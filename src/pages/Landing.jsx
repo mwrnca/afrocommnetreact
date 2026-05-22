@@ -1,0 +1,107 @@
+import { useNavigate } from 'react-router-dom'
+import './Pages.css'
+
+function Landing() {
+
+    const navigate = useNavigate()
+
+  return (
+    <>
+      <header className="header">
+        <div className="brand">
+          <img src="assets/ACN__1_-removebg-preview.png" alt="Afrocommnet Logo" className="logo" />
+          <div className="brand-text">
+            <h1>
+              <a href="index.html">.AFROCOMMNET.</a>
+            </h1>
+          </div>
+        </div>
+      </header>
+
+      <section className="hero">
+        <div className="hero-content">
+          <h2>WELCOME!</h2>
+          <h3>TO THE </h3>
+          <h1>ONE</h1>
+          <h3>COMMERCE MANAGEMENT</h3>
+          <h3>PAGE</h3>
+
+          <a href="about.html" className="btn-green">WHO WE ARE</a>
+        </div>
+      </section>
+
+      <nav className="vertical-nav">
+        <a href="commland.html">Communities</a>
+        <a href="eduland.html">Education</a>
+        <a href="toolsland.html">Tools</a>
+      </nav>
+
+      <section className="roles">
+        <h2>ARE YOU A:</h2>
+
+        <div className="role-buttons">
+
+          <a onClick={() => navigate('/signup.bss')} className="role-btn">
+            <span className="icon">⬢</span>
+            <h2>Business Operator</h2>
+            <small>Producers • Wholesalers • Retailers • Service Providers</small>
+          </a>
+
+          <a onClick={() => navigate('/signup.inst')} className="role-btn">
+            <span className="icon">⬢</span>
+            <h2>Institution</h2>
+            <small>Government • NGOs • Enterprises • Agencies</small>
+          </a>
+
+          <a onClick={() => navigate('/signup.cons')} className="role-btn">
+            <span className="icon">⬢</span>
+            <h2>Consumer</h2>
+            <small>Buyers • Sourcing • Marketplace Users</small>
+          </a>
+
+          <a onClick={() => navigate('/signup.prof')} className="role-btn">
+            <span className="icon">⬢</span>
+            <h2>Professionals</h2>
+            <small>Lawyers • Engineers • Doctors</small>
+          </a>
+
+        </div>
+      </section>
+
+      <section className="hero">
+        <div>
+          <h4>A platform for people to manage risk and resources as well as grow capital and expertise in their areas of involvement allowing us to grow.</h4>
+        </div>
+      </section>
+
+      <section className="investors">
+        <h2 style={{ color: 'black' }}>credits</h2>
+      </section>
+
+      <section className="public-chat">
+        <div className="investors">
+          <h2>Public Lobby</h2>
+        </div>
+
+        <div className="chat-window" id="chatWindow">
+        </div>
+      </section>
+
+      <div className="investors">
+        <h2>"please note that to gain full access to the public chat you must be an account holder"</h2>
+      </div>
+
+      <footer className="hero">
+        <p>© 2026 Afrocommnet™. All rights reserved.</p>
+        <p>Afrocommnet, logo, and content are protected under copyright and trademark law.</p>
+        <div className="footer-links">
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+          <a href="#">Contact</a>
+        </div>
+      </footer>
+    </>
+  )
+}
+
+export default Landing
