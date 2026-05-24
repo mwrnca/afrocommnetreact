@@ -21,3 +21,13 @@
     padding: 1em;
     background-color: rgba(1, 1, 104, 0.1);
 }
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 8px;
+    padding: 1em;
+    background-color: rgba(1, 1, 104, 0.1);
+    margin-bottom: 12px;
+}

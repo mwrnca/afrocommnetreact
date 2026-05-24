@@ -11,7 +11,6 @@ export default function Communities () {
                 <CommunitiesCard />
             </div>
             
-            <h1>Communities Page</h1>
         </div>
     );
 }

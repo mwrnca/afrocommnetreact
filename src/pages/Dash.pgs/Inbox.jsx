@@ -1,10 +1,10 @@
 import "./Dash.css"
-import Inbox from "../../components/HomeComponents/Inbox";
+import InboxCard from "../../components/HomeComponents/InboxCard";
 
 export default function Inbox () {
     return (
         <div className="page-container">
-            <Inbox />
+            <InboxCard />
         </div>
     );
 }

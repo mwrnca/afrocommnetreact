@@ -23,3 +23,19 @@
   justify-content: space-around;
   gap: 0.5em;
 }
+
+.tool-btn-cont {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tool-btn-cont > div {
+  background-color: rgba(1, 1, 104, 0.1);
+  min-width: 2rem;
+  min-height: 2rem;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  padding: 4px;
+}
