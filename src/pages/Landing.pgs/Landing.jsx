@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import Header from '../../components/Generalcomponents/Header'
 import './Pages.css'
 
 function Landing() {
@@ -6,17 +7,9 @@ function Landing() {
     const navigate = useNavigate()
 
   return (
-    <>
-      <header className="header">
-        <div className="brand">
-          <img src="assets/ACN__1_-removebg-preview.png" alt="Afrocommnet Logo" className="logo" />
-          <div className="brand-text">
-            <h1>
-              <a href="index.html">.AFROCOMMNET.</a>
-            </h1>
-          </div>
-        </div>
-      </header>
+    <section className="page-container">
+      
+      <Header />
 
       <section className="hero">
         <div className="hero-content">
@@ -26,14 +19,14 @@ function Landing() {
           <h3>COMMERCE MANAGEMENT</h3>
           <h3>PAGE</h3>
 
-          <a href="about.html" className="btn-green">WHO WE ARE</a>
+          <a onClick={() => navigate('/about')} className="btn-green">WHO WE ARE</a>
         </div>
       </section>
 
       <nav className="vertical-nav">
-        <a href="commland.html">Communities</a>
-        <a href="eduland.html">Education</a>
-        <a href="toolsland.html">Tools</a>
+        <a onClick={() => navigate('/communitiesLand')}>Communities</a>
+        <a onClick={() => navigate('/eduLand')}>Education</a>
+        <a onClick={() => navigate('/toolsLand')}>Tools</a>
       </nav>
 
       <section className="roles">
@@ -41,25 +34,25 @@ function Landing() {
 
         <div className="role-buttons">
 
-          <a onClick={() => navigate('/signup.bss')} className="role-btn">
+          <a onClick={() => navigate('/signup/bss')} className="role-btn">
             <span className="icon">⬢</span>
             <h2>Business Operator</h2>
             <small>Producers • Wholesalers • Retailers • Service Providers</small>
           </a>
 
-          <a onClick={() => navigate('/signup.inst')} className="role-btn">
+          <a onClick={() => navigate('/signup/inst')} className="role-btn">
             <span className="icon">⬢</span>
             <h2>Institution</h2>
             <small>Government • NGOs • Enterprises • Agencies</small>
           </a>
 
-          <a onClick={() => navigate('/signup.cons')} className="role-btn">
+          <a onClick={() => navigate('/signup/cons')} className="role-btn">
             <span className="icon">⬢</span>
             <h2>Consumer</h2>
             <small>Buyers • Sourcing • Marketplace Users</small>
           </a>
 
-          <a onClick={() => navigate('/signup.prof')} className="role-btn">
+          <a onClick={() => navigate('/signup/prof')} className="role-btn">
             <span className="icon">⬢</span>
             <h2>Professionals</h2>
             <small>Lawyers • Engineers • Doctors</small>
@@ -95,12 +88,12 @@ function Landing() {
         <p>© 2026 Afrocommnet™. All rights reserved.</p>
         <p>Afrocommnet, logo, and content are protected under copyright and trademark law.</p>
         <div className="footer-links">
-          <a href="#">Terms</a>
-          <a href="#">Privacy</a>
-          <a href="#">Contact</a>
+          <a onClick={() => navigate('/terms')}>Terms</a>
+          <a onClick={() => navigate('/privacy')}>Privacy</a>
+          <a onClick={() => navigate('/contact')}>Contact</a>
         </div>
       </footer>
-    </>
+    </section>
   )
 }
 

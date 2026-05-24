@@ -16,7 +16,11 @@ body {
     font-family: system-ui, sans-serif;
 }
 
-/* ================= BRAND ================= */
+.page-container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
 
 .header {
     padding: 25px 20px;
@@ -24,6 +28,7 @@ body {
 
 .brand {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 15px;
 }
@@ -230,29 +235,42 @@ input{
 }
 
 .btn-cont {
-    display: inline-block;
-    margin-top: 35px;
-    padding: 14px 28px;
-    background: rgb(15, 4, 41);
-    color: white;
-    text-decoration: none;
-    border-radius: 12px;
-    border: 1px solid #d4af37;;
-    font-weight: 600;
-    transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 32px;
+  /* border: 2px solid #c9a84c;        */
+  border-radius: 50px;               
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  width: fit-content;
 }
 
 .btn-cont:hover {
-    background: #080123;
+  background: rgba(201, 168, 76, 0.08);
+  box-shadow: 0 0 12px rgba(201, 168, 76, 0.3);
 }
 
-footer{
-    border-radius: 20px;
-    margin: 5%;
-    background: none;
-    border: #ffd700 solid 1px;
-    padding: 20px;
-    text-align: center;
-    color: #fefefd;
+.btn-cont span {
+  font-size: 15px;
+  font-weight: 700;
+  padding: 10px 10px;
+  letter-spacing: 0.12em;
+  color: #edeaf0;        
 }
 
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+     background: linear-gradient(to bottom, rgba(4, nhf0, 30, 0.886),rgba(0, 0, 1, 0.9));
+   padding:30px;
+   border-radius:10px;
+   width:400px;
+   box-shadow:0 5px 15px rgba(0,0,0,0.2);
+   margin: 0% auto;
+   color: #fefefd;
+}

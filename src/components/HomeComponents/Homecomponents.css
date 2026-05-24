@@ -1,0 +1,23 @@
+.container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 1em;
+    border: gold;
+    border-radius: 0px;
+    color: #fff8f8;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+}
+
+.card-sales {
+    grid-row:1 / span 3;
+}
+
+.container > div {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1em;
+    background-color: rgba(1, 1, 104, 0.1);
+}

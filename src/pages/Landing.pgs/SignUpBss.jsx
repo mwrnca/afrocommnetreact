@@ -1,22 +1,14 @@
-import { useNavigate } from 'react-router-dom'
-import "./Pages.css"
+import { NavLink, useNavigate } from 'react-router-dom'
+import Header from '../../components/Generalcomponents/Header'
+import "./pages.css"
 
 export default function SignUpBss() {
 
-  const navigate = useNavigate()
+    const navigate = useNavigate()
 
   return (
-    <>
-      <header className="header">
-        <div className="brand">
-          <img src="ACN__1_-removebg-preview.png" className="logo" />
-          <div className="brand-text">
-            <h1>
-              <a onClick={() => navigate('/')}>.AFROCOMMNET.</a>
-            </h1>
-          </div>
-        </div>
-      </header>
+    <section className="page-container">
+      <Header />
 
       <section className="roles">
         <h2>Create Account</h2>
@@ -25,19 +17,26 @@ export default function SignUpBss() {
         <p>this will help in enhancing your overall experience on our platform.</p>
       </section>
 
-      <section className="container">
-        <div className="input">
-          <h1 id="myH1" style={{ margin: '20px' }}>SIGN UP</h1>
-          <input id="name" type="text" placeholder="Full Name" required />
-          <input id="email" type="email" placeholder="Email Address" required />
-          <input id="phone" type="text" placeholder="Phone Number" required />
-          <input id="bssName" type="text" placeholder="Name of Business" required />
-          <input id="nature" type="text" placeholder="Nature of Business" required />
-          <input id="location" type="text" placeholder="Location of Business" required />
-          <input id="password" type="password" placeholder="Account Password" required />
-          <input id="confPassword" type="password" placeholder="Confirm Password" required />
-          <a onClick={() => navigate('/dash.bss')} className="btn-cont">FINISH</a>
-        </div>
+      <section className="signup-container">
+          <div>
+            <h1 id="myH1" style={{ margin: '20px' }}>SIGN UP</h1>
+          </div>
+
+          <div>
+            <input id="name" type="text" placeholder="Full Name" required />
+            <input id="email" type="email" placeholder="Email Address" required />
+            <input id="phone" type="text" placeholder="Phone Number" required />
+            <input id="bssName" type="text" placeholder="Name of Business" required />
+            <input id="nature" type="text" placeholder="Nature of Business" required />
+            <input id="location" type="text" placeholder="Location of Business" required />
+            <input id="password" type="password" placeholder="Account Password" required />
+            <input id="confPassword" type="password" placeholder="Confirm Password" required />
+          </div>
+          
+          <div onClick={() => navigate('/dash/bss')} className="btn-green" style={{ margin: '20px', width: '80%' }}>
+            <span>FINISH</span>
+          </div>
+          
       </section>
 
       <section id="fillAllFeilds" className="fill-all-feilds">
@@ -60,6 +59,6 @@ export default function SignUpBss() {
           <a href="#">Contact</a>
         </div>
       </footer>
-    </>
+    </section>
   )
 }
