@@ -48,9 +48,9 @@ export default function CompoundInterestCalculator() {
           <input type="number" placeholder="e.g. 5" value={time} onChange={e => setTime(e.target.value)} />
         </label>
         <label>Compounding Frequency (n)
-          <select value={freq} onChange={e => setFreq(Number(e.target.value))}>
+          <select value={freq} onChange={e => setFreq(Number(e.target.value))} className="compound-select">
             {frequencies.map(f => (
-              <option key={f.n} value={f.n}>{f.label}</option>
+              <option key={f.n} value={f.n} className="compound-select">{f.label}</option>
             ))}
           </select>
         </label>
