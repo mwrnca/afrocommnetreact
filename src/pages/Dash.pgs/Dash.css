@@ -40,3 +40,23 @@
   padding: 4px;
   cursor: pointer;
 }
+
+.add-new-task {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background-color: var(--secondary);
+  margin: 0 auto;
+}
+
+.task-form {
+   display: flex;
+   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 0 auto;
+}
