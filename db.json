@@ -31,6 +31,36 @@
       "img": "",
       "password": "123456",
       "dateJoined": "2026-05-30"
+    },
+    {
+      "first_name": "cmpiaek",
+      "second_name": "cqnioaedm",
+      "email": "cqia kle",
+      "phone_number": "03948i8054",
+      "name_of_business": "mceflka",
+      "nature_of_business": "Restaurant",
+      "location_of_business": "c akle",
+      "county": "test@gmail.com",
+      "description": "ca premnpoa;ermfcpea",
+      "password": "1234",
+      "confirm_password": "1234",
+      "role": "business",
+      "id": "732ogjdMuvM"
+    },
+    {
+      "first_name": "cmpiaek",
+      "second_name": "cqnioaedm",
+      "email": "cmaei@gmail.com",
+      "phone_number": "03948i8054",
+      "name_of_business": "mceflka",
+      "nature_of_business": "Restaurant",
+      "location_of_business": "c akle",
+      "county": "test@gmail.com",
+      "description": "qMAEPOWIK",
+      "password": "1234",
+      "confirm_password": "1234",
+      "role": "business",
+      "id": "sSSHRWMUJKI"
     }
   ],
   "history": [],
@@ -512,7 +542,7 @@
       }
     ]
   },
-  "services" : [
+  "services": [
     {
       "id": "1",
       "img": "",
@@ -570,6 +600,22 @@
       "location": "Town"
     }
   ],
+  "bussiness_user_entry": [
+    {
+      "id": "1",
+      "first_name": "Andy",
+      "second_name": "Doe",
+      "email": "andy@gmail.com",
+      "phone_number": "0712345678",
+      "name_of_business": "Andy's Tech",
+      "nature_of_business": "Technology",
+      "location_of_business": "Nairobi CBD",
+      "county": "Nairobi",
+      "description": "We provide affordable tech solutions for small businesses.",
+      "password": "1234",
+      "confirm_password": "1234",
+      "role": "business"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
-  
 }
