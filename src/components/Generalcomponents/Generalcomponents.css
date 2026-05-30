@@ -143,3 +143,22 @@
 .topbar {
     background: transparent;
 }
+
+.card-header {
+  background-color: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  margin: 20px;
+  flex-wrap: wrap;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}

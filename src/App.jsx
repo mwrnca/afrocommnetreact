@@ -21,6 +21,7 @@ import Settings from './pages/Dash.pgs/Settings'
 import ToDo from './pages/Dash.pgs/ToDo'
 import Tools from './pages/Dash.pgs/Tools'
 import DashBss from './pages/Dash.pgs/DashBss'
+import DashEmpl from './pages/Dash.pgs/DashEmpl'
 import DashProf from './pages/Dash.pgs/DashProf'
 import DashInst from './pages/Dash.pgs/DashInst'
 import DashCons from './pages/Dash.pgs/DashCons'
@@ -35,7 +36,7 @@ function App() {
         <Route path="/communitiesLand" element={<CommunitiesLand />} />
         <Route path="/toolsLand" element={<ToolsLng />} />
         <Route path="/eduLand" element={<EduLand />} />
-        <Route path="/workspaces" element={<WorkspaceSelector />} />
+        <Route path="/workspace" element={<WorkspaceSelector />} />
         <Route path="/about" element={<About />} />
         <Route path="/login/bss" element={<LogInBss />} />
         <Route path="/login/prof" element={<LogInProf />} />

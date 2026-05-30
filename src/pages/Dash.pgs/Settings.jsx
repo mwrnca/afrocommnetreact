@@ -12,13 +12,13 @@ export default function Settings () {
 
             <div className="settings-items">
 
-                <div onclick={() => navigate("/workspacea")} >
+                <div onclick={() => navigate("/")} >
                 <h3>SWITCH WORKSPACE</h3>
                 </div>
 
-                <div onclick={() => navigate("/workspacea")} >
-                    <span>SWITCH</span>
-                </div>
+                <button onclick={() => navigate("/workspace")} >
+                    SWITCH
+                </button>
 
             </div>
         </div>

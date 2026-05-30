@@ -55,6 +55,13 @@
       "priority": "low",
       "dueDate": "2026-06-15",
       "notes": ""
+    },
+    {
+      "title": "mzione",
+      "priority": "medium",
+      "dueDate": "2026-05-20",
+      "notes": "mcal znmnnicoaNionoca",
+      "id": "Vzzbq_IVTQg"
     }
   ],
   "messages": [
@@ -80,120 +87,489 @@
     }
   ],
   "communities": [
-  {
-    "id": 1,
-    "name": "Finance & Investing",
-    "description": "A community for discussing personal finance, investing strategies and market trends.",
-    "category": "Finance",
-    "members": 245
+    {
+      "id": "1",
+      "name": "Finance & Investing",
+      "description": "A community for discussing personal finance, investing strategies and market trends.",
+      "category": "Finance",
+      "members": 245
+    },
+    {
+      "id": "2",
+      "name": "Tech Entrepreneurs",
+      "description": "Connect with fellow tech entrepreneurs, share ideas and get feedback.",
+      "category": "Technology",
+      "members": 189
+    },
+    {
+      "id": "3",
+      "name": "Marketing Hub",
+      "description": "Everything marketing — digital, content, social media and beyond.",
+      "category": "Marketing",
+      "members": 312
+    }
+  ],
+  "sales": {
+    "weekly": [
+      {
+        "day": "Mon",
+        "orders": 5,
+        "completed": 4,
+        "pending": 1
+      },
+      {
+        "day": "Tue",
+        "orders": 8,
+        "completed": 7,
+        "pending": 1
+      },
+      {
+        "day": "Wed",
+        "orders": 6,
+        "completed": 5,
+        "pending": 1
+      },
+      {
+        "day": "Thu",
+        "orders": 10,
+        "completed": 9,
+        "pending": 1
+      },
+      {
+        "day": "Fri",
+        "orders": 12,
+        "completed": 10,
+        "pending": 2
+      },
+      {
+        "day": "Sat",
+        "orders": 7,
+        "completed": 6,
+        "pending": 1
+      },
+      {
+        "day": "Sun",
+        "orders": 3,
+        "completed": 3,
+        "pending": 0
+      }
+    ],
+    "monthly": [
+      {
+        "day": "Week 1",
+        "orders": 40,
+        "completed": 35,
+        "pending": 5
+      },
+      {
+        "day": "Week 2",
+        "orders": 55,
+        "completed": 50,
+        "pending": 5
+      },
+      {
+        "day": "Week 3",
+        "orders": 48,
+        "completed": 44,
+        "pending": 4
+      },
+      {
+        "day": "Week 4",
+        "orders": 62,
+        "completed": 58,
+        "pending": 4
+      }
+    ],
+    "yearly": [
+      {
+        "day": "Jan",
+        "orders": 180,
+        "completed": 160,
+        "pending": 20
+      },
+      {
+        "day": "Feb",
+        "orders": 210,
+        "completed": 190,
+        "pending": 20
+      },
+      {
+        "day": "Mar",
+        "orders": 195,
+        "completed": 175,
+        "pending": 20
+      },
+      {
+        "day": "Apr",
+        "orders": 230,
+        "completed": 210,
+        "pending": 20
+      },
+      {
+        "day": "May",
+        "orders": 250,
+        "completed": 225,
+        "pending": 25
+      },
+      {
+        "day": "Jun",
+        "orders": 220,
+        "completed": 200,
+        "pending": 20
+      },
+      {
+        "day": "Jul",
+        "orders": 240,
+        "completed": 215,
+        "pending": 25
+      },
+      {
+        "day": "Aug",
+        "orders": 260,
+        "completed": 235,
+        "pending": 25
+      },
+      {
+        "day": "Sep",
+        "orders": 245,
+        "completed": 220,
+        "pending": 25
+      },
+      {
+        "day": "Oct",
+        "orders": 270,
+        "completed": 245,
+        "pending": 25
+      },
+      {
+        "day": "Nov",
+        "orders": 290,
+        "completed": 260,
+        "pending": 30
+      },
+      {
+        "day": "Dec",
+        "orders": 310,
+        "completed": 280,
+        "pending": 30
+      }
+    ]
   },
-  {
-    "id": 2,
-    "name": "Tech Entrepreneurs",
-    "description": "Connect with fellow tech entrepreneurs, share ideas and get feedback.",
-    "category": "Technology",
-    "members": 189
+  "expenses": {
+    "weekly": [
+      {
+        "day": "Mon",
+        "amount": 1200,
+        "category": "Salaries"
+      },
+      {
+        "day": "Tue",
+        "amount": 800,
+        "category": "Utilities"
+      },
+      {
+        "day": "Wed",
+        "amount": 950,
+        "category": "Rent"
+      },
+      {
+        "day": "Thu",
+        "amount": 600,
+        "category": "Supplies"
+      },
+      {
+        "day": "Fri",
+        "amount": 1100,
+        "category": "Salaries"
+      },
+      {
+        "day": "Sat",
+        "amount": 400,
+        "category": "Utilities"
+      },
+      {
+        "day": "Sun",
+        "amount": 200,
+        "category": "Supplies"
+      }
+    ],
+    "monthly": [
+      {
+        "day": "Week 1",
+        "amount": 5200,
+        "category": "Salaries"
+      },
+      {
+        "day": "Week 2",
+        "amount": 4800,
+        "category": "Rent"
+      },
+      {
+        "day": "Week 3",
+        "amount": 5500,
+        "category": "Salaries"
+      },
+      {
+        "day": "Week 4",
+        "amount": 4200,
+        "category": "Utilities"
+      }
+    ],
+    "yearly": [
+      {
+        "day": "Jan",
+        "amount": 18000
+      },
+      {
+        "day": "Feb",
+        "amount": 19500
+      },
+      {
+        "day": "Mar",
+        "amount": 17800
+      },
+      {
+        "day": "Apr",
+        "amount": 21000
+      },
+      {
+        "day": "May",
+        "amount": 20500
+      },
+      {
+        "day": "Jun",
+        "amount": 19000
+      },
+      {
+        "day": "Jul",
+        "amount": 22000
+      },
+      {
+        "day": "Aug",
+        "amount": 21500
+      },
+      {
+        "day": "Sep",
+        "amount": 20000
+      },
+      {
+        "day": "Oct",
+        "amount": 23000
+      },
+      {
+        "day": "Nov",
+        "amount": 24000
+      },
+      {
+        "day": "Dec",
+        "amount": 25000
+      }
+    ]
   },
-  {
-    "id": 3,
-    "name": "Marketing Hub",
-    "description": "Everything marketing — digital, content, social media and beyond.",
-    "category": "Marketing",
-    "members": 312
-  }
-],
-"sales": {
-  "weekly":  [
-    { "day": "Mon", "orders": 5,  "completed": 4, "pending": 1 },
-    { "day": "Tue", "orders": 8,  "completed": 7, "pending": 1 },
-    { "day": "Wed", "orders": 6,  "completed": 5, "pending": 1 },
-    { "day": "Thu", "orders": 10, "completed": 9, "pending": 1 },
-    { "day": "Fri", "orders": 12, "completed": 10, "pending": 2 },
-    { "day": "Sat", "orders": 7,  "completed": 6, "pending": 1 },
-    { "day": "Sun", "orders": 3,  "completed": 3, "pending": 0 }
+  "revenue": {
+    "weekly": [
+      {
+        "day": "Mon",
+        "revenue": 3200,
+        "profit": 2000,
+        "loss": 0
+      },
+      {
+        "day": "Tue",
+        "revenue": 4100,
+        "profit": 3300,
+        "loss": 0
+      },
+      {
+        "day": "Wed",
+        "revenue": 2900,
+        "profit": 1950,
+        "loss": 0
+      },
+      {
+        "day": "Thu",
+        "revenue": 5200,
+        "profit": 4600,
+        "loss": 0
+      },
+      {
+        "day": "Fri",
+        "revenue": 6100,
+        "profit": 5000,
+        "loss": 0
+      },
+      {
+        "day": "Sat",
+        "revenue": 3800,
+        "profit": 3400,
+        "loss": 0
+      },
+      {
+        "day": "Sun",
+        "revenue": 1500,
+        "profit": 1300,
+        "loss": 0
+      }
+    ],
+    "monthly": [
+      {
+        "day": "Week 1",
+        "revenue": 18000,
+        "profit": 12800,
+        "loss": 0
+      },
+      {
+        "day": "Week 2",
+        "revenue": 22000,
+        "profit": 17200,
+        "loss": 0
+      },
+      {
+        "day": "Week 3",
+        "revenue": 19500,
+        "profit": 14000,
+        "loss": 0
+      },
+      {
+        "day": "Week 4",
+        "revenue": 25000,
+        "profit": 20800,
+        "loss": 0
+      }
+    ],
+    "yearly": [
+      {
+        "day": "Jan",
+        "revenue": 72000,
+        "profit": 54000,
+        "loss": 0
+      },
+      {
+        "day": "Feb",
+        "revenue": 85000,
+        "profit": 65500,
+        "loss": 0
+      },
+      {
+        "day": "Mar",
+        "revenue": 78000,
+        "profit": 60200,
+        "loss": 0
+      },
+      {
+        "day": "Apr",
+        "revenue": 92000,
+        "profit": 71000,
+        "loss": 0
+      },
+      {
+        "day": "May",
+        "revenue": 98000,
+        "profit": 77500,
+        "loss": 0
+      },
+      {
+        "day": "Jun",
+        "revenue": 88000,
+        "profit": 69000,
+        "loss": 0
+      },
+      {
+        "day": "Jul",
+        "revenue": 105000,
+        "profit": 83000,
+        "loss": 0
+      },
+      {
+        "day": "Aug",
+        "revenue": 110000,
+        "profit": 88500,
+        "loss": 0
+      },
+      {
+        "day": "Sep",
+        "revenue": 102000,
+        "profit": 82000,
+        "loss": 0
+      },
+      {
+        "day": "Oct",
+        "revenue": 115000,
+        "profit": 92000,
+        "loss": 0
+      },
+      {
+        "day": "Nov",
+        "revenue": 125000,
+        "profit": 101000,
+        "loss": 0
+      },
+      {
+        "day": "Dec",
+        "revenue": 140000,
+        "profit": 115000,
+        "loss": 0
+      }
+    ]
+  },
+  "services" : [
+    {
+      "id": "1",
+      "img": "",
+      "title": "SHAEIM",
+      "category": "TECH",
+      "location": "Town"
+    },
+    {
+      "id": "2",
+      "img": "",
+      "title": "SHAEIM",
+      "category": "TECH",
+      "location": "Town"
+    },
+    {
+      "id": "3",
+      "img": "",
+      "title": "SHAEIM",
+      "category": "TECH",
+      "location": "Town"
+    },
+    {
+      "id": "4",
+      "img": "",
+      "title": "SHAEIM",
+      "category": "TECH",
+      "location": "Town"
+    },
+    {
+      "id": "5",
+      "img": "",
+      "title": "SHAEIM",
+      "category": "TECH",
+      "location": "Town"
+    },
+    {
+      "id": "6",
+      "img": "",
+      "title": "SHAEIM",
+      "category": "TECH",
+      "location": "Town"
+    },
+    {
+      "id": "7",
+      "img": "",
+      "title": "SHAEIM",
+      "category": "TECH",
+      "location": "Town"
+    },
+    {
+      "id": "8",
+      "img": "",
+      "title": "SHAEIM",
+      "category": "TECH",
+      "location": "Town"
+    }
   ],
-  "monthly": [
-    { "day": "Week 1", "orders": 40, "completed": 35, "pending": 5 },
-    { "day": "Week 2", "orders": 55, "completed": 50, "pending": 5 },
-    { "day": "Week 3", "orders": 48, "completed": 44, "pending": 4 },
-    { "day": "Week 4", "orders": 62, "completed": 58, "pending": 4 }
-  ],
-  "yearly": [
-    { "day": "Jan", "orders": 180, "completed": 160, "pending": 20 },
-    { "day": "Feb", "orders": 210, "completed": 190, "pending": 20 },
-    { "day": "Mar", "orders": 195, "completed": 175, "pending": 20 },
-    { "day": "Apr", "orders": 230, "completed": 210, "pending": 20 },
-    { "day": "May", "orders": 250, "completed": 225, "pending": 25 },
-    { "day": "Jun", "orders": 220, "completed": 200, "pending": 20 },
-    { "day": "Jul", "orders": 240, "completed": 215, "pending": 25 },
-    { "day": "Aug", "orders": 260, "completed": 235, "pending": 25 },
-    { "day": "Sep", "orders": 245, "completed": 220, "pending": 25 },
-    { "day": "Oct", "orders": 270, "completed": 245, "pending": 25 },
-    { "day": "Nov", "orders": 290, "completed": 260, "pending": 30 },
-    { "day": "Dec", "orders": 310, "completed": 280, "pending": 30 }
-  ]
-},
-"expenses": {
-  "weekly": [
-    { "day": "Mon", "amount": 1200, "category": "Salaries" },
-    { "day": "Tue", "amount": 800,  "category": "Utilities" },
-    { "day": "Wed", "amount": 950,  "category": "Rent" },
-    { "day": "Thu", "amount": 600,  "category": "Supplies" },
-    { "day": "Fri", "amount": 1100, "category": "Salaries" },
-    { "day": "Sat", "amount": 400,  "category": "Utilities" },
-    { "day": "Sun", "amount": 200,  "category": "Supplies" }
-  ],
-  "monthly": [
-    { "day": "Week 1", "amount": 5200, "category": "Salaries" },
-    { "day": "Week 2", "amount": 4800, "category": "Rent" },
-    { "day": "Week 3", "amount": 5500, "category": "Salaries" },
-    { "day": "Week 4", "amount": 4200, "category": "Utilities" }
-  ],
-  "yearly": [
-    { "day": "Jan", "amount": 18000 },
-    { "day": "Feb", "amount": 19500 },
-    { "day": "Mar", "amount": 17800 },
-    { "day": "Apr", "amount": 21000 },
-    { "day": "May", "amount": 20500 },
-    { "day": "Jun", "amount": 19000 },
-    { "day": "Jul", "amount": 22000 },
-    { "day": "Aug", "amount": 21500 },
-    { "day": "Sep", "amount": 20000 },
-    { "day": "Oct", "amount": 23000 },
-    { "day": "Nov", "amount": 24000 },
-    { "day": "Dec", "amount": 25000 }
-  ]
-},
-"revenue": {
-  "weekly": [
-    { "day": "Mon", "revenue": 3200, "profit": 2000, "loss": 0 },
-    { "day": "Tue", "revenue": 4100, "profit": 3300, "loss": 0 },
-    { "day": "Wed", "revenue": 2900, "profit": 1950, "loss": 0 },
-    { "day": "Thu", "revenue": 5200, "profit": 4600, "loss": 0 },
-    { "day": "Fri", "revenue": 6100, "profit": 5000, "loss": 0 },
-    { "day": "Sat", "revenue": 3800, "profit": 3400, "loss": 0 },
-    { "day": "Sun", "revenue": 1500, "profit": 1300, "loss": 0 }
-  ],
-  "monthly": [
-    { "day": "Week 1", "revenue": 18000, "profit": 12800, "loss": 0 },
-    { "day": "Week 2", "revenue": 22000, "profit": 17200, "loss": 0 },
-    { "day": "Week 3", "revenue": 19500, "profit": 14000, "loss": 0 },
-    { "day": "Week 4", "revenue": 25000, "profit": 20800, "loss": 0 }
-  ],
-  "yearly": [
-    { "day": "Jan", "revenue": 72000,  "profit": 54000,  "loss": 0 },
-    { "day": "Feb", "revenue": 85000,  "profit": 65500,  "loss": 0 },
-    { "day": "Mar", "revenue": 78000,  "profit": 60200,  "loss": 0 },
-    { "day": "Apr", "revenue": 92000,  "profit": 71000,  "loss": 0 },
-    { "day": "May", "revenue": 98000,  "profit": 77500,  "loss": 0 },
-    { "day": "Jun", "revenue": 88000,  "profit": 69000,  "loss": 0 },
-    { "day": "Jul", "revenue": 105000, "profit": 83000,  "loss": 0 },
-    { "day": "Aug", "revenue": 110000, "profit": 88500,  "loss": 0 },
-    { "day": "Sep", "revenue": 102000, "profit": 82000,  "loss": 0 },
-    { "day": "Oct", "revenue": 115000, "profit": 92000,  "loss": 0 },
-    { "day": "Nov", "revenue": 125000, "profit": 101000, "loss": 0 },
-    { "day": "Dec", "revenue": 140000, "profit": 115000, "loss": 0 }
-  ]
-},
   "$schema": "./node_modules/json-server/schema.json"
+  
 }

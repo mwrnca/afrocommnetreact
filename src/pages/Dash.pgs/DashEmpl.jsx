@@ -4,7 +4,7 @@ import ExpensesContainer from '../../components/HomeComponents/ExpensesContainer
 import RevenueContainer from '../../components/HomeComponents/RevenueContainer'
 import "./Dash.css"
 
-export default function Dashprof () {
+export default function DashEmpl () {
   const toggleMenu = () => {
     const popup = document.getElementById("popup")
     if (popup) popup.style.display = popup.style.display === "block" ? "none" : "block"
