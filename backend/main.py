@@ -1,4 +1,6 @@
-# add at top
+# main.py (or auth.py)
+
+import hashlib
 from passlib.context import CryptContext
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 from fastapi import FastAPI, HTTPException, Depends
@@ -21,15 +23,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Health check ──
-@app.get("/")
-def root():
-    return {"message": "Backend is running"}
+# # ── Health check ──
+# @app.get("/register")
+# def root():
+#     return {"message": "Backend is running"}
+
+@app.post("/register")
+def register():
+    return {"ok": True}
 
 # ──────────────────────────────────────────
 # AUTH ROUTES
 # ──────────────────────────────────────────
 
+def normalize_password(pw: str):
+    return hashlib.sha256(pw.encode()).hexdigest()
 # REGISTER
 # React sends user form data → we save to db → create empty data object
 @app.post("/register", response_model=schemas.UserResponse)
@@ -51,7 +59,7 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
         second_name          = user.second_name,
         email                = user.email,
         phone_number         = user.phone_number,
-        password             = pwd_context.hash(user.password),
+        password             = pwd_context.hash(user.password[:72]),
         role                 = user.role,
         name_of_business     = user.name_of_business,
         nature_of_business   = user.nature_of_business,
