@@ -8,8 +8,12 @@ export default function SignUpCons() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [form, setForm] = useState({
-    first_name: "", second_name: "", email: "",
-    phone_number: "", password: "", confirm_password: "",
+    first_name: "", 
+    second_name: "", 
+    email: "",
+    phone_number: "", 
+    password: "", 
+    confirm_password: "",
   });
 
   const handleChange = (e) =>

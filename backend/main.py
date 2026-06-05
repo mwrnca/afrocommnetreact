@@ -1,20 +1,18 @@
-# main.py (or auth.py)
-
-import hashlib
 from passlib.context import CryptContext
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import engine, Base, get_db
 import models, schemas
 
-# creates all tables in the database on startup
-# if they already exist it skips them
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+# CORS must be added immediately after app = FastAPI()
+# before any routes
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
@@ -23,21 +21,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# # ── Health check ──
-# @app.get("/register")
-# def root():
-#     return {"message": "Backend is running"}
+@app.get("/")
+def root():
+    return {"message": "Backend is running"}
 
-@app.post("/register")
-def register():
-    return {"ok": True}
 
 # ──────────────────────────────────────────
 # AUTH ROUTES
 # ──────────────────────────────────────────
 
-def normalize_password(pw: str):
-    return hashlib.sha256(pw.encode()).hexdigest()
 # REGISTER
 # React sends user form data → we save to db → create empty data object
 @app.post("/register", response_model=schemas.UserResponse)

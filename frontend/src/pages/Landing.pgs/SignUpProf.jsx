@@ -4,12 +4,16 @@ import Header from '../../components/Generalcomponents/Header';
 import { signup, saveUser } from '../../api';
 import "./pages.css";
 
-export default function SignUpCons() {
+export default function SignUpProf() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [form, setForm] = useState({
-    first_name: "", second_name: "", email: "",
-    phone_number: "", password: "", confirm_password: "",
+    first_name: "", 
+    second_name: "", 
+    email: "",
+    phone_number: "", 
+    password: "", 
+    confirm_password: "",
   });
 
   const handleChange = (e) =>
@@ -25,9 +29,9 @@ export default function SignUpCons() {
       return;
     }
     try {
-      const user = await signup({ ...form, role: "consumer" });
+      const user = await signup({ ...form, role: "professional" });
       saveUser(user);
-      navigate("/dash/cons");
+      navigate("/dash/prof");
     } catch (err) {
       setError(err.message);
     }

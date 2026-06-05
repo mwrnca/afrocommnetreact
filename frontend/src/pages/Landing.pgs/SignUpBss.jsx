@@ -4,7 +4,7 @@ import Header from '../../components/Generalcomponents/Header';
 import { signup, saveUser } from '../../api';
 import "./pages.css";
 
-export default function SignUpCons() {
+export default function SignUpBss() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [form, setForm] = useState({
@@ -29,9 +29,9 @@ export default function SignUpCons() {
       return;
     }
     try {
-      const user = await signup({ ...form, role: "consumer" });
+      const user = await signup({ ...form, role: "business" });
       saveUser(user);
-      navigate("/dash/cons");
+      navigate("/dash/bss");
     } catch (err) {
       setError(err.message);
     }
