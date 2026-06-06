@@ -102,3 +102,76 @@
   padding-left: 28px;
   border-right: 1px solid var(--border);
 }
+
+.update-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.sales-update,
+.expenses-update {
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.update-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.update-input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.65rem 0.875rem;
+  color: var(--text);
+  font-family: var(--font-family);
+  font-size: 14px;
+  outline: none;
+  transition: var(--transition);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.update-input:focus {
+  border-color: var(--primary);
+}
+
+.update-input::placeholder {
+  color: #666;
+}
+
+.update-button {
+  background: var(--primary);
+  color: var(--secondary);
+  border: none;
+  padding: 0.65rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-family);
+  margin-top: 0.5rem;
+}
+
+.update-button:hover {
+  background: var(--hover);
+  color: var(--hover-text);
+}
+
+.update-msg {
+  font-size: 13px;
+  color: #27ae60;
+  margin: 0;
+}

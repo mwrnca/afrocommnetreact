@@ -7,6 +7,7 @@ import RiskRewardCalculator from "../../components/ToolsComponents.jsx/RiskRewar
 import SimpleInterestCalculator from "../../components/ToolsComponents.jsx/SimpleInterestCalculator"
 import CompoundInterestCalculator from "../../components/ToolsComponents.jsx/CompoundInterestCalculator"
 import MarketCapCalculator from "../../components/ToolsComponents.jsx/MarketCapCalculator"
+import UpdateDataForm from "../../components/ToolsComponents.jsx/UpdateDataForm"
 
 
 export default function Tools() {
@@ -26,6 +27,7 @@ export default function Tools() {
         <div onClick={() => setActiveForm("SimpleInterestCalculator")}>SimpleInterestCalculator</div>
         <div onClick={() => setActiveForm("CompoundInterestCalculator")}>CompoundInterestCalculator</div>
         <div onClick={() => setActiveForm("MarketCapCalculator")}>MarketCapCalculator</div>
+        <div onClick={() => setActiveForm("UpdateDataForm")}>UpdateDataForm</div>
         </div>
         
         {activeForm === "Calculator" && <Calculator />}
@@ -35,6 +37,7 @@ export default function Tools() {
         {activeForm === "SimpleInterestCalculator" && <SimpleInterestCalculator />}
         {activeForm === "CompoundInterestCalculator" && <CompoundInterestCalculator/>}
         {activeForm === "MarketCapCalculator" && <MarketCapCalculator />}
+        {activeForm === "UpdateDataForm" && <UpdateDataForm />}
 
         </section>
     )

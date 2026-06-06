@@ -54,6 +54,7 @@ export default function ExpensesContainer() {
       </div>
       <div className="card completed"><h3>Total Expenses</h3><h2>{totals.total.toLocaleString("en-KE")}</h2></div>
       <div className="card pending"><h3>Biggest Expense</h3><h2>{totals.biggest}</h2></div>
+      {/* add pending and completed cards here */}
       <div className="card sales-growth">
         <h3>Expense Growth</h3>
         <h2 style={{ color: totals.growth <= 0 ? "#27ae60" : "#e74c3c" }}>

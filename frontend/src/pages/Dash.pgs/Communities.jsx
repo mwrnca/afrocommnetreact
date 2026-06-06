@@ -53,12 +53,25 @@ export default function Communities() {
 
       <div className="communities-header">
         <h2 className="communities-title">Communities</h2>
+
+        <search className="communities-search">
+          <input placeholder="Search communities..." />
+        </search>
+        
+        <div className="communities-btns">
+          <button
+          className="communities-create-btn"
+        >
+          {showForm ? "Cancel" : "+ My Communities"}
+        </button>
         <button
           className="communities-create-btn"
           onClick={() => setShowForm(prev => !prev)}
         >
           {showForm ? "Cancel" : "+ Create Community"}
         </button>
+        </div>
+        
       </div>
 
       {showForm && (

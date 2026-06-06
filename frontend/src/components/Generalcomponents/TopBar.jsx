@@ -1,8 +1,11 @@
+import { getUser } from "../../api";
 import { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import "./Generalcomponents.css"
 
 export default function TopBar({ open, setOpen, currentPage }) {
+
+  const { name, email } = getUser();
   const [dateTime, setDateTime] = useState(new Date());
 
   useEffect(() => {
@@ -21,7 +24,10 @@ export default function TopBar({ open, setOpen, currentPage }) {
   return (
     <header className="topbar">
       {/* large screen — current page */}
-      <span className="topbar-page desktop-only">{currentPage}</span>
+      <div>
+        <h2>{name || "User"}</h2>
+        <small>{email || "Email not available"}</small>
+      </div>
 
       {/* mobile — hamburger */}
       <button
@@ -30,11 +36,11 @@ export default function TopBar({ open, setOpen, currentPage }) {
       >
         {open ? "✕" : "☰"}
       </button>
-
-      {/* always visible */}
+{/* 
+      always visible
       <div className="topbar-search">
         <SearchBar />
-      </div>
+      </div> */}
 
       {/* large screen — date time */}
       <span className="topbar-date desktop-only">{formatted}</span>
