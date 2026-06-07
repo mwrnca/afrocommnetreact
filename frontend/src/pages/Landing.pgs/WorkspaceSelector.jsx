@@ -36,11 +36,11 @@ export default function WorkspaceSelector () {
             <small>Lawyers • Engineers • Doctors</small>
           </div>
 
-          <a onClick={() => navigate('/login/management')} className="role-btn">
+          <div onClick={() => navigate('/login/mgmt')} className="role-btn">
             <span className="icon">⬢</span>
             <h2>EMPLOYEE MANAGEMENT</h2>
             <small>Busiiness Owners and Managers</small>
-          </a>
+          </div>
 
           <div onClick={() => navigate('/login/employee')} className="role-btn">
             <span className="icon">⬢</span>

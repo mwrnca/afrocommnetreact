@@ -16,7 +16,7 @@ export default function LoginMgmt() {
   institution:  "inst",
   consumer:     "cons",
   management:   "empl-mgmt",
-  employee:      "employee",
+  employee:     "employee",
   };
 
   const handleChange = (e) =>

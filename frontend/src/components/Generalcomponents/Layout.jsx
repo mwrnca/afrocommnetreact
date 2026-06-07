@@ -1,24 +1,57 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Outlet } from "react-router-dom";
 import NavBar from "./Nav";
 import TopBar from "./TopBar";
-import "./Generalcomponents.css"
+import "./Generalcomponents.css";
 
 const pageNames = {
-  "/home": "Home",
-  "/history": "History",
-  "/profile": "Profile",
-  "/services": "Services",
+  // business
+  "/dash/bss":              "Home",
+  "/dash/bss/todo":         "To-Do",
+  "/dash/bss/inbox":        "Inbox",
+  "/dash/bss/tools":        "Tools",
+  "/dash/bss/communities":  "Communities",
+  "/dash/bss/settings":     "Settings",
+
+  // consumer
+  "/dash/cons":             "Home",
+  "/dash/cons/inbox":       "Inbox",
+  "/dash/cons/communities": "Communities",
+  "/dash/cons/settings":    "Settings",
+
+  // professional
+  "/dash/prof":             "Home",
+  "/dash/prof/todo":        "To-Do",
+  "/dash/prof/inbox":       "Inbox",
+  "/dash/prof/tools":       "Tools",
+  "/dash/prof/communities": "Communities",
+  "/dash/prof/settings":    "Settings",
+
+  // institution
+  "/dash/inst":             "Home",
+  "/dash/inst/todo":        "To-Do",
+  "/dash/inst/inbox":       "Inbox",
+  "/dash/inst/communities": "Communities",
+  "/dash/inst/settings":    "Settings",
+
+  // employee
+  "/dash/employee":         "Home",
+  "/dash/employee/tasks":   "Tasks",
+  "/dash/employee/notice":  "Notice Board",
+  "/dash/employee/inbox":   "Inbox",
+  "/dash/employee/tools":   "Tools",
+
+  // management
+  "/dash/empl-mgmt":        "Employee Management",
 };
 
-export default function Layout({ children }) {
+export default function Layout() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const currentPage = pageNames[location.pathname] || "Home";
 
   return (
     <div className="layout">
-      {/* overlay — closes menu when clicking outside */}
       {open && (
         <div className="overlay" onClick={() => setOpen(false)} />
       )}
@@ -28,7 +61,7 @@ export default function Layout({ children }) {
       <div className="main-area">
         <TopBar open={open} setOpen={setOpen} currentPage={currentPage} />
         <main className="main-content">
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>

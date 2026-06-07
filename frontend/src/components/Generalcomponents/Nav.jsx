@@ -1,28 +1,74 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./Generalcomponents.css"
+import "./Generalcomponents.css";
 import Footer from "../Footer";
 
- const getHomeRoute = () => {
+const navLinks = {
+  business: [
+    { label: "Home",        path: "/dash/bss" },
+    { label: "To-Do",       path: "/dash/bss/todo" },
+    { label: "Inbox",       path: "/dash/bss/inbox" },
+    { label: "Tools",       path: "/dash/bss/tools" },
+    { label: "Communities", path: "/dash/bss/communities" },
+    { label: "Settings",    path: "/dash/bss/settings" },
+  ],
+  consumer: [
+    { label: "Home",        path: "/dash/cons" },
+    { label: "Inbox",       path: "/dash/cons/inbox" },
+    { label: "Communities", path: "/dash/cons/communities" },
+    { label: "Settings",    path: "/dash/cons/settings" },
+  ],
+  professional: [
+    { label: "Home",        path: "/dash/prof" },
+    { label: "To-Do",       path: "/dash/prof/todo" },
+    { label: "Inbox",       path: "/dash/prof/inbox" },
+    { label: "Tools",       path: "/dash/prof/tools" },
+    { label: "Communities", path: "/dash/prof/communities" },
+    { label: "Settings",    path: "/dash/prof/settings" },
+  ],
+  institution: [
+    { label: "Home",        path: "/dash/inst" },
+    { label: "To-Do",       path: "/dash/inst/todo" },
+    { label: "Inbox",       path: "/dash/inst/inbox" },
+    { label: "Communities", path: "/dash/inst/communities" },
+    { label: "Settings",    path: "/dash/inst/settings" },
+  ],
+  employee: [
+    { label: "Home",         path: "/dash/employee" },
+    { label: "Tasks",        path: "/dash/employee/tasks" },
+    { label: "Notice Board", path: "/dash/employee/notice" },
+    { label: "Inbox",        path: "/dash/employee/inbox" },
+    { label: "Tools",        path: "/dash/employee/tools" },
+  ],
+};
+
+const getHomeRoute = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const roleRoutes = {
+  const routes = {
     business:     "/dash/bss",
     professional: "/dash/prof",
     institution:  "/dash/inst",
     consumer:     "/dash/cons",
     employee:     "/dash/employee",
   };
-  return roleRoutes[user.role] || "/";
+  return routes[user.role] || "/";
 };
 
 export default function NavBar({ open, setOpen, currentPage }) {
   const [dateTime, setDateTime] = useState(new Date());
-  const homeRoute = getHomeRoute(); // called fresh every render
+  const [user, setUser] = useState(() => {
+    return JSON.parse(localStorage.getItem("user") || "{}");
+  });
+   const links = navLinks[user.role] || [];
+  console.log("user:", user);
+  console.log("role:", user.role);
+  console.log("links:", links);
 
+  // re-read localStorage whenever the component updates
   useEffect(() => {
-    const timer = setInterval(() => setDateTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
+    const stored = JSON.parse(localStorage.getItem("user") || "{}");
+    setUser(stored);
+  }, [currentPage]); // re-reads when page changes
 
   const formatted = dateTime.toLocaleString("en-KE", {
     weekday: "short",
@@ -39,24 +85,15 @@ export default function NavBar({ open, setOpen, currentPage }) {
       </div>
 
       <div className="navbar-links">
-        <NavLink to={"/dash/home"} onClick={() => setOpen(false)}>
-          <span className="nav-link-text">Home</span>
-        </NavLink>
-        <NavLink to="/dash/todo" onClick={() => setOpen(false)}>
-          <span className="nav-link-text">To-Do</span>
-        </NavLink>
-        <NavLink to="/dash/tools" onClick={() => setOpen(false)}>
-          <span className="nav-link-text">Tools</span>
-        </NavLink>
-        <NavLink to="/dash/inbox" onClick={() => setOpen(false)}>
-          <span className="nav-link-text">Inbox</span>
-        </NavLink>
-        <NavLink to="/dash/communities" onClick={() => setOpen(false)}>
-          <span className="nav-link-text">Communities</span>
-        </NavLink>
-        <NavLink to="/dash/settings" onClick={() => setOpen(false)}>
-          <span className="nav-link-text">Settings</span>
-        </NavLink>
+        {links.map(link => (
+          <NavLink
+            key={link.path}
+            to={link.path}
+            onClick={() => setOpen(false)}
+          >
+            <span className="nav-link-text">{link.label}</span>
+          </NavLink>
+        ))}
       </div>
 
       <div className="navbar-date mobile-only">{formatted}</div>
