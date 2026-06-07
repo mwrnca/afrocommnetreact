@@ -10,10 +10,13 @@ import LogInBss from './pages/Landing.pgs/LogInBss'
 import LogInProf from './pages/Landing.pgs/LogInProf'
 import LogInInst from './pages/Landing.pgs/LogInInst'
 import LogInCons from './pages/Landing.pgs/LogInCons'
+import LogInMgmt from './pages/Landing.pgs/LogInMgmt'
+import LoginEmployee from './pages/Landing.pgs/LoginEmployee'
 import SignUpBss from './pages/Landing.pgs/SignUpBss'
 import SignUpProf from './pages/Landing.pgs/SignUpProf'
 import SignUpInst from './pages/Landing.pgs/SignUpInst'
 import SignUpCons from './pages/Landing.pgs/SignUpCons'
+import SignUpMgmt from './pages/Landing.pgs/SignupMgmt'
 import Communities from './pages/Dash.pgs/Communities'
 import Edu from './pages/Dash.pgs/Edu'
 import Inbox from './pages/Dash.pgs/Inbox'
@@ -25,7 +28,6 @@ import DashEmpl from './pages/Dash.pgs/DashEmployee'
 import DashProf from './pages/Dash.pgs/DashProf'
 import DashInst from './pages/Dash.pgs/DashInst'
 import DashCons from './pages/Dash.pgs/DashCons'
-import LoginEmployee from './pages/Landing.pgs/LoginEmployee'
 import DashEmployee from './pages/Dash.pgs/DashEmployee'
 import DashEmplMgmt from './pages/Dash.pgs/DashEmplMgmt'
 
@@ -45,11 +47,13 @@ function App() {
         <Route path="/login/prof" element={<LogInProf />} />
         <Route path="/login/inst" element={<LogInInst />} />
         <Route path="/login/cons" element={<LogInCons />} />
+        <Route path="/login/management" element={<LogInMgmt />} />
         <Route path="/login/employee" element={<LoginEmployee />} />
         <Route path="/signup/bss" element={<SignUpBss />} />
         <Route path="/signup/prof" element={<SignUpProf />} />
         <Route path="/signup/inst" element={<SignUpInst />} />
         <Route path="/signup/cons" element={<SignUpCons />} />
+        <Route path="/signup/management" element={<SignUpMgmt />} />
         <Route path="/dash/communities" element={<Layout><Communities /></Layout>} />
         <Route path="/dash/edu" element={<Layout><Edu /></Layout>} />
         <Route path="/dash/inbox" element={<Layout><Inbox /></Layout>} />

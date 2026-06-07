@@ -3,15 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Generalcomponents/Header';
 import { login, saveUser } from '../../api';
 import "./pages.css";
+import DashEmplMgmt from '../Dash.pgs/DashEmplMgmt';
 import DashEmployee from '../Dash.pgs/DashEmployee';
 
-export default function LoginCons() {
+export default function LoginMgmt() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [form, setForm] = useState({ 
-    email: "", 
-    password: "" 
-  });
+  const [form, setForm] = useState({ email: "", password: "" });
   const roleRoutes = {
   business:     "bss",
   professional: "prof",
@@ -20,7 +18,6 @@ export default function LoginCons() {
   management:   "empl-mgmt",
   employee:      "employee",
   };
-
 
   const handleChange = (e) =>
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -34,7 +31,7 @@ export default function LoginCons() {
       const data = await login(form.email, form.password);
       saveUser(data.user);
       // route based on role returned from backend
-     navigate(`/dash/${roleRoutes[data.user.role]}`);
+      navigate(`/dash/${roleRoutes[data.user.role]}`);
     } catch (err) {
       setError(err.message);
     }

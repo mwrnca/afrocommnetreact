@@ -17,27 +17,31 @@ export default function Tools() {
     const [ activeForm, setActiveForm ] = useState(false);
 
     return (
-        <section className="Tools-container">
+        <section className="tools-page-container">
 
-        <div className="tool-btn-cont">
-        <div onClick={() => setActiveForm("Calculator")}>Calculator</div>
-        <div onClick={() => setActiveForm("ROIcalc")}>ROI calc</div>
-        <div onClick={() => setActiveForm("BusinessNetWorthCalculator")}>BusinessNetWorthCalculator</div>
-        <div onClick={() => setActiveForm("RiskRewardCalculator")}>RiskRewardCalculato</div>
-        <div onClick={() => setActiveForm("SimpleInterestCalculator")}>SimpleInterestCalculator</div>
-        <div onClick={() => setActiveForm("CompoundInterestCalculator")}>CompoundInterestCalculator</div>
-        <div onClick={() => setActiveForm("MarketCapCalculator")}>MarketCapCalculator</div>
-        <div onClick={() => setActiveForm("UpdateDataForm")}>UpdateDataForm</div>
-        </div>
+            <div className="update-data-forms">
+                <UpdateDataForm />
+            </div>
+
+            <div className="tools-cont">
+                <div className="tool-btn-cont">
+                    <div onClick={() => setActiveForm("Calculator")}>Calculator</div>
+                    <div onClick={() => setActiveForm("ROIcalc")}>ROI calc</div>
+                    <div onClick={() => setActiveForm("BusinessNetWorthCalculator")}>BusinessNetWorthCalculator</div>
+                    <div onClick={() => setActiveForm("RiskRewardCalculator")}>RiskRewardCalculato</div>
+                    <div onClick={() => setActiveForm("SimpleInterestCalculator")}>SimpleInterestCalculator</div>
+                    <div onClick={() => setActiveForm("CompoundInterestCalculator")}>CompoundInterestCalculator</div>
+                    <div onClick={() => setActiveForm("MarketCapCalculator")}>MarketCapCalculator</div>
+                </div>
         
-        {activeForm === "Calculator" && <Calculator />}
-        {activeForm === "ROIcalc" && <ROIcalc />}
-        {activeForm === "BusinessNetWorthCalculator" && <BusinessNetWorthCalculator />}
-        {activeForm === "RiskRewardCalculator" && <RiskRewardCalculator />}
-        {activeForm === "SimpleInterestCalculator" && <SimpleInterestCalculator />}
-        {activeForm === "CompoundInterestCalculator" && <CompoundInterestCalculator/>}
-        {activeForm === "MarketCapCalculator" && <MarketCapCalculator />}
-        {activeForm === "UpdateDataForm" && <UpdateDataForm />}
+                    {activeForm === "Calculator" && <Calculator />}
+                    {activeForm === "ROIcalc" && <ROIcalc />}
+                    {activeForm === "BusinessNetWorthCalculator" && <BusinessNetWorthCalculator />}
+                    {activeForm === "RiskRewardCalculator" && <RiskRewardCalculator />}
+                    {activeForm === "SimpleInterestCalculator" && <SimpleInterestCalculator />}
+                    {activeForm === "CompoundInterestCalculator" && <CompoundInterestCalculator/>}
+                    {activeForm === "MarketCapCalculator" && <MarketCapCalculator />}
+            </div>
 
         </section>
     )

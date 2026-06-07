@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import EmployeeLogForm from "../../components/EmployeeComponents/EmployeeLogForm";
+// import EmployeeLogForm from "../../components/EmployeeComponents/EmployeeLogForm";
 import "./Dash.css";
 
 export default function DashEmployee() {

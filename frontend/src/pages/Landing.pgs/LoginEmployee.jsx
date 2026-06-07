@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Generalcomponents/Header';
 import { login, saveUser } from '../../api';
 import "./pages.css";
-import DashEmployee from '../Dash.pgs/DashEmployee';
 
-export default function LoginCons() {
+
+export default function LoginEmployee() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [form, setForm] = useState({ 

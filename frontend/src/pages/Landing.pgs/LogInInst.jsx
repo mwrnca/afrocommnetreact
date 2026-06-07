@@ -13,6 +13,8 @@ export default function LoginInst() {
   professional: "prof",
   institution:  "inst",
   consumer:     "cons",
+  management:   "empl-mgmt",
+  employee:      "employee",
   };
 
   const handleChange = (e) =>

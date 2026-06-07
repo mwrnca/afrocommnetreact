@@ -16,6 +16,8 @@ export default function LoginProf() {
   professional: "prof",
   institution:  "inst",
   consumer:     "cons",
+  management:   "empl-mgmt",
+  employee:      "employee",
   };
 
   const handleChange = (e) =>

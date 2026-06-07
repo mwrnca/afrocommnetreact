@@ -15,8 +15,9 @@ export default function Inbox() {
 
   // fetch all messages for the logged in user on mount
   // in a real app you'd filter by receiverId matching logged in user
+  // fetch(`http://localhost:8000/messages/${user.id}`)
   useEffect(() => {
-    fetch(`http://localhost:8000/messages/${user.id}`)
+    fetch(`http://localhost:8000`)
       .then(res => res.json())
       .then(data => setMessages(data));
   }, []);

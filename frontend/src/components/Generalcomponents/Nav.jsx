@@ -39,7 +39,7 @@ export default function NavBar({ open, setOpen, currentPage }) {
       </div>
 
       <div className="navbar-links">
-        <NavLink to={homeRoute} onClick={() => setOpen(false)}>
+        <NavLink to={"/dash/home"} onClick={() => setOpen(false)}>
           <span className="nav-link-text">Home</span>
         </NavLink>
         <NavLink to="/dash/todo" onClick={() => setOpen(false)}>

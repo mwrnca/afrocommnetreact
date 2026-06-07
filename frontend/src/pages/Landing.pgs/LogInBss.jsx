@@ -13,6 +13,8 @@ export default function LoginBss() {
   professional: "prof",
   institution:  "inst",
   consumer:     "cons",
+  management:   "empl-mgmt",
+  employee:      "employee",
 };
 
 

@@ -58,6 +58,12 @@ function Landing() {
             <small>Lawyers • Engineers • Doctors</small>
           </a>
 
+         <a onClick={() => navigate('/signup/management')} className="role-btn">
+            <span className="icon">⬢</span>
+            <h2>EMPLOYEE MANAGEMENT</h2>
+            <small>BUSSINESS OWNERS AND MANAGERS</small>
+          </a>
+
         </div>
       </section>
 

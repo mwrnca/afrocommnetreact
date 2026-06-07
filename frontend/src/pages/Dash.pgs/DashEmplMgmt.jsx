@@ -1,6 +1,6 @@
 import "./Dash.css"
 
-export default function EmplMngm () {
+export default function DashEmplMgmt () {
     return(
         <>
         </>

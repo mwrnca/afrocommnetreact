@@ -25,6 +25,12 @@
   gap: 0.5em;
 }
 
+.tools-page-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+
 .tool-btn-cont {
   display: flex;
   justify-content: space-around;
