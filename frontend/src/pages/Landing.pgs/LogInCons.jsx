@@ -11,6 +11,13 @@ export default function LoginCons() {
     email: "", 
     password: "" 
   });
+  const roleRoutes = {
+  business:     "bss",
+  professional: "prof",
+  institution:  "inst",
+  consumer:     "cons",
+  };
+
 
   const handleChange = (e) =>
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -24,7 +31,7 @@ export default function LoginCons() {
       const data = await login(form.email, form.password);
       saveUser(data.user);
       // route based on role returned from backend
-      navigate(`/dash/${data.user.role === "consumer" ? "cons" : data.user.role}`);
+     navigate(`/dash/${roleRoutes[data.user.role]}`);
     } catch (err) {
       setError(err.message);
     }

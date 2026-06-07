@@ -21,10 +21,13 @@ import Settings from './pages/Dash.pgs/Settings'
 import ToDo from './pages/Dash.pgs/ToDo'
 import Tools from './pages/Dash.pgs/Tools'
 import DashBss from './pages/Dash.pgs/DashBss'
-import DashEmpl from './pages/Dash.pgs/DashEmpl'
+import DashEmpl from './pages/Dash.pgs/DashEmployee'
 import DashProf from './pages/Dash.pgs/DashProf'
 import DashInst from './pages/Dash.pgs/DashInst'
 import DashCons from './pages/Dash.pgs/DashCons'
+import LoginEmployee from './pages/Landing.pgs/LoginEmployee'
+import DashEmployee from './pages/Dash.pgs/DashEmployee'
+import DashEmplMgmt from './pages/Dash.pgs/DashEmplMgmt'
 
 
 function App() {
@@ -42,6 +45,7 @@ function App() {
         <Route path="/login/prof" element={<LogInProf />} />
         <Route path="/login/inst" element={<LogInInst />} />
         <Route path="/login/cons" element={<LogInCons />} />
+        <Route path="/login/employee" element={<LoginEmployee />} />
         <Route path="/signup/bss" element={<SignUpBss />} />
         <Route path="/signup/prof" element={<SignUpProf />} />
         <Route path="/signup/inst" element={<SignUpInst />} />
@@ -56,6 +60,8 @@ function App() {
         <Route path="/dash/prof" element={<Layout><DashProf /></Layout>} />
         <Route path="/dash/inst" element={<Layout><DashInst /></Layout>} />
         <Route path="/dash/cons" element={<Layout><DashCons /></Layout>} />
+        <Route path="/dash/employee" element={<Layout><DashEmployee /></Layout>} />
+        <Route path="/dash/empl-mgmt" element={<Layout><DashEmplMgmt /></Layout>} />
       </Routes>
     </section>
   )

@@ -80,3 +80,15 @@ export async function fetchCommunities() {
   const res = await fetch(`${BASE}/communities`);
   return res.json();
 }
+
+export const API = {
+  // ... existing ones
+  directory: (params = {}) => {
+    const query = new URLSearchParams();
+    if (params.role)   query.append("role",   params.role);
+    if (params.county) query.append("county", params.county);
+    if (params.search) query.append("search", params.search);
+    const str = query.toString();
+    return `${BASE_URL}/directory${str ? `?${str}` : ""}`;
+  },
+};

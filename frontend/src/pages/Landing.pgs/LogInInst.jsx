@@ -8,6 +8,12 @@ export default function LoginInst() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [form, setForm] = useState({ email: "", password: "" });
+  const roleRoutes = {
+  business:     "bss",
+  professional: "prof",
+  institution:  "inst",
+  consumer:     "cons",
+  };
 
   const handleChange = (e) =>
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -21,7 +27,7 @@ export default function LoginInst() {
       const data = await login(form.email, form.password);
       saveUser(data.user);
       // route based on role returned from backend
-      navigate(`/dash/${data.user.role === "institution" ? "inst" : data.user.role}`);
+      navigate(`/dash/${roleRoutes[data.user.role]}`);
     } catch (err) {
       setError(err.message);
     }

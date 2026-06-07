@@ -3,8 +3,21 @@ import { useEffect, useState } from "react";
 import "./Generalcomponents.css"
 import Footer from "../Footer";
 
+ const getHomeRoute = () => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const roleRoutes = {
+    business:     "/dash/bss",
+    professional: "/dash/prof",
+    institution:  "/dash/inst",
+    consumer:     "/dash/cons",
+    employee:     "/dash/employee",
+  };
+  return roleRoutes[user.role] || "/";
+};
+
 export default function NavBar({ open, setOpen, currentPage }) {
   const [dateTime, setDateTime] = useState(new Date());
+  const homeRoute = getHomeRoute(); // called fresh every render
 
   useEffect(() => {
     const timer = setInterval(() => setDateTime(new Date()), 1000);
@@ -26,15 +39,26 @@ export default function NavBar({ open, setOpen, currentPage }) {
       </div>
 
       <div className="navbar-links">
-        <NavLink to="/dash/bss" onClick={() => setOpen(false)}><span className="nav-link-text">Home</span></NavLink>
-        <NavLink to="/dash/todo" onClick={() => setOpen(false)}><span className="nav-link-text">To-Do</span></NavLink>
-        <NavLink to="/dash/tools" onClick={() => setOpen(false)}><span className="nav-link-text">Tools</span></NavLink>
-        <NavLink to="/dash/inbox" onClick={() => setOpen(false)}><span className="nav-link-text">Inbox</span></NavLink>
-        <NavLink to="/dash/communities" onClick={() => setOpen(false)}><span className="nav-link-text">Communities</span></NavLink>
-        <NavLink to="/dash/settings" onClick={() => setOpen(false)}><span className="nav-link-text">Settings</span></NavLink>
+        <NavLink to={homeRoute} onClick={() => setOpen(false)}>
+          <span className="nav-link-text">Home</span>
+        </NavLink>
+        <NavLink to="/dash/todo" onClick={() => setOpen(false)}>
+          <span className="nav-link-text">To-Do</span>
+        </NavLink>
+        <NavLink to="/dash/tools" onClick={() => setOpen(false)}>
+          <span className="nav-link-text">Tools</span>
+        </NavLink>
+        <NavLink to="/dash/inbox" onClick={() => setOpen(false)}>
+          <span className="nav-link-text">Inbox</span>
+        </NavLink>
+        <NavLink to="/dash/communities" onClick={() => setOpen(false)}>
+          <span className="nav-link-text">Communities</span>
+        </NavLink>
+        <NavLink to="/dash/settings" onClick={() => setOpen(false)}>
+          <span className="nav-link-text">Settings</span>
+        </NavLink>
       </div>
 
-      {/* date shown at bottom of navbar on mobile only */}
       <div className="navbar-date mobile-only">{formatted}</div>
 
       <div>

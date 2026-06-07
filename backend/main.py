@@ -4,6 +4,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import engine, Base, get_db
 import models, schemas
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -356,3 +362,264 @@ def add_revenue(user_id: int, revenue: schemas.RevenueCreate, db: Session = Depe
     db.commit()
     db.refresh(new_revenue)
     return new_revenue
+
+# ──────────────────────────────────────────
+# DIRECTORY ROUTE
+# ──────────────────────────────────────────
+
+# GET all non-consumer users for the directory
+# supports optional query params for filtering
+@app.get("/directory", response_model=list[schemas.UserResponse])
+def get_directory(
+    role:   str = None,
+    county: str = None,
+    search: str = None,
+    db:     Session = Depends(get_db)
+):
+    # start with all non-consumer users
+    query = db.query(models.User).filter(models.User.role != "consumer")
+
+    # apply filters only if they were provided
+    if role:
+        query = query.filter(models.User.role == role)
+    if county:
+        query = query.filter(models.User.county == county)
+    if search:
+        query = query.filter(
+            models.User.first_name.ilike(f"%{search}%") |
+            models.User.name_of_business.ilike(f"%{search}%") |
+            models.User.nature_of_business.ilike(f"%{search}%")
+        )
+
+    return query.all()
+
+import resend
+import hashlib
+
+resend.api_key = RESEND_API_KEY
+
+# ──────────────────────────────────────────
+# EMPLOYEE ROUTES
+# ──────────────────────────────────────────
+
+# CREATE employee — business owner only
+# creates profile, sends email with credentials
+@app.post("/employees/{business_id}", response_model=schemas.EmployeeResponse)
+def create_employee(
+    business_id: int,
+    employee: schemas.EmployeeCreate,
+    db: Session = Depends(get_db)
+):
+    # get the business owner to use their email as sender
+    business = db.query(models.User).filter(
+        models.User.id == business_id
+    ).first()
+    if not business:
+        raise HTTPException(status_code=404, detail="Business not found")
+
+    # check email not already taken
+    existing = db.query(models.Employee).filter(
+        models.Employee.email == employee.email
+    ).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    # hash the password
+    hashed = hash_password(employee.password)
+
+    # save employee to db
+    new_employee = models.Employee(
+        businessId = business_id,
+        first_name = employee.first_name,
+        last_name  = employee.last_name,
+        email      = employee.email,
+        password   = hashed,
+        position   = employee.position,
+    )
+    db.add(new_employee)
+    db.commit()
+    db.refresh(new_employee)
+
+    # send email with credentials
+    try:
+        resend.Emails.send({
+            "from":    f"{business.name_of_business} <onboarding@resend.dev>",
+            "to":      employee.email,
+            "subject": f"Your Employee Account — {business.name_of_business}",
+            "html":    f"""
+                <h2>Welcome to {business.name_of_business}</h2>
+                <p>Hi {employee.first_name},</p>
+                <p>You have been added as an employee at <strong>{business.name_of_business}</strong>.</p>
+                <p>Your login details:</p>
+                <ul>
+                    <li><strong>Email:</strong> {employee.email}</li>
+                    <li><strong>Password:</strong> {employee.password}</li>
+                </ul>
+                <p>Login at: <a href="http://localhost:5173/login/employee">Click here to login</a></p>
+                <p>Please change your password after first login.</p>
+            """
+        })
+    except Exception as e:
+        # dont fail the whole request if email fails
+        print(f"Email failed: {e}")
+
+    return new_employee
+
+# GET all employees for a business
+@app.get("/employees/{business_id}", response_model=list[schemas.EmployeeResponse])
+def get_employees(business_id: int, db: Session = Depends(get_db)):
+    return db.query(models.Employee).filter(
+        models.Employee.businessId == business_id
+    ).all()
+
+# GET single employee details
+@app.get("/employee/{employee_id}", response_model=schemas.EmployeeResponse)
+def get_employee(employee_id: int, db: Session = Depends(get_db)):
+    employee = db.query(models.Employee).filter(
+        models.Employee.id == employee_id
+    ).first()
+    if not employee:
+        raise HTTPException(status_code=404, detail="Employee not found")
+    return employee
+
+# EMPLOYEE LOGIN
+@app.post("/login/employee", response_model=schemas.EmployeeLoginResponse)
+def employee_login(credentials: schemas.EmployeeLoginRequest, db: Session = Depends(get_db)):
+    employee = db.query(models.Employee).filter(
+        models.Employee.email == credentials.email
+    ).first()
+    if not employee or not verify_password(credentials.password, employee.password):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    return {
+        "employee": employee,
+        "message":  "Login successful"
+    }
+
+# ──────────────────────────────────────────
+# ASSIGNED TASKS ROUTES
+# ──────────────────────────────────────────
+
+# CREATE assigned task
+@app.post("/assigned-tasks/{business_id}", response_model=schemas.AssignedTaskResponse)
+def create_assigned_task(
+    business_id: int,
+    task: schemas.AssignedTaskCreate,
+    db: Session = Depends(get_db)
+):
+    new_task = models.AssignedTask(
+        businessId  = business_id,
+        employeeId  = task.employeeId,
+        title       = task.title,
+        description = task.description,
+        priority    = task.priority,
+        dueDate     = task.dueDate,
+    )
+    db.add(new_task)
+    db.commit()
+    db.refresh(new_task)
+    return new_task
+
+# GET all assigned tasks for a business
+@app.get("/assigned-tasks/{business_id}", response_model=list[schemas.AssignedTaskResponse])
+def get_assigned_tasks(business_id: int, db: Session = Depends(get_db)):
+    return db.query(models.AssignedTask).filter(
+        models.AssignedTask.businessId == business_id
+    ).all()
+
+# GET assigned tasks for a specific employee
+@app.get("/assigned-tasks/employee/{employee_id}", response_model=list[schemas.AssignedTaskResponse])
+def get_employee_tasks(employee_id: int, db: Session = Depends(get_db)):
+    return db.query(models.AssignedTask).filter(
+        models.AssignedTask.employeeId == employee_id
+    ).all()
+
+# COMPLETE a task
+@app.patch("/assigned-tasks/{task_id}/complete")
+def complete_task(task_id: int, db: Session = Depends(get_db)):
+    task = db.query(models.AssignedTask).filter(
+        models.AssignedTask.id == task_id
+    ).first()
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    task.completed    = True
+    task.completed_at = datetime.datetime.utcnow()
+    db.commit()
+    return {"message": "Task completed"}
+
+# ──────────────────────────────────────────
+# NOTICE BOARD ROUTES
+# ──────────────────────────────────────────
+
+# POST notice
+@app.post("/notice-board/{business_id}", response_model=schemas.NoticeBoardResponse)
+def post_notice(
+    business_id: int,
+    notice: schemas.NoticeBoardCreate,
+    db: Session = Depends(get_db)
+):
+    new_notice = models.NoticeBoard(
+        businessId = business_id,
+        title      = notice.title,
+        body       = notice.body,
+        postedBy   = notice.postedBy,
+    )
+    db.add(new_notice)
+    db.commit()
+    db.refresh(new_notice)
+    return new_notice
+
+# GET all notices for a business
+@app.get("/notice-board/{business_id}", response_model=list[schemas.NoticeBoardResponse])
+def get_notices(business_id: int, db: Session = Depends(get_db)):
+    return db.query(models.NoticeBoard).filter(
+        models.NoticeBoard.businessId == business_id
+    ).order_by(models.NoticeBoard.timestamp.desc()).all()
+
+# ──────────────────────────────────────────
+# EMPLOYEE LOG ROUTES
+# ──────────────────────────────────────────
+
+# CREATE log entry
+@app.post("/logs/{employee_id}", response_model=schemas.EmployeeLogResponse)
+def create_log(
+    employee_id: int,
+    log: schemas.EmployeeLogCreate,
+    db: Session = Depends(get_db)
+):
+    employee = db.query(models.Employee).filter(
+        models.Employee.id == employee_id
+    ).first()
+    if not employee:
+        raise HTTPException(status_code=404, detail="Employee not found")
+
+    new_log = models.EmployeeLog(
+        businessId  = employee.businessId,
+        employeeId  = employee_id,
+        entry_type  = log.entry_type,
+        title       = log.title,
+        amount      = log.amount,
+        description = log.description,
+        client_name = log.client_name,
+        status      = log.status,
+        date        = log.date,
+        notes       = log.notes,
+    )
+    db.add(new_log)
+    db.commit()
+    db.refresh(new_log)
+    return new_log
+
+# GET all logs for a business — for management dashboard
+@app.get("/logs/business/{business_id}", response_model=list[schemas.EmployeeLogResponse])
+def get_business_logs(business_id: int, db: Session = Depends(get_db)):
+    return db.query(models.EmployeeLog).filter(
+        models.EmployeeLog.businessId == business_id
+    ).order_by(models.EmployeeLog.timestamp.desc()).all()
+
+# GET logs for a specific employee
+@app.get("/logs/employee/{employee_id}", response_model=list[schemas.EmployeeLogResponse])
+def get_employee_logs(employee_id: int, db: Session = Depends(get_db)):
+    return db.query(models.EmployeeLog).filter(
+        models.EmployeeLog.employeeId == employee_id
+    ).order_by(models.EmployeeLog.timestamp.desc()).all()

@@ -143,3 +143,70 @@ class Revenue(Base):
     period     = Column(String, nullable=False)
 
     user_data = relationship("UserData", back_populates="revenue")
+
+# ── Employee table ──
+class Employee(Base):
+    __tablename__ = "employees"
+
+    id          = Column(Integer, primary_key=True, index=True)
+    businessId  = Column(Integer, ForeignKey("users.id"), nullable=False)
+    first_name  = Column(String, nullable=False)
+    last_name   = Column(String, nullable=False)
+    email       = Column(String, unique=True, nullable=False)
+    password    = Column(String, nullable=False)
+    position    = Column(String, nullable=True)
+    role        = Column(String, default="employee")
+    created_at  = Column(DateTime, default=datetime.datetime.utcnow)
+
+    # relationships
+    business        = relationship("User", foreign_keys=[businessId])
+    assigned_tasks  = relationship("AssignedTask", back_populates="employee")
+    logs            = relationship("EmployeeLog", back_populates="employee")
+
+# ── AssignedTask table ──
+class AssignedTask(Base):
+    __tablename__ = "assigned_tasks"
+
+    id          = Column(Integer, primary_key=True, index=True)
+    businessId  = Column(Integer, ForeignKey("users.id"), nullable=False)
+    employeeId  = Column(Integer, ForeignKey("employees.id"), nullable=False)
+    title       = Column(String, nullable=False)
+    description = Column(Text, nullable=True)
+    priority    = Column(String, default="medium")
+    dueDate     = Column(String, nullable=True)
+    completed   = Column(Boolean, default=False)
+    created_at  = Column(DateTime, default=datetime.datetime.utcnow)
+    completed_at = Column(DateTime, nullable=True)
+
+    employee = relationship("Employee", back_populates="assigned_tasks")
+
+# ── NoticeBoard table ──
+class NoticeBoard(Base):
+    __tablename__ = "notice_board"
+
+    id          = Column(Integer, primary_key=True, index=True)
+    businessId  = Column(Integer, ForeignKey("users.id"), nullable=False)
+    title       = Column(String, nullable=False)
+    body        = Column(Text, nullable=False)
+    postedBy    = Column(String, nullable=False)
+    timestamp   = Column(DateTime, default=datetime.datetime.utcnow)
+
+# ── EmployeeLog table ──
+# general log form entries from employee home
+class EmployeeLog(Base):
+    __tablename__ = "employee_logs"
+
+    id          = Column(Integer, primary_key=True, index=True)
+    businessId  = Column(Integer, ForeignKey("users.id"), nullable=False)
+    employeeId  = Column(Integer, ForeignKey("employees.id"), nullable=False)
+    entry_type  = Column(String, nullable=False)  # Sale, New Client, Service etc
+    title       = Column(String, nullable=False)
+    amount      = Column(Float, nullable=True)
+    description = Column(Text, nullable=True)
+    client_name = Column(String, nullable=True)
+    status      = Column(String, nullable=False)  # Completed, Pending, Follow-up
+    date        = Column(String, nullable=False)
+    notes       = Column(Text, nullable=True)
+    timestamp   = Column(DateTime, default=datetime.datetime.utcnow)
+
+    employee = relationship("Employee", back_populates="logs")

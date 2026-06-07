@@ -8,6 +8,13 @@ export default function LoginBss() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [form, setForm] = useState({ email: "", password: "" });
+  const roleRoutes = {
+  business:     "bss",
+  professional: "prof",
+  institution:  "inst",
+  consumer:     "cons",
+};
+
 
   const handleChange = (e) =>
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -19,9 +26,12 @@ export default function LoginBss() {
     }
     try {
       const data = await login(form.email, form.password);
+      console.log("login response:", data);        // add this
+      console.log("role:", data.user.role);         // add this
+      console.log("route:", roleRoutes[data.user.role]);
       saveUser(data.user);
       // route based on role returned from backend
-      navigate(`/dash/${data.user.role === "business" ? "bss" : data.user.role}`);
+      navigate(`/dash/${roleRoutes[data.user.role]}`);
     } catch (err) {
       setError(err.message);
     }

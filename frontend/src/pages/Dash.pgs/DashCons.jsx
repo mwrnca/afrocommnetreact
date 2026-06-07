@@ -1,39 +1,54 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { getUser, fetchUserData, fetchCommunities } from "../../api";
-import ConsHome from '../../components/HomeComponents/ConsHome';
-import "./Dash.css";
+import DirectoryCard    from "../../components/GeneralComponents/DirectoryCard";
+import DirectoryFilters from "../../components/GeneralComponents/DirectoryFilters";
 
-export default function DashCons() {
-  const navigate = useNavigate();
-  const [userData,    setUserData]    = useState(null);
-  const [communities, setCommunities] = useState([]);
-  const [loading,     setLoading]     = useState(true);
+export default function DashCons({ userData, communities }) {
+  const [users,   setUsers]   = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({ search: "", role: "", county: "" });
 
   useEffect(() => {
-    const { id, role } = getUser();
-    if (!id)                { navigate("/login/cons"); return; }
-    if (role !== "consumer") { navigate("/");           return; }
+    const fetchDirectory = async () => {
+      setLoading(true);
 
-    Promise.all([
-      fetchUserData(id),
-      fetchCommunities(),
-    ])
-      .then(([userData, commsData]) => {
-        setUserData(userData);
-        setCommunities(commsData);
-      })
-      .catch(err => console.error("Fetch error:", err))
-      .finally(() => setLoading(false));
-  }, []);
+      const params = new URLSearchParams();
+      if (filters.search) params.append("search", filters.search);
+      if (filters.role)   params.append("role",   filters.role);
+      if (filters.county) params.append("county", filters.county);
 
-  if (loading) return <p>Loading...</p>;
+      const res  = await fetch(
+        `http://localhost:8000/directory${params.toString() ? `?${params}` : ""}`
+      );
+      const data = await res.json();
+      setUsers(data);
+      setLoading(false);
+    };
+
+    fetchDirectory();
+  }, [filters]);
 
   return (
-    <section className="page-container">
-      <div className="cons-home">
-        <ConsHome userData={userData} communities={communities} />
+    <div className="consumer-home">
+      <div className="consumer-home-header">
+        <h2 className="consumer-home-title">Discover</h2>
+        <p className="consumer-home-sub">
+          Browse businesses, professionals and institutions
+        </p>
       </div>
-    </section>
+
+      <DirectoryFilters onFilter={setFilters} />
+
+      {loading ? (
+        <p className="dir-loading">Loading...</p>
+      ) : users.length === 0 ? (
+        <p className="dir-empty">No results found</p>
+      ) : (
+        <div className="dir-grid">
+          {users.map(user => (
+            <DirectoryCard key={user.id} user={user} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

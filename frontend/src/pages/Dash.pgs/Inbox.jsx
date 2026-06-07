@@ -16,7 +16,7 @@ export default function Inbox() {
   // fetch all messages for the logged in user on mount
   // in a real app you'd filter by receiverId matching logged in user
   useEffect(() => {
-    fetch("http://localhost:3001/messages")
+    fetch(`http://localhost:8000/messages/${user.id}`)
       .then(res => res.json())
       .then(data => setMessages(data));
   }, []);
@@ -25,7 +25,7 @@ export default function Inbox() {
   // marks it as read in db.json and updates the UI
   const handleRead = async (id) => {
     // PATCH only updates the specific field we pass
-    await fetch(`http://localhost:3001/messages/${id}`, {
+    await fetch(`http://localhost:8000/messages/${user.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ read: true }),

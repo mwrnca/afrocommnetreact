@@ -1,0 +1,340 @@
+/* ─── Consumer Home ─── */
+.consumer-home {
+  padding: clamp(1rem, 3vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.consumer-home-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.consumer-home-title {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.consumer-home-sub {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ─── Filters ─── */
+.dir-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.dir-filter-input,
+.dir-filter-select {
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.875rem;
+  color: var(--text);
+  font-family: var(--font-family);
+  font-size: 13px;
+  outline: none;
+  transition: var(--transition);
+  min-width: 180px;
+  flex: 1;
+}
+
+.dir-filter-input:focus,
+.dir-filter-select:focus {
+  border-color: var(--primary);
+}
+
+.dir-filter-input::placeholder {
+  color: #666;
+}
+
+.dir-filter-select option {
+  background: var(--secondary);
+  color: var(--text);
+}
+
+.dir-clear-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-family);
+  white-space: nowrap;
+}
+
+.dir-clear-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* ─── Grid ─── */
+.dir-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.dir-loading,
+.dir-empty {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 3rem;
+  font-size: 14px;
+}
+
+/* ─── Directory Card ─── */
+.dir-card {
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.dir-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* top half — image */
+.dir-card-image {
+  width: 100%;
+  height: 140px;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dir-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dir-card-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* bottom half — info */
+.dir-card-info {
+  padding: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.dir-card-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dir-card-location {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.dir-card-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--secondary);
+  background: var(--primary);
+  padding: 2px 8px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+/* ─── Directory Detail (full screen overlay) ─── */
+.dir-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 1rem;
+}
+
+.dir-detail {
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: clamp(300px, 90vw, 520px);
+  max-height: 90dvh;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  gap: 0.75rem;
+}
+
+.dir-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
+
+.dir-close:hover {
+  color: var(--text);
+}
+
+.dir-detail-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+}
+
+.dir-detail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dir-detail-avatar {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.dir-detail-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  text-align: center;
+}
+
+.dir-detail-category {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+  text-align: center;
+}
+
+.dir-detail-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+}
+
+.dir-detail-info p {
+  font-size: 13px;
+  color: var(--text);
+  margin: 0;
+}
+
+.dir-detail-desc {
+  color: var(--text-secondary) !important;
+  line-height: 1.6;
+}
+
+/* ─── Message section ─── */
+.dir-message-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dir-message-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  color: var(--text);
+  font-family: var(--font-family);
+  font-size: 14px;
+  min-height: 100px;
+  resize: vertical;
+  outline: none;
+  transition: var(--transition);
+  box-sizing: border-box;
+}
+
+.dir-message-input:focus {
+  border-color: var(--primary);
+}
+
+.dir-message-input::placeholder {
+  color: #666;
+}
+
+.dir-send-btn {
+  background: var(--primary);
+  color: var(--secondary);
+  border: none;
+  padding: 0.65rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-family);
+  align-self: flex-end;
+}
+
+.dir-send-btn:hover {
+  background: var(--hover);
+  color: var(--hover-text);
+}
+
+.dir-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dir-sent {
+  font-size: 13px;
+  color: #27ae60;
+  margin: 0;
+}
