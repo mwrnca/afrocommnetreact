@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Generalcomponents/Header';
+import Footer from "../../components/Generalcomponents/Footer";
 import { login, saveUser } from '../../api';
 import "./pages.css";
-import DashEmployee from '../Dash.pgs/DashEmployee';
 
 export default function LoginCons() {
   const navigate = useNavigate();
@@ -52,6 +52,8 @@ export default function LoginCons() {
           <span>LOG IN</span>
         </button>
       </section>
+
+      <Footer />
     </section>
   );
 }

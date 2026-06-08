@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Generalcomponents/Header';
+import Footer from "../../components/Generalcomponents/Footer";
 import { login, saveUser } from '../../api';
 import "./pages.css";
-import DashEmplMgmt from '../Dash.pgs/DashEmplMgmt';
-import DashEmployee from '../Dash.pgs/DashEmployee';
 
 export default function LoginMgmt() {
   const navigate = useNavigate();
@@ -15,7 +14,7 @@ export default function LoginMgmt() {
   professional: "prof",
   institution:  "inst",
   consumer:     "cons",
-  management:   "empl-mgmt",
+  management:   "mgmt",
   employee:     "employee",
   };
 
@@ -35,6 +34,8 @@ export default function LoginMgmt() {
     } catch (err) {
       setError(err.message);
     }
+    console.log("LOGIN RESPONSE:", data);
+console.log("ROLE:", data?.user?.role);
   };
 
   return (
@@ -49,6 +50,7 @@ export default function LoginMgmt() {
           <span>LOG IN</span>
         </button>
       </section>
+      <Footer />
     </section>
   );
 }

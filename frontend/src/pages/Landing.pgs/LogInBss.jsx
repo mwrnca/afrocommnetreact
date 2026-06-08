@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Generalcomponents/Header';
+import Footer from "../../components/Generalcomponents/Footer";
 import { login, saveUser } from '../../api';
 import "./pages.css";
 
@@ -51,6 +52,8 @@ export default function LoginBss() {
           <span>LOG IN</span>
         </button>
       </section>
+
+      <Footer />
     </section>
   );
 }

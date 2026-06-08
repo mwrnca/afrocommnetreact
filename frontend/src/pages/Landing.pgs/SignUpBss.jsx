@@ -49,7 +49,9 @@ export default function SignUpBss() {
       </section>
       
       <section className="signup-container">
-        <h1 id="myH1" style={{ margin: '20px' }}>SIGN UP</h1>
+        <h1 id="myH1" style={{ margin: '20px' }} className="signup-title">
+          SIGN UP
+        </h1>
         <input name="first_name"   type="text"     placeholder="First Name"    value={form.first_name}   onChange={handleChange} />
         <input name="second_name"  type="text"     placeholder="Second Name"   value={form.second_name}  onChange={handleChange} />
         <input name="email"        type="email"    placeholder="Email Address" value={form.email}         onChange={handleChange} />

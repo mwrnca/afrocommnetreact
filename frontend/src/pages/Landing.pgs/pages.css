@@ -10,10 +10,10 @@ body {
     background: linear-gradient(to bottom, rgba(4, 0, 30, 0.886),rgba(0, 0, 1, 0.9)),
                    url(bg.img.jpeg) no-repeat center center/cover;
     
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     font-family: system-ui, sans-serif;
 }
 
@@ -21,6 +21,9 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    overflow: hidden;
+    word-break: break-word;
+    font-size: clamp(0.75rem, 2vw, 1rem);
 }
 
 .header {
@@ -61,6 +64,9 @@ body {
     flex-direction: column;
     gap: 15px;
     padding: 25px 20px;
+    overflow: hidden;
+    word-break: break-word;
+    font-size: clamp(0.75rem, 2vw, 1rem);
 }
 
 .vertical-nav a {
@@ -87,6 +93,9 @@ body {
     background-image: url('assets/pattern.png');
     background-size: cover;
     background-position: center;
+    overflow: hidden;
+    word-break: break-word;
+    font-size: clamp(0.75rem, 2vw, 1rem);
 }
 
 .hero h2 {
@@ -110,6 +119,9 @@ body {
     border: 2px solid #090215;
     font-weight: 600;
     transition: 0.3s;
+    overflow: hidden;
+    word-break: break-word;
+    font-size: clamp(0.75rem, 2vw, 1rem);
 }
 
 .btn-green:hover {
@@ -128,6 +140,9 @@ body {
     flex-direction: column;
     gap: 20px;
     margin-top: 35px;
+    overflow: hidden;
+    word-break: break-word;
+    font-size: clamp(0.75rem, 2vw, 1rem);
 }
 
 .role-btn {
@@ -138,6 +153,9 @@ body {
     text-decoration: none;
     color: white;
     transition: 0.3s ease;
+    overflow: hidden;
+    word-break: break-word;
+    font-size: clamp(0.75rem, 2vw, 1rem);
 }
 
 .role-btn:hover {
@@ -274,4 +292,15 @@ input{
    box-shadow:0 5px 15px rgba(0,0,0,0.2);
    margin: 0% auto;
    color: #fefefd;
+   overflow: hidden;
+    word-break: break-word;
+    font-size: clamp(1.75rem, 2vw, 3rem);
+}
+
+.signup-title {
+    text-align: center;
+    color: #fefefd;
+    overflow: hidden;
+    word-break: break-word;
+    font-size: clamp(0.75rem, 2vw, 1rem);
 }

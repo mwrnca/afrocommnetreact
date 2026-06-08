@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import Header from "../../components/Generalcomponents/Header";
 import "./pages.css";
+import Footer from "../../components/Generalcomponents/Footer";
 
 export default function WorkspaceSelector () {
 
@@ -7,7 +9,8 @@ export default function WorkspaceSelector () {
 
     return (
         <div className="page-container">
-            <section className="roles">
+            <Header />
+        <section className="roles">
         <h2>PLEASE SELECT AN ACCOUNT TYPE TO PROCEED:</h2>
 
         <div className="role-buttons">
@@ -38,18 +41,20 @@ export default function WorkspaceSelector () {
 
           <div onClick={() => navigate('/login/mgmt')} className="role-btn">
             <span className="icon">⬢</span>
-            <h2>EMPLOYEE MANAGEMENT</h2>
-            <small>Busiiness Owners and Managers</small>
+            <h2>Employee Management</h2>
+            <small>Business Owners and Managers</small>
           </div>
 
           <div onClick={() => navigate('/login/employee')} className="role-btn">
             <span className="icon">⬢</span>
-            <h2>Employee</h2>
-            <small>Employees of Bussinesses and Institutions</small>
+            <h2>Employees</h2>
+            <small>Employees of Businesses and Institutions</small>
           </div>
 
         </div>
       </section>
+
+      <Footer />
         </div>
     );
 }

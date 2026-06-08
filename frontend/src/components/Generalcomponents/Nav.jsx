@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getUser } from "../../api" 
 import "./Generalcomponents.css";
-import Footer from "../Footer";
+import Footer from "./Footer";
 
 const navLinks = {
   business: [
@@ -56,19 +57,17 @@ const getHomeRoute = () => {
 
 export default function NavBar({ open, setOpen, currentPage }) {
   const [dateTime, setDateTime] = useState(new Date());
-  const [user, setUser] = useState(() => {
-    return JSON.parse(localStorage.getItem("user") || "{}");
-  });
+  const [user, setUser] = useState(() => getUser());
    const links = navLinks[user.role] || [];
   console.log("user:", user);
   console.log("role:", user.role);
   console.log("links:", links);
+  console.log(localStorage.getItem("user"));
 
   // re-read localStorage whenever the component updates
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("user") || "{}");
-    setUser(stored);
-  }, [currentPage]); // re-reads when page changes
+  setUser(getUser());
+}, [currentPage]); // re-reads when page changes
 
   const formatted = dateTime.toLocaleString("en-KE", {
     weekday: "short",
@@ -91,7 +90,7 @@ export default function NavBar({ open, setOpen, currentPage }) {
             to={link.path}
             onClick={() => setOpen(false)}
           >
-            <span className="nav-link-text">{link.label}</span>
+            <span className="navbar-links-text">{link.label}</span>
           </NavLink>
         ))}
       </div>

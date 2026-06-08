@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import Header from '../../components/Generalcomponents/Header'
-import './Pages.css'
+import Header from '../../components/Generalcomponents/Header';
+import './Pages.css';
 
 function Landing() {
 
@@ -60,8 +60,8 @@ function Landing() {
 
          <a onClick={() => navigate('/signup/mgmt')} className="role-btn">
             <span className="icon">⬢</span>
-            <h2>EMPLOYEE MANAGEMENT</h2>
-            <small>BUSSINESS OWNERS AND MANAGERS</small>
+            <h2>Employee Management</h2>
+            <small>Business Owners and Managers</small>
           </a>
 
         </div>

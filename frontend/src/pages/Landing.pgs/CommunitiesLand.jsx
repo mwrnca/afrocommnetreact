@@ -1,5 +1,5 @@
 import Header from "../../components/Generalcomponents/Header";
-import Footer from "../../components/Footer";
+import Footer from "../../components/Generalcomponents/Footer";
 import "./pages.css";
 
 export default function CommunitiesLand() {
