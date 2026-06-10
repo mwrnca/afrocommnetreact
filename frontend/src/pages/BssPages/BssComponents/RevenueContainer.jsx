@@ -4,7 +4,7 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Legend
 } from "recharts";
-import "./Homecomponents.css";
+import "./BussinessComponents.css";
 
 const periods = ["weekly", "monthly", "yearly"];
 
@@ -31,13 +31,13 @@ export default function RevenueContainer() {
   const profitLoss = totals.profit - (totals.revenue - totals.profit);
 
   return (
-    <div className="container">
-      <div className="card-sales">
-        <div className="card-header">
-          <h2 className="card-title">Revenue Overview</h2>
-          <div className="period-tabs">
+    <div className="bss-revenue-container">
+      <div className="bss-revenue-cards">
+        <div className="bss-revenue-header">
+          <h2 className="bss-revenue-cardtitle">Revenue Overview</h2>
+          <div className="bss-revenue-period-tabs">
             {periods.map(p => (
-              <button key={p} className={`period-tab ${period === p ? "period-active" : ""}`} onClick={() => setPeriod(p)}>
+              <button key={p} className={`bss-revenue-period-tab ${period === p ? "bss-revenue-period-active" : ""}`} onClick={() => setPeriod(p)}>
                 {p.charAt(0).toUpperCase() + p.slice(1)}
               </button>
             ))}
@@ -65,19 +65,22 @@ export default function RevenueContainer() {
           </AreaChart>
         </ResponsiveContainer>
       </div>
-      <div className="card completed"><h3>Total Revenue</h3><h2>{totals.revenue.toLocaleString("en-KE")}</h2></div>
-      <div className="card completed"><h3>Total Profit</h3><h2>{totals.profit.toLocaleString("en-KE")}</h2></div>
-      <div className="card pending">
+
+      <div className="bss-revenue-cards-container">
+      <div className="bss-revenue-card"><h3>Total Revenue</h3><h2>{totals.revenue.toLocaleString("en-KE")}</h2></div>
+      <div className="bss-revenue-card"><h3>Total Profit</h3><h2>{totals.profit.toLocaleString("en-KE")}</h2></div>
+      <div className="bss-revenue-card">
         <h3>Profit / Loss</h3>
         <h2 style={{ color: profitLoss >= 0 ? "#27ae60" : "#e74c3c" }}>
           {profitLoss >= 0 ? "+" : ""}{profitLoss.toLocaleString("en-KE")}
         </h2>
       </div>
-      <div className="card sales-growth">
+      <div className="bss-revenue-card">
         <h3>Business Growth</h3>
         <h2 style={{ color: totals.growth >= 0 ? "#27ae60" : "#e74c3c" }}>
           {totals.growth >= 0 ? "+" : ""}{totals.growth}%
         </h2>
+      </div>
       </div>
     </div>
   );

@@ -1,27 +1,31 @@
 const BASE = "http://localhost:8000";
 
-// saves user to localStorage after login/signup
+// ── Auth ──
 export function saveUser(user) {
+  localStorage.setItem("user",     JSON.stringify(user));
   localStorage.setItem("userId",   String(user.id));
   localStorage.setItem("userRole", user.role);
   localStorage.setItem("userName", user.first_name);
 }
 
 export function getUser() {
+  const stored = localStorage.getItem("user");
+  if (stored) return JSON.parse(stored);
+  // fallback to individual keys
   return {
-    id:   localStorage.getItem("userId"),
-    role: localStorage.getItem("userRole"),
-    name: localStorage.getItem("userName"),
+    id:         localStorage.getItem("userId"),
+    role:       localStorage.getItem("userRole"),
+    first_name: localStorage.getItem("userName"),
   };
 }
 
 export function clearUser() {
+  localStorage.removeItem("user");
   localStorage.removeItem("userId");
   localStorage.removeItem("userRole");
   localStorage.removeItem("userName");
 }
 
-// ── Auth ──
 export async function signup(formData) {
   const res = await fetch(`${BASE}/register`, {
     method:  "POST",
@@ -30,7 +34,7 @@ export async function signup(formData) {
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.detail || "Signup failed");
-  return data; // returns the created user
+  return data;
 }
 
 export async function login(email, password) {
@@ -81,14 +85,37 @@ export async function fetchCommunities() {
   return res.json();
 }
 
-export const API = {
-  // ... existing ones
-  directory: (params = {}) => {
-    const query = new URLSearchParams();
-    if (params.role)   query.append("role",   params.role);
-    if (params.county) query.append("county", params.county);
-    if (params.search) query.append("search", params.search);
-    const str = query.toString();
-    return `${BASE_URL}/directory${str ? `?${str}` : ""}`;
-  },
-};
+export async function fetchDirectory(params = {}) {
+  const query = new URLSearchParams();
+  if (params.role)   query.append("role",   params.role);
+  if (params.county) query.append("county", params.county);
+  if (params.search) query.append("search", params.search);
+  const str = query.toString();
+  const res = await fetch(`${BASE}/directory${str ? `?${str}` : ""}`);
+  return res.json();
+}
+
+export async function fetchEmployees(businessId) {
+  const res = await fetch(`${BASE}/employees/${businessId}`);
+  return res.json();
+}
+
+export async function fetchAssignedTasks(employeeId) {
+  const res = await fetch(`${BASE}/assigned-tasks/employee/${employeeId}`);
+  return res.json();
+}
+
+export async function fetchNotices(businessId) {
+  const res = await fetch(`${BASE}/notice-board/${businessId}`);
+  return res.json();
+}
+
+export async function fetchBusinessLogs(businessId) {
+  const res = await fetch(`${BASE}/logs/business/${businessId}`);
+  return res.json();
+}
+
+export async function fetchEmployeeLogs(employeeId) {
+  const res = await fetch(`${BASE}/logs/employee/${employeeId}`);
+  return res.json();
+}

@@ -14,7 +14,7 @@ function Header() {
           
           <div className="brand-text">
               <span onClick={() => navigate('/')}>.AFROCOMMNET.</span>
-              <small>ONE</small>
+              {/* <small>ONE</small> */}
           </div>
 
           <div>

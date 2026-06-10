@@ -377,7 +377,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -386,8 +386,8 @@
 }
 
 .modal {
-  background: var(--secondary);
-  border: 1px solid var(--border);
+  background: var(--bg);
+  /* border: 1px solid var(--border); */
   border-radius: 12px;
   padding: 2rem;
   width: clamp(300px, 90vw, 540px);
@@ -516,13 +516,17 @@
 }
 
 /* ─── Task Form ─── */
+.add-new-task {
+  background-color: var(--bg);
+}
+
 .task-form {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   padding: 1.5rem;
   margin: 1rem 0;
-  background: var(--secondary);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 12px;
 }
@@ -530,7 +534,7 @@
 .task-form input,
 .task-form select,
 .task-form textarea {
-  background: var(--bg);
+  background: var(--secondary);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.65rem 0.875rem;

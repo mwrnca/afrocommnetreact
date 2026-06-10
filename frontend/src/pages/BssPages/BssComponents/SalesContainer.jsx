@@ -1,4 +1,4 @@
-import "./Homecomponents.css";
+import "./BussinessComponents.css";
 import { useState, useEffect } from "react";
 import { getUser, fetchSales } from "../../../api";
 import {
@@ -18,7 +18,11 @@ export default function SalesContainer() {
     if (!id) return;
 
     fetchSales(id, period).then(periodData => {
+
+      if (!Array.isArray(periodData)) return;
+
       setData(periodData);
+      
       const orders    = periodData.reduce((sum, d) => sum + d.orders,    0);
       const completed = periodData.reduce((sum, d) => sum + d.completed, 0);
       const pending   = periodData.reduce((sum, d) => sum + d.pending,   0);
@@ -30,22 +34,22 @@ export default function SalesContainer() {
   }, [period]);
 
   return (
-    <div className="container">
-      <div className="card-sales">
-        <div className="card-header">
-          <h2 className="card-title">Sales Overview</h2>
-          <div className="period-tabs">
+    <div className="bss-sales-container">
+      <div className="bss-sales-card">
+        <div className="bss-sales-header">
+          <h2 className="bss-sales-cardtitle">Sales Overview</h2>
+          <div className="bss-sales-period-tabs">
             {periods.map(p => (
               <button
                 key={p}
-                className={`period-tab ${period === p ? "period-active" : ""}`}
+                className={`bss-sales-period-tab ${period === p ? "bss-sales-period-active" : ""}`}
                 onClick={() => setPeriod(p)}
               >
                 {p.charAt(0).toUpperCase() + p.slice(1)}
               </button>
             ))}
-          </div>
-        </div>
+           </div>
+         </div>
         <ResponsiveContainer width="100%" height={220}>
           <LineChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(212,175,55,0.1)" />
@@ -63,15 +67,31 @@ export default function SalesContainer() {
           </LineChart>
         </ResponsiveContainer>
       </div>
-      <div className="card completed"><h3>Total Orders</h3><h2>{totals.orders}</h2></div>
-      <div className="card completed"><h3>Completed</h3><h2>{totals.completed}</h2></div>
-      <div className="card pending"><h3>Pending</h3><h2>{totals.pending}</h2></div>
-      <div className="card sales-growth">
-        <h3>Sales Growth</h3>
-        <h2 style={{ color: totals.growth >= 0 ? "#27ae60" : "#e74c3c" }}>
-          {totals.growth >= 0 ? "+" : ""}{totals.growth}%
-        </h2>
+
+      <div className="bss-sales-cards-container">
+        <div className="bss-sales-cards">
+          <h3>Total Orders</h3>
+          <h2>{totals.orders}</h2>
+        </div>
+
+        <div className="bss-sales-cards">
+          <h3>Completed</h3>
+          <h2>{totals.completed}</h2>
+        </div>
+
+        <div className="bss-sales-cards">
+          <h3>Pending</h3>
+          <h2>{totals.pending}</h2>
+        </div>
+      
+        <div className="bss-sales-cards">
+          <h3>Sales Growth</h3>
+          <h2 style={{ color: totals.growth >= 0 ? "#27ae60" : "#e74c3c" }}>
+            {totals.growth >= 0 ? "+" : ""}{totals.growth}%
+          </h2>
+        </div>
       </div>
+
     </div>
   );
 }

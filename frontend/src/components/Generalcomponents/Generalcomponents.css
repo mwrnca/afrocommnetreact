@@ -1,11 +1,12 @@
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    flex-wrap: wrap;
     align-items: center;
     font-family: system-ui, sans-serif;
     padding: 25px 20px;
     overflow: hidden;
-    word-break: break-word;
+    /* word-break: break-word; */
     font-size: clamp(0.75rem, 2vw, 3rem);
 }
 
@@ -204,4 +205,6 @@
 .footer {
     border-top: 0px solid #ccc;
     padding: 1em;
+    text-align: center;
+    background: transparent;
 }

@@ -4,7 +4,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Legend
 } from "recharts";
-import "./Homecomponents.css";
+import "./BussinessComponents.css";
 
 const periods = ["weekly", "monthly", "yearly"];
 
@@ -29,13 +29,13 @@ export default function ExpensesContainer() {
   }, [period]);
 
   return (
-    <div className="container">
-      <div className="card-sales">
-        <div className="card-header">
-          <h2 className="card-title">Expenses Overview</h2>
-          <div className="period-tabs">
+    <div className="bss-expenses-container">
+      <div className="bss-expenses-cards">
+        <div className="bss-expenses-header">
+          <h2 className="bss-expenses-cardtitle">Expenses Overview</h2>
+          <div className="bss-expenses-period-tabs">
             {periods.map(p => (
-              <button key={p} className={`period-tab ${period === p ? "period-active" : ""}`} onClick={() => setPeriod(p)}>
+              <button key={p} className={`bss-expenses-period-tab ${period === p ? "bss-expenses-period-active" : ""}`} onClick={() => setPeriod(p)}>
                 {p.charAt(0).toUpperCase() + p.slice(1)}
               </button>
             ))}
@@ -52,14 +52,25 @@ export default function ExpensesContainer() {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="card completed"><h3>Total Expenses</h3><h2>{totals.total.toLocaleString("en-KE")}</h2></div>
-      <div className="card pending"><h3>Biggest Expense</h3><h2>{totals.biggest}</h2></div>
-      {/* add pending and completed cards here */}
-      <div className="card sales-growth">
-        <h3>Expense Growth</h3>
-        <h2 style={{ color: totals.growth <= 0 ? "#27ae60" : "#e74c3c" }}>
+
+      <div className="bss-expenses-cards-container">
+        <div className="bss-expenses-card">
+          <h3>Total Expenses</h3>
+          <h2>{totals.total.toLocaleString("en-KE")}</h2>
+        </div>
+
+        <div className="bss-expenses-card">
+          <h3>Biggest Expense</h3>
+          <h2>{totals.biggest}</h2>
+        </div>
+      
+        <div className="bss-expenses-card">
+          <h3>Expense Growth</h3>
+          <h2 style={{ color: totals.growth <= 0 ? "#27ae60" : "#e74c3c" }}>
           {totals.growth >= 0 ? "+" : ""}{totals.growth}%
-        </h2>
+          </h2>
+        </div>
+
       </div>
     </div>
   );

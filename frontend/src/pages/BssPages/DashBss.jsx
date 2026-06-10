@@ -12,6 +12,8 @@ export default function DashBss() {
   const [expenses, setExpenses] = useState([]);
   const [revenue,  setRevenue]  = useState([]);
   const [loading,  setLoading]  = useState(true);
+  const user = getUser
+
 
   useEffect(() => {
     const { id, role } = getUser();
@@ -35,15 +37,15 @@ export default function DashBss() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <section className="page-container">
-      <div className="sales-content">
-        <SalesContainer data={sales} />
+    <section className="bss-page-container">
+      <div>
+        <SalesContainer initialData={sales} userId={user.id} />
       </div>
-      <div className="sales-content">
-        <ExpensesContainer data={expenses} />
+      <div>
+        <ExpensesContainer initialData={expenses} userId={user.id} />
       </div>
-      <div className="sales-content">
-        <RevenueContainer data={revenue} />
+      <div>
+        <RevenueContainer    initialData={revenue}    userId={user.id} />
       </div>
     </section>
   );

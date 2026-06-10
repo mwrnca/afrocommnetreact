@@ -100,6 +100,7 @@ class SaleBase(BaseModel):
     completed: int
     pending:   int
     period:    str  # weekly, monthly, yearly
+    item_name: Optional[str] = None
 
 class SaleCreate(SaleBase):
     pass

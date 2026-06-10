@@ -114,6 +114,7 @@ class Sale(Base):
     completed  = Column(Integer, default=0)
     pending    = Column(Integer, default=0)
     period     = Column(String, nullable=False)   # weekly, monthly, yearly
+    item_name  = Column(String, nullable=True)
 
     user_data = relationship("UserData", back_populates="sales")
 

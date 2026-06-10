@@ -32,7 +32,7 @@ export default function BssInbox() {
   const unreadCount = messages.filter(m => !m.read).length;
 
   return (
-    <div className="inbox-page">
+    <div className="bss-page-container">
 
       <div className="inbox-header">
         <div className="inbox-title-row">
