@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUser, fetchSales, fetchExpenses, fetchRevenue } from "../../api";
+import { getUser, fetchSales, fetchExpenses } from "../../api";
 import "./Dash.css";
 
 export default function DashProf() {

@@ -27,17 +27,16 @@ export default function ToDoCard ({task}) {
     return (
         <>
         <div className="todo-card" onClick={() => setOpen(true)}>
-            <div className="card-header">
+            <div className="todo-card-header">
                 <span className="to-do-priority" style={{ color: p.color }}>
                     {p.icon} {p.label}
-                </span>
-                {overdue && <span className="todo-overdue">Overdue</span>}
+            </span>
+            {overdue && <span className="todo-overdue">Overdue</span>}
             </div>
+            
             <p className="todo-title">{task.title}</p>
             {task.dueDate && (
-            <p className="todo-date" style={{ color: overdue ? "#e74c3c" : "#888" }}>
-              {"📅"} {date(task.dueDate)}
-            </p>
+            <p className="todo-date" style={{ color: overdue ? "#e74c3c" : "#888" }}>{task.dueDate}</p>
           )}
           {task.notes && <p className="todo-preview">{task.notes}</p>}
         </div>

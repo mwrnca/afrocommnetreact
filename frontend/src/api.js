@@ -70,10 +70,10 @@ export async function fetchSales(userId, period = "weekly") {
   return res.json();
 }
 
-export async function fetchRevenue(userId, period = "weekly") {
-  const res = await fetch(`${BASE}/revenue/${userId}/${period}`);
-  return res.json();
-}
+// export async function fetchRevenue(userId, period = "weekly") {
+//   const res = await fetch(`${BASE}/revenue/${userId}/${period}`);
+//   return res.json();
+// }
 
 export async function fetchExpenses(userId, period = "weekly") {
   const res = await fetch(`${BASE}/expenses/${userId}/${period}`);

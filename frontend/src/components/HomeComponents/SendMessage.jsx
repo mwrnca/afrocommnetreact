@@ -5,14 +5,12 @@ import "./Homecomponents.css";
 export default function SendMessage({ onClose, onSent }) {
   const [form, setForm] = useState({
     receiverName: "",
-    subject: "",
-    body: "",
+    subject:      "",
+    body:         "",
   });
-
   const [sending, setSending] = useState(false);
-  const [error, setError] = useState("");
+  const [error,   setError]   = useState("");
 
-  const { id, name } = getUser();
   const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -23,37 +21,44 @@ export default function SendMessage({ onClose, onSent }) {
       return;
     }
 
+    // read inside function — always fresh
+    const { id, first_name } = getUser();
+    if (!id) { setError("Not logged in"); return; }
+
     setError("");
     setSending(true);
 
-    const res = await fetch(`http://localhost:8000/messages/${user.id}`, {
+    // ✅ fixed — was missing / before id and using wrong variable
+    const res = await fetch(`http://localhost:8000/messages/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        senderId:   Number(id),
-        receiverId: 0,         // you'll need receiver lookup — for now 0
-        senderName: name,
+        senderId:     Number(id),
+        receiverId:   0,
+        senderName:   first_name || "User",
         receiverName: form.receiverName,
-        subject: form.subject,
-        body: form.body,
-        timestamp: new Date().toISOString(),
-        read: true,
+        subject:      form.subject,
+        body:         form.body,
+        timestamp:    new Date().toISOString(),
+        read:         true,
       }),
     });
 
+    if (!res.ok) {
+      setError("Failed to send message");
+      setSending(false);
+      return;
+    }
+
     const saved = await res.json();
-
     setSending(false);
-
     onSent(saved);
-
     onClose();
   };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-
         <button className="modal-close" onClick={onClose}>✕</button>
         <h2 className="modal-title">New Message</h2>
 
@@ -64,28 +69,23 @@ export default function SendMessage({ onClose, onSent }) {
             value={form.receiverName}
             onChange={handleChange}
           />
-
           <input
             name="subject"
             placeholder="Subject"
             value={form.subject}
             onChange={handleChange}
           />
-
           <textarea
             name="body"
             placeholder="Write your message..."
             value={form.body}
             onChange={handleChange}
           />
-
           {error && <p className="msg-error">{error}</p>}
-
           <button onClick={handleSend} disabled={sending}>
             {sending ? "Sending..." : "Send"}
           </button>
         </div>
-
       </div>
     </div>
   );

@@ -167,6 +167,48 @@
   }
 }
 
+/* ─── Hamburger button ─── */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text);
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .desktop-only { display: none; }
+  .mobile-only  { display: flex; }
+
+  .hamburger {
+    display: block; /* show on mobile */
+  }
+
+  .navbar {
+    position: fixed;
+    left: -240px;
+    top: 0;
+    width: 240px;
+    height: 100dvh;
+    z-index: 99;
+    transition: left 0.3s ease;
+    background: var(--secondary); /* needs background or it's transparent */
+    border-right: 1px solid var(--border);
+  }
+
+  .navbar-open {
+    left: 0;
+  }
+}
+
 .card-header {
   background-color: var(--bg);
   border: 1.5px solid var(--border);

@@ -328,40 +328,40 @@ def add_expense(user_id: int, expense: schemas.ExpenseCreate, db: Session = Depe
 # ──────────────────────────────────────────
 
 # GET revenue by period
-@app.get("/revenue/{user_id}/{period}", response_model=list[schemas.RevenueResponse])
-def get_revenue(user_id: int, period: str, db: Session = Depends(get_db)):
-    user_data = db.query(models.UserData).filter(
-        models.UserData.userId == user_id
-    ).first()
-    if not user_data:
-        raise HTTPException(status_code=404, detail="User not found")
+# @app.get("/revenue/{user_id}/{period}", response_model=list[schemas.RevenueResponse])
+# def get_revenue(user_id: int, period: str, db: Session = Depends(get_db)):
+#     user_data = db.query(models.UserData).filter(
+#         models.UserData.userId == user_id
+#     ).first()
+#     if not user_data:
+#         raise HTTPException(status_code=404, detail="User not found")
 
-    return db.query(models.Revenue).filter(
-        models.Revenue.userDataId == user_data.id,
-        models.Revenue.period     == period
-    ).all()
+#     return db.query(models.Revenue).filter(
+#         models.Revenue.userDataId == user_data.id,
+#         models.Revenue.period     == period
+#     ).all()
 
 # ADD a revenue entry
-@app.post("/revenue/{user_id}", response_model=schemas.RevenueResponse)
-def add_revenue(user_id: int, revenue: schemas.RevenueCreate, db: Session = Depends(get_db)):
-    user_data = db.query(models.UserData).filter(
-        models.UserData.userId == user_id
-    ).first()
-    if not user_data:
-        raise HTTPException(status_code=404, detail="User not found")
+# @app.post("/revenue/{user_id}", response_model=schemas.RevenueResponse)
+# def add_revenue(user_id: int, revenue: schemas.RevenueCreate, db: Session = Depends(get_db)):
+#     user_data = db.query(models.UserData).filter(
+#         models.UserData.userId == user_id
+#     ).first()
+#     if not user_data:
+#         raise HTTPException(status_code=404, detail="User not found")
 
-    new_revenue = models.Revenue(
-        userDataId = user_data.id,
-        day        = revenue.day,
-        revenue    = revenue.revenue,
-        profit     = revenue.profit,
-        loss       = revenue.loss,
-        period     = revenue.period,
-    )
-    db.add(new_revenue)
-    db.commit()
-    db.refresh(new_revenue)
-    return new_revenue
+#     new_revenue = models.Revenue(
+#         userDataId = user_data.id,
+#         day        = revenue.day,
+#         revenue    = revenue.revenue,
+#         profit     = revenue.profit,
+#         loss       = revenue.loss,
+#         period     = revenue.period,
+#     )
+#     db.add(new_revenue)
+#     db.commit()
+#     db.refresh(new_revenue)
+#     return new_revenue
 
 # ──────────────────────────────────────────
 # DIRECTORY ROUTE

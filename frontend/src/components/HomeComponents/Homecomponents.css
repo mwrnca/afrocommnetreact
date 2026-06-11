@@ -1,3 +1,13 @@
+.profilebar {
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(0.5rem, 2vw, 1rem);
+  border-radius: 7px;
+}
+
 .container {
     display: grid;
     grid-template-columns: 3fr 1fr;
@@ -22,38 +32,20 @@
     background-color: var(--bg);
 }
 
-/* .card-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border-radius: 8px;
-    padding: 1em;
-    background-color: var(--bg);
-    margin-bottom: 12px;
-} */
-
-.todo-card {
-  background-color: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 7px;
-  text-align: start;
-  margin-bottom: 12px;
-  border-left: 4px solid var(--border);
+/* ─── Todo Card ─── */
+.todo-form-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 8px;
 }
 
-/* .card-header {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-weight: 300 ;
-  color: blueviolet;
-} */
-
-/* ─── Todo Card ─── */
-.to-do-card {
+.todo-card {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  padding: 1rem 1.25rem;
+  padding: clamp(0.4rem 2vw 0.75rem);
   background-color: var(--bg);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -67,6 +59,11 @@
   background: rgba(212, 175, 55, 0.05);
 }
 
+.todo-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .card-header {
   display: flex;
   align-items: center;
@@ -74,8 +71,9 @@
 }
 
 .to-do-priority {
-  font-size: 13px;
+  font-size: clamp(0.2rem, 2vw, 0.75rem);
   font-weight: 600;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .todo-overdue {
@@ -612,7 +610,7 @@
 
 /* ─── Community Card ─── */
 .community-card {
-  background: var(--secondary);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 1rem 1.25rem;

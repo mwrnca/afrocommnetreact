@@ -8,26 +8,23 @@ export default function ProfileBar () {
     const { name, email } = getUser();
 
     return (
-        <div className="settings-items">
+        <div className="profilebar">
                 <div className="details1">
-                    
                     <div>
-                     <img src="https://via.placeholder.com/150" alt="User Avatar" className="avatar" />
+                        <img src="https://via.placeholder.com/150" alt="User Avatar" className="avatar" />
                     </div>
 
                     <div>
-                     <h2>{name || "User"}</h2>
-                     <small>{email || "Email not available"}</small>
+                        <h2>{name || "User"}</h2>
+                        <small>{email || "Email not available"}</small>
                     </div>
                 </div>
                 
-
                 <div>
                     <a onclick={() => navigate("/profile")} className="edit-profile-link">
                         <span>Edit Profile</span>
                     </a>
                 </div>
-                
             </div>
     );
 }

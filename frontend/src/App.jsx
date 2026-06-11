@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Generalcomponents/Layout'
 
 // LANDING PAGES
-
 import Landing from './pages/Landing.pgs/Landing'
 import About from './pages/Landing.pgs/About'
 import CommunitiesLand from './pages/Landing.pgs/CommunitiesLand'

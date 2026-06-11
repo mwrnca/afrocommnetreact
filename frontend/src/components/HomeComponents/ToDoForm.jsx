@@ -1,10 +1,13 @@
 import "./Homecomponents.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { getUser } from "../../api";
 
-export default function ToDoForm() {
+export default function ToDoForm({ setTasks }) {
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ title: "", priority: "medium", dueDate: "", notes: "" });
-  
+  const [form, setForm] = useState({
+    title: "", priority: "medium", dueDate: "", notes: ""
+  });
+
   const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -12,13 +15,21 @@ export default function ToDoForm() {
   const handleSubmit = async () => {
     if (!form.title.trim()) return;
 
-    const res = await fetch("http://localhost:8000/tasks", {
+    const { id } = getUser();
+    if (!id) return;
+
+    // ✅ correct URL with user id
+    const res = await fetch(`http://localhost:8000/tasks/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
 
+    if (!res.ok) return;
+
     const saved = await res.json();
+
+    // update parent's tasks list
     setTasks(prev => [...prev, saved]);
     setForm({ title: "", priority: "medium", dueDate: "", notes: "" });
     setShowForm(false);
@@ -26,10 +37,10 @@ export default function ToDoForm() {
 
   return (
     <div className="todo-form-container">
-    <div>
-      <button  className="add-new-task" onClick={() => setShowForm(prev => !prev)}>
-        {showForm ? "CANCEL X" : "+ ADD NEW TASK"}
-      </button>
+      <div>
+        <button className="add-new-task" onClick={() => setShowForm(prev => !prev)}>
+          {showForm ? "CANCEL X" : "+ ADD NEW TASK"}
+        </button>
       </div>
 
       {showForm && (
@@ -60,6 +71,6 @@ export default function ToDoForm() {
           <button onClick={handleSubmit}>Save Task</button>
         </div>
       )}
-      </div>
-    );
+    </div>
+  );
 }

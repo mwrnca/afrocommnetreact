@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUser, fetchSales, fetchExpenses, fetchRevenue } from "../../api";
+import { getUser, fetchSales, fetchExpenses } from "../../api";
 import SalesContainer from './BssComponents/SalesContainer';
 import ExpensesContainer from './BssComponents/ExpensesContainer';
 import RevenueContainer from './BssComponents/RevenueContainer';
@@ -23,12 +23,12 @@ export default function DashBss() {
     Promise.all([
       fetchSales(id,    "weekly"),
       fetchExpenses(id, "weekly"),
-      fetchRevenue(id,  "weekly"),
+      // fetchRevenue(id,  "weekly"),
     ])
-      .then(([salesData, expensesData, revenueData]) => {
+      .then(([salesData, expensesData ]) => {
         setSales(salesData);
         setExpenses(expensesData);
-        setRevenue(revenueData);
+        // setRevenue(revenueData);
       })
       .catch(err => console.error("Fetch error:", err))
       .finally(() => setLoading(false));
@@ -45,8 +45,9 @@ export default function DashBss() {
         <ExpensesContainer initialData={expenses} userId={user.id} />
       </div>
       <div>
-        <RevenueContainer    initialData={revenue}    userId={user.id} />
+        {/* <RevenueContainer    initialData={revenue}    userId={user.id} /> */}
+        <RevenueContainer />
       </div>
     </section>
-  );
+  ); 
 }
