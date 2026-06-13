@@ -33,7 +33,7 @@ export default function DashInst() {
 
   return (
     <section className="page-container">
-      {/* <div className="sales-content">
+      <div className="sales-content">
         <SalesContainer data={sales} />
       </div>
       <div className="sales-content">
@@ -41,7 +41,7 @@ export default function DashInst() {
       </div>
       <div className="sales-content">
         <RevenueContainer data={revenue} />
-      </div> */}
+      </div>
     </section>
   );
 }

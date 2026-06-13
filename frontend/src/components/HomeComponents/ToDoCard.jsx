@@ -26,7 +26,7 @@ export default function ToDoCard ({task}) {
 
     return (
         <>
-        <div className="todo-card" onClick={() => setOpen(true)}>
+        <div className="todo-card"  onClick={() => setOpen(true)}>
             <div className="todo-card-header">
                 <span className="to-do-priority" style={{ color: p.color }}>
                     {p.icon} {p.label}
@@ -43,6 +43,6 @@ export default function ToDoCard ({task}) {
 
 
         {open && <TaskDetail task={task} onClose={() => setOpen(false)} />}
-        </>
+    </>
     )
 }
