@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { getUser, fetchExpenses } from "../../../api";
-import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer, Legend
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid,
+  Tooltip, ResponsiveContainer, Legend } from "recharts";
 import "./BussinessComponents.css";
 
 const periods = ["weekly", "monthly", "yearly"];
