@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getUser } from "../../api";
 import "./Homecomponents.css";
 
 const fmtFull = (ts) =>
@@ -23,7 +24,7 @@ export default function MessageDetail({ message, onClose }) {
 const handleReply = async () => {
   if (!reply.trim()) return;
   setSending(true);
-  const { id, name } = getUser();  // import getUser from "../../api"
+  const { id, name } = getUser();
 
   await fetch(`http://localhost:8000/messages/${id}`, {
     method: "POST",

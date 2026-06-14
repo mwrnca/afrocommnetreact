@@ -50,3 +50,52 @@
   border-radius: 8px;
   margin-bottom: 1em;
 }
+
+.todo-complete-btn {
+  background: transparent;
+  border: 1px solid #27ae60;
+  color: #27ae60;
+  padding: 0.3rem 0.75rem;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  align-self: flex-start;
+  margin-top: 0.25rem;
+}
+
+.todo-complete-btn:hover {
+  background: #27ae60;
+  color: #fff;
+}
+
+.inbox-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.inbox-tab {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 0.4rem 1.25rem;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-family);
+}
+
+.inbox-tab:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.inbox-tab-active {
+  background: var(--primary);
+  color: var(--secondary);
+  border-color: var(--primary);
+}

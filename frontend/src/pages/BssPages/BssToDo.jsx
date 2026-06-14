@@ -6,6 +6,9 @@ import "./Dash.css";
 
 export default function BssToDo() {
   const [tasks, setTasks] = useState([]);
+  const handleComplete = (taskId) => {
+    setTasks(prev => prev.filter(t => t.id !== taskId));
+  };
 
   useEffect(() => {
     const { id } = getUser();
@@ -24,7 +27,7 @@ export default function BssToDo() {
       <ToDoForm setTasks={setTasks} />
       <div className="cards-container">
         {tasks.map(task => (
-          <ToDoCard key={task.id} task={task} />
+          <ToDoCard key={task.id} task={task} onComplete={handleComplete} />
         ))}
       </div>
     </div>

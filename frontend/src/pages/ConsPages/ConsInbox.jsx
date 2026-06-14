@@ -5,37 +5,40 @@ import { getUser } from "../../api";
 import "./Dash.css";
 
 export default function ConsInbox() {
-  const [messages,  setMessages]  = useState([]);
+  const [received,  setReceived]  = useState([]);
+  const [sent,      setSent]      = useState([]);
+  const [view,      setView]      = useState("received"); // "received" or "sent"
   const [composing, setComposing] = useState(false);
 
   useEffect(() => {
     const { id } = getUser();
     if (!id) return;
 
-    fetch(`http://localhost:8000/messages/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) setMessages(data);
-        else setMessages([]);
-      })
-      .catch(() => setMessages([]));
+    // fetch both at once
+    Promise.all([
+      fetch(`http://localhost:8000/messages/${id}/received`).then(r => r.json()),
+      fetch(`http://localhost:8000/messages/${id}/sent`).then(r => r.json()),
+    ]).then(([receivedData, sentData]) => {
+      if (Array.isArray(receivedData)) setReceived(receivedData);
+      if (Array.isArray(sentData))     setSent(sentData);
+    }).catch(() => {});
   }, []);
 
   const handleRead = async (messageId) => {
     await fetch(`http://localhost:8000/messages/${messageId}/read`, {
       method: "PATCH",
     });
-
-    setMessages(prev =>
+    setReceived(prev =>
       prev.map(m => m.id === messageId ? { ...m, read: true } : m)
     );
   };
 
   const handleSent = (newMessage) => {
-    setMessages(prev => [newMessage, ...prev]);
+    setSent(prev => [newMessage, ...prev]);
   };
 
-  const unreadCount = messages.filter(m => !m.read).length;
+  const unreadCount = received.filter(m => !m.read).length;
+  const messages    = view === "received" ? received : sent;
 
   return (
     <div className="bss-page-container">
@@ -54,14 +57,32 @@ export default function ConsInbox() {
         </button>
       </div>
 
+      {/* toggle tabs */}
+      <div className="inbox-tabs">
+        <button
+          className={`inbox-tab ${view === "received" ? "inbox-tab-active" : ""}`}
+          onClick={() => setView("received")}
+        >
+          Received
+        </button>
+        <button
+          className={`inbox-tab ${view === "sent" ? "inbox-tab-active" : ""}`}
+          onClick={() => setView("sent")}
+        >
+          Sent
+        </button>
+      </div>
+
       <div className="inbox-list">
         {messages.length === 0
-          ? <p className="inbox-empty">No messages</p>
+          ? <p className="inbox-empty">
+              {view === "received" ? "No messages received" : "No messages sent"}
+            </p>
           : messages.map(message => (
               <InboxCard
                 key={message.id}
                 message={message}
-                onRead={handleRead}
+                onRead={view === "received" ? handleRead : null}
               />
             ))
         }

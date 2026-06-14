@@ -73,7 +73,7 @@ function Landing() {
         </div>
       </section>
 
-      <section className="investors">
+      {/* <section className="investors">
         <h2 style={{ color: 'black' }}>credits</h2>
       </section>
 
@@ -88,7 +88,7 @@ function Landing() {
 
       <div className="investors">
         <h2>"please note that to gain full access to the public chat you must be an account holder"</h2>
-      </div>
+      </div> */}
 
       <footer className="hero">
         <p>© 2026 Afrocommnet™. All rights reserved.</p>

@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUser, fetchSales, fetchExpenses } from "../../api";
+import SalesContainer from "./InstComponents/SalesContainer";
+import ExpensesContainer from "./InstComponents/ExpensesContainer";
+import RevenueContainer from "./InstComponents/RevenueContainer";
 import "./Dash.css"
 
 export default function DashInst() {
@@ -13,8 +16,8 @@ export default function DashInst() {
 
   useEffect(() => {
     const { id, role } = getUser();
-    if (!id)               { navigate("/login/bss"); return; }
-    if (role !== "business") { navigate("/");         return; }
+    if (!id)               { navigate("/login/inst"); return; }
+    if (role !== "institution") { navigate("/");         return; }
 
     Promise.all([
       fetchSales(id,    "weekly"),

@@ -16,45 +16,54 @@ export default function SendMessage({ onClose, onSent }) {
   };
 
   const handleSend = async () => {
-    if (!form.receiverName.trim() || !form.subject.trim() || !form.body.trim()) {
-      setError("All fields are required");
-      return;
-    }
+  if (!form.receiverName.trim() || !form.subject.trim() || !form.body.trim()) {
+    setError("All fields are required");
+    return;
+  }
 
-    // read inside function — always fresh
-    const { id, first_name } = getUser();
-    if (!id) { setError("Not logged in"); return; }
+  const { id, first_name } = getUser();
+  if (!id) { setError("Not logged in"); return; }
 
-    setError("");
-    setSending(true);
+  // look up receiver by name
+  const lookupRes = await fetch(
+    `http://localhost:8000/users/search?name=${form.receiverName}`
+  );
+  const receivers = await lookupRes.json();
 
-    // ✅ fixed — was missing / before id and using wrong variable
-    const res = await fetch(`http://localhost:8000/messages/${id}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        senderId:     Number(id),
-        receiverId:   0,
-        senderName:   first_name || "User",
-        receiverName: form.receiverName,
-        subject:      form.subject,
-        body:         form.body,
-        timestamp:    new Date().toISOString(),
-        read:         true,
-      }),
-    });
-
-    if (!res.ok) {
-      setError("Failed to send message");
-      setSending(false);
-      return;
-    }
-
-    const saved = await res.json();
+  if (!Array.isArray(receivers) || receivers.length === 0) {
+    setError("User not found — check the name and try again");
     setSending(false);
-    onSent(saved);
-    onClose();
-  };
+    return;
+  }
+
+  const receiver = receivers[0];
+
+  setError("");
+  setSending(true);
+
+  const res = await fetch(`http://localhost:8000/messages/${id}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      senderId:   Number(id),
+      receiverId: receiver.id,  // ✅ real receiver id now
+      senderName: first_name || "User",
+      subject:    form.subject,
+      body:       form.body,
+    }),
+  });
+
+  if (!res.ok) {
+    setError("Failed to send message");
+    setSending(false);
+    return;
+  }
+
+  const saved = await res.json();
+  setSending(false);
+  onSent(saved);
+  onClose();
+};
 
   return (
     <div className="modal-overlay" onClick={onClose}>

@@ -7,7 +7,7 @@ export default function ConsSettings () {
     const navigate = useNavigate()
 
     return (
-        <div>
+        <div className="bss-settings-page-container">
             <ProfileBar />  
 
             <div className="settings-items">

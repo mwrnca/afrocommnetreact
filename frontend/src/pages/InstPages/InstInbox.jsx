@@ -1,27 +1,33 @@
 import { useState, useEffect } from "react";
 import InboxCard from "../../components/HomeComponents/InboxCard";
 import SendMessage from "../../components/HomeComponents/SendMessage";
+import { getUser } from "../../api";
 import "./Dash.css";
 
 export default function InstInbox() {
-  const [messages, setMessages] = useState([]);
+  const [messages,  setMessages]  = useState([]);
   const [composing, setComposing] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:8000`)
+    const { id } = getUser();
+    if (!id) return;
+
+    fetch(`http://localhost:8000/messages/${id}`)
       .then(res => res.json())
-      .then(data => setMessages(res.data.messages));
+      .then(data => {
+        if (Array.isArray(data)) setMessages(data);
+        else setMessages([]);
+      })
+      .catch(() => setMessages([]));
   }, []);
 
-  const handleRead = async (id) => {
-    await fetch(`http://localhost:8000/messages/${user.id}`, {
+  const handleRead = async (messageId) => {
+    await fetch(`http://localhost:8000/messages/${messageId}/read`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ read: true }),
     });
 
     setMessages(prev =>
-      prev.map(m => m.id === id ? { ...m, read: true } : m)
+      prev.map(m => m.id === messageId ? { ...m, read: true } : m)
     );
   };
 
@@ -32,17 +38,14 @@ export default function InstInbox() {
   const unreadCount = messages.filter(m => !m.read).length;
 
   return (
-    <div className="inbox-page">
-
+    <div className="bss-page-container">
       <div className="inbox-header">
         <div className="inbox-title-row">
           <h2 className="inbox-title">Inbox</h2>
-
           {unreadCount > 0 && (
             <span className="inbox-badge">{unreadCount}</span>
           )}
         </div>
-
         <button
           className="inbox-compose-btn"
           onClick={() => setComposing(true)}
@@ -70,7 +73,6 @@ export default function InstInbox() {
           onSent={handleSent}
         />
       )}
-
     </div>
   );
 }

@@ -7,7 +7,7 @@ export default function InstSettings () {
     const navigate = useNavigate()
 
     return (
-        <div>
+        <div className="bss-settings-page-container">
             <ProfileBar />  
 
             <div className="settings-items">

@@ -15,7 +15,9 @@ const navLinks = {
   ],
   consumer: [
     { label: "Home",        path: "/dash/cons" },
+    { label: "To-Do",       path: "/dash/cons/todo" },
     { label: "Inbox",       path: "/dash/cons/inbox" },
+    { label: "Tools",       path: "/dash/bss/tools" },
     { label: "Communities", path: "/dash/cons/communities" },
     { label: "Settings",    path: "/dash/cons/settings" },
   ],
@@ -31,6 +33,7 @@ const navLinks = {
     { label: "Home",        path: "/dash/inst" },
     { label: "To-Do",       path: "/dash/inst/todo" },
     { label: "Inbox",       path: "/dash/inst/inbox" },
+    { label: "Tools",       path: "/dash/inst/tools" },
     { label: "Communities", path: "/dash/inst/communities" },
     { label: "Settings",    path: "/dash/inst/settings" },
   ],

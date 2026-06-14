@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { getUser } from "../../api";
+import CommunityRoom from "./CommunityRoom";
 import "./Homecomponents.css";
 
 const BASE = "http://localhost:8000";
 
-export default function CommunityCard({ community, onJoin }) {
+export default function CommunityCard({ community, onJoin, isJoined }) {
   const [expanded, setExpanded] = useState(false);
-  const [joined,   setJoined]   = useState(false);
+  const [joined,   setJoined]   = useState(isJoined || false);
+  const [inRoom,   setInRoom]   = useState(false);
 
   const handleJoin = async (e) => {
     e.stopPropagation();
@@ -21,12 +23,26 @@ export default function CommunityCard({ community, onJoin }) {
     onJoin(community.id);
   };
 
+  // if in room show full screen room
+  if (inRoom) {
+    return (
+      <CommunityRoom
+        community={community}
+        onBack={() => setInRoom(false)}
+      />
+    );
+  }
+
   return (
     <div
       className={`community-card ${expanded ? "community-expanded" : ""}`}
-      onClick={() => setExpanded(prev => !prev)}
+      onClick={() => {
+        // if joined go straight to room
+        if (joined) { setInRoom(true); return; }
+        setExpanded(prev => !prev);
+      }}
     >
-      {/* top row — always visible */}
+      {/* top row */}
       <div className="community-top">
         <div className="community-info">
           <span className="community-tag">{community.category}</span>
@@ -34,22 +50,18 @@ export default function CommunityCard({ community, onJoin }) {
           <p className="community-members">👥 {community.members} members</p>
         </div>
 
-        <span className={`community-arrow ${expanded ? "arrow-up" : ""}`}>
-          ›
-        </span>
+        <div className="community-top-right">
+          {joined && <span className="community-joined-badge">✓ Joined</span>}
+          <span className={`community-arrow ${expanded ? "arrow-up" : ""}`}>›</span>
+        </div>
       </div>
 
-      {/* expanded section */}
-      {expanded && (
+      {/* expanded — only shows if not joined */}
+      {expanded && !joined && (
         <div className="community-details" onClick={e => e.stopPropagation()}>
           <p className="community-desc">{community.description}</p>
-
-          <button
-            className={`community-join-btn ${joined ? "joined" : ""}`}
-            onClick={handleJoin}
-            disabled={joined}
-          >
-            {joined ? "✓ Joined" : "Join Community"}
+          <button className="community-join-btn" onClick={handleJoin}>
+            Join Community
           </button>
         </div>
       )}

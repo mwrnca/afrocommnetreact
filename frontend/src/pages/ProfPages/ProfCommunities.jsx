@@ -12,7 +12,7 @@ export default function ProfCommunities() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3001/communities")
+    fetch(`http://localhost:8000/communities`)
       .then(res => res.json())
       .then(data => setCommunities(data));
   }, []);
@@ -28,7 +28,7 @@ export default function ProfCommunities() {
     }
 
     setError("");
-    const res = await fetch("http://localhost:3001/communities", {
+    const res = await fetch(`http://localhost:8000/communities`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...form, members: 1 }),
@@ -49,7 +49,7 @@ export default function ProfCommunities() {
   };
 
   return (
-    <div className="communities-page">
+    <div className="bss-page-container">
 
       <div className="communities-header">
         <h2 className="communities-title">Communities</h2>

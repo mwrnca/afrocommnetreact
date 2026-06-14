@@ -150,9 +150,33 @@ def create_task(user_id: int, task: schemas.TaskCreate, db: Session = Depends(ge
     db.refresh(new_task)
     return new_task
 
+    # COMPLETE a task
+@app.patch("/tasks/{task_id}/complete")
+def complete_task(task_id: int, db: Session = Depends(get_db)):
+    task = db.query(models.Task).filter(models.Task.id == task_id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    task.completed = True
+    db.commit()
+    return {"message": "Task completed"}
+
 # ──────────────────────────────────────────
 # MESSAGES ROUTES
 # ──────────────────────────────────────────
+
+# GET received messages
+@app.get("/messages/{user_id}/received", response_model=list[schemas.MessageResponse])
+def get_received(user_id: int, db: Session = Depends(get_db)):
+    return db.query(models.Message).filter(
+        models.Message.receiverId == user_id
+    ).order_by(models.Message.timestamp.desc()).all()
+
+# GET sent messages
+@app.get("/messages/{user_id}/sent", response_model=list[schemas.MessageResponse])
+def get_sent(user_id: int, db: Session = Depends(get_db)):
+    return db.query(models.Message).filter(
+        models.Message.senderId == user_id
+    ).order_by(models.Message.timestamp.desc()).all()
 
 # GET all messages for a user
 @app.get("/messages/{user_id}", response_model=list[schemas.MessageResponse])
@@ -623,3 +647,67 @@ def get_employee_logs(employee_id: int, db: Session = Depends(get_db)):
     return db.query(models.EmployeeLog).filter(
         models.EmployeeLog.employeeId == employee_id
     ).order_by(models.EmployeeLog.timestamp.desc()).all()
+
+# SEARCH users by name — for message receiver lookup
+@app.get("/users/search", response_model=list[schemas.UserResponse])
+def search_users(name: str, db: Session = Depends(get_db)):
+    return db.query(models.User).filter(
+        (models.User.first_name.ilike(f"%{name}%")) |
+        (models.User.second_name.ilike(f"%{name}%")) |
+        (models.User.name_of_business.ilike(f"%{name}%"))
+    ).all()
+
+# GET communities filtered by role and/or category
+@app.get("/communities", response_model=list[schemas.CommunityResponse])
+def get_communities(
+    role:     str = None,
+    category: str = None,
+    db:       Session = Depends(get_db)
+):
+    query = db.query(models.Community)
+    if role:     query = query.filter(models.Community.role == role)
+    if category: query = query.filter(models.Community.category == category)
+    return query.all()
+
+# GET communities a user has joined
+@app.get("/communities/user/{user_id}", response_model=list[schemas.CommunityResponse])
+def get_user_communities(user_id: int, db: Session = Depends(get_db)):
+    user_data = db.query(models.UserData).filter(
+        models.UserData.userId == user_id
+    ).first()
+    if not user_data:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    joined = db.query(models.UserCommunity).filter(
+        models.UserCommunity.userDataId == user_data.id
+    ).all()
+
+    community_ids = [j.communityId for j in joined]
+    return db.query(models.Community).filter(
+        models.Community.id.in_(community_ids)
+    ).all()
+
+# GET posts in a community
+@app.get("/community-posts/{community_id}", response_model=list[schemas.CommunityPostResponse])
+def get_community_posts(community_id: int, db: Session = Depends(get_db)):
+    return db.query(models.CommunityPost).filter(
+        models.CommunityPost.communityId == community_id
+    ).order_by(models.CommunityPost.timestamp.asc()).all()
+
+# POST a message in a community
+@app.post("/community-posts/{community_id}", response_model=schemas.CommunityPostResponse)
+def create_community_post(
+    community_id: int,
+    post: schemas.CommunityPostCreate,
+    db: Session = Depends(get_db)
+):
+    new_post = models.CommunityPost(
+        communityId = community_id,
+        userId      = post.userId,
+        senderName  = post.senderName,
+        body        = post.body,
+    )
+    db.add(new_post)
+    db.commit()
+    db.refresh(new_post)
+    return new_post

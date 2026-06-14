@@ -17,14 +17,14 @@ export default function InstTools() {
     const [ activeForm, setActiveForm ] = useState(false);
 
     return (
-        <section className="tools-page-container">
+        <section className="bss-tools-page-container">
 
             <div className="update-data-forms">
                 <UpdateDataForm />
             </div>
 
-            <div className="tools-cont">
-                <div className="tool-btn-cont">
+            <div className="bss-tools-cont">
+                <div className="bss-tool-btn-cont">
                     <div onClick={() => setActiveForm("Calculator")}>Calculator</div>
                     <div onClick={() => setActiveForm("ROIcalc")}>ROI calc</div>
                     <div onClick={() => setActiveForm("BusinessNetWorthCalculator")}>BusinessNetWorthCalculator</div>

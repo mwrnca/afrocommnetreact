@@ -11,17 +11,17 @@ export default function WorkspaceSelector () {
         <div className="page-container">
             <Header />
         <section className="roles">
-        <h2>PLEASE SELECT AN ACCOUNT TYPE TO PROCEED:</h2>
+        <h2>WELCOME TO THE LOGIN PAGE</h2>
 
         <div className="role-buttons">
 
           <div onClick={() => navigate('/login/bss')} className="role-btn">
             <span className="icon">⬢</span>
-            <h2>Business Operator</h2>
-            <small>Producers • Wholesalers • Retailers • Service Providers</small>
+            <h2>LOGIN</h2>
+            <small>Bussiness Operators • Consumers • Institutions • Professionals • Employees • Employee Management</small>
           </div>
 
-          <div onClick={() => navigate('/login/inst')} className="role-btn">
+          {/* <div onClick={() => navigate('/login/inst')} className="role-btn">
             <span className="icon">⬢</span>
             <h2>Institution</h2>
             <small>Government • NGOs • Enterprises • Agencies</small>
@@ -49,7 +49,7 @@ export default function WorkspaceSelector () {
             <span className="icon">⬢</span>
             <h2>Employees</h2>
             <small>Employees of Businesses and Institutions</small>
-          </div>
+          </div> */}
 
         </div>
       </section>

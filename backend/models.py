@@ -87,9 +87,10 @@ class Community(Base):
     description = Column(Text, nullable=True)
     category    = Column(String, nullable=True)
     members     = Column(Integer, default=1)
+    role        = Column(String, nullable=True)  # ← add this
 
-    # which users have joined this community
     members_list = relationship("UserCommunity", back_populates="community")
+    posts        = relationship("CommunityPost", back_populates="community")
 
 # ── UserCommunity table ──
 # junction table — tracks which users joined which communities
@@ -211,3 +212,15 @@ class EmployeeLog(Base):
     timestamp   = Column(DateTime, default=datetime.datetime.utcnow)
 
     employee = relationship("Employee", back_populates="logs")
+
+class CommunityPost(Base):
+    __tablename__ = "community_posts"
+
+    id          = Column(Integer, primary_key=True, index=True)
+    communityId = Column(Integer, ForeignKey("communities.id"), nullable=False)
+    userId      = Column(Integer, nullable=False)
+    senderName  = Column(String, nullable=False)
+    body        = Column(Text, nullable=False)
+    timestamp   = Column(DateTime, default=datetime.datetime.utcnow)
+
+    community = relationship("Community", back_populates="posts")

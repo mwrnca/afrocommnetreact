@@ -248,3 +248,28 @@ class EmployeeLoginRequest(BaseModel):
 class EmployeeLoginResponse(BaseModel):
     employee: EmployeeResponse
     message:  str
+
+class CommunityPostBase(BaseModel):
+    body:       str
+    senderName: str
+    userId:     int
+
+class CommunityPostCreate(CommunityPostBase):
+    pass
+
+class CommunityPostResponse(CommunityPostBase):
+    id:          int
+    communityId: int
+    timestamp:   datetime.datetime
+
+    class Config:
+        from_attributes = True
+
+# update CommunityResponse to include role
+class CommunityResponse(CommunityBase):
+    id:      int
+    members: int
+    role:    Optional[str] = None
+
+    class Config:
+        from_attributes = True
