@@ -10,6 +10,7 @@
   flex-direction: column;
   padding: clamp(0.6rem, 2vw, 1.5rem);
   gap: 1rem;
+  min-height: 100vh;
 }
 
 .bss-tools-page-container {

@@ -125,7 +125,7 @@ export default function RevenueContainer() {
           </h2>
         </div>
         <div className="bss-revenue-card">
-          <h3>Business Growth</h3>
+          <h3>TotalGrowth</h3>
           <h2 style={{ color: totals.growth >= 0 ? "#27ae60" : "#e74c3c" }}>
             {totals.growth >= 0 ? "+" : ""}{totals.growth}%
           </h2>

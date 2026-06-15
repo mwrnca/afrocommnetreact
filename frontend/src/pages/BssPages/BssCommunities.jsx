@@ -57,7 +57,6 @@ export default function BssCommunities() {
     const res = await fetch(`${BASE}/communities`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // auto-tag with user's role
       body: JSON.stringify({ ...form, members: 1, role }),
     });
 
