@@ -15,7 +15,9 @@ const pageNames = {
 
   // consumer
   "/dash/cons":             "Home",
+  "/dash/cons/todo":        "To-Do",
   "/dash/cons/inbox":       "Inbox",
+  "/dash/cons/tools":       "Tools",
   "/dash/cons/communities": "Communities",
   "/dash/cons/settings":    "Settings",
 
@@ -30,7 +32,8 @@ const pageNames = {
   // institution
   "/dash/inst":             "Home",
   "/dash/inst/todo":        "To-Do",
-  "/dash/inst/inbox":       "Inbox",
+  "/dash/inst/inbox":       "Inbox",  
+  "/dash/inst/tools":       "Tools",
   "/dash/inst/communities": "Communities",
   "/dash/inst/settings":    "Settings",
 

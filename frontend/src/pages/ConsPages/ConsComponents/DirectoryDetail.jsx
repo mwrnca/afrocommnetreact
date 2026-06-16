@@ -58,7 +58,7 @@ export default function DirectoryDetail({ user, onClose }) {
         {/* details */}
         <div className="dir-detail-info">
           {user.location_of_business && (
-            <p>📍 {user.location_of_business}</p>
+            <p>📍 {user.location}</p>
           )}
           {user.county && (
             <p>🗺 {user.county}</p>

@@ -5,7 +5,7 @@ import "./Generalcomponents.css"
 
 export default function TopBar({ open, setOpen, currentPage }) {
 
-  const { name, email } = getUser();
+  const { first_name, email } = getUser();
   const [dateTime, setDateTime] = useState(new Date());
 
   useEffect(() => {
@@ -25,8 +25,8 @@ export default function TopBar({ open, setOpen, currentPage }) {
     <header className="topbar">
       {/* large screen — current page */}
       <div>
-        <h2>{name || "User"}</h2>
-        <small>{email || "Email not available"}</small>
+        <h2>{ first_name || "name not available"}</h2>
+        <small>{ email || "Email not available"}</small>
       </div>
 
       {/* mobile — hamburger */}
@@ -36,7 +36,8 @@ export default function TopBar({ open, setOpen, currentPage }) {
       >
         {open ? "✕" : "☰"}
       </button>
-{/* 
+     
+     {/* 
       always visible
       <div className="topbar-search">
         <SearchBar />

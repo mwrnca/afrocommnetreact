@@ -25,7 +25,7 @@ export default function BusinessNetWorthCalculator() {
 
   return (
     <div className="fin-calc">
-      <h2 className="fin-title">Business Net Worth Calculator</h2>
+      <h2 className="fin-title">Net Worth Calculator</h2>
       <p className="fin-formula">Net Worth = Total Assets − Total Liabilities</p>
 
       <div className="fin-fields">

@@ -19,15 +19,15 @@ export default function InstTools() {
     return (
         <section className="bss-tools-page-container">
 
-            <div className="update-data-forms">
+            {/* <div className="update-data-forms">
                 <UpdateDataForm />
-            </div>
+            </div> */}
 
             <div className="bss-tools-cont">
                 <div className="bss-tool-btn-cont">
                     <div onClick={() => setActiveForm("Calculator")}>Calculator</div>
                     <div onClick={() => setActiveForm("ROIcalc")}>ROI calc</div>
-                    <div onClick={() => setActiveForm("BusinessNetWorthCalculator")}>BusinessNetWorthCalculator</div>
+                    <div onClick={() => setActiveForm("BusinessNetWorthCalculator")}>Net Worth Calculator</div>
                     <div onClick={() => setActiveForm("RiskRewardCalculator")}>RiskRewardCalculato</div>
                     <div onClick={() => setActiveForm("SimpleInterestCalculator")}>SimpleInterestCalculator</div>
                     <div onClick={() => setActiveForm("CompoundInterestCalculator")}>CompoundInterestCalculator</div>

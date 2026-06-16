@@ -1,36 +1,76 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from typing import Optional, List
 import datetime
 
-# ── Base schemas ──
-# these are the shared fields, other schemas inherit from them
-
 # ── User schemas ──
 class UserBase(BaseModel):
-    first_name:           str
-    second_name:          str
-    email:                str
-    phone_number:         str
-    role:                 str
+    first_name:  str
+    second_name: str
+    email:       str
+    phone_number: str
+    role:        str
 
-    # optional — only business/institution fill these
-    name_of_business:     Optional[str] = None
-    nature_of_business:   Optional[str] = None
-    location_of_business: Optional[str] = None
-    county:               Optional[str] = None
-    description:          Optional[str] = None
-
-# what React sends when signing up — includes password
 class UserCreate(UserBase):
     password:         str
     confirm_password: str
 
-# what the API sends back — never include password in responses
 class UserResponse(UserBase):
     id: int
 
     class Config:
-        from_attributes = True  # allows reading from SQLAlchemy models
+        from_attributes = True
+
+# ── Profile schemas ──
+class BusinessProfileBase(BaseModel):
+    name_of_business:     str
+    nature_of_business:   str
+    location_of_business: str
+    county:               str
+    description:          Optional[str] = None
+
+class BusinessProfileCreate(BusinessProfileBase):
+    pass
+
+class BusinessProfileResponse(BusinessProfileBase):
+    id:     int
+    userId: int
+
+    class Config:
+        from_attributes = True
+
+class InstitutionProfileBase(BaseModel):
+    name_of_institution: str
+    type_of_institution: str
+    location:            str
+    county:              str
+    description:         Optional[str] = None
+
+class InstitutionProfileCreate(InstitutionProfileBase):
+    pass
+
+class InstitutionProfileResponse(InstitutionProfileBase):
+    id:     int
+    userId: int
+
+    class Config:
+        from_attributes = True
+
+class ProfessionalProfileBase(BaseModel):
+    profession:     str
+    specialization: Optional[str] = None
+    location:       str
+    county:         str
+    description:    Optional[str] = None
+
+class ProfessionalProfileCreate(ProfessionalProfileBase):
+    pass
+
+class ProfessionalProfileResponse(ProfessionalProfileBase):
+    id:     int
+    userId: int
+
+    class Config:
+        from_attributes = True
 
 # ── Login schemas ──
 class LoginRequest(BaseModel):
@@ -49,11 +89,31 @@ class TaskBase(BaseModel):
     notes:    Optional[str] = None
 
 class TaskCreate(TaskBase):
-    pass  # same as TaskBase for now
+    pass
 
 class TaskResponse(TaskBase):
     id:        int
     completed: bool
+
+    class Config:
+        from_attributes = True
+
+# ── Attachment schemas ──
+class AttachmentBase(BaseModel):
+    name:      str
+    file_type: str
+    data:      Optional[str] = None
+    url:       Optional[str] = None
+
+class AttachmentCreate(AttachmentBase):
+    messageId:       Optional[int] = None
+    communityPostId: Optional[int] = None
+
+class AttachmentResponse(AttachmentBase):
+    id:              int
+    messageId:       Optional[int] = None
+    communityPostId: Optional[int] = None
+    timestamp:       datetime.datetime
 
     class Config:
         from_attributes = True
@@ -70,9 +130,12 @@ class MessageCreate(MessageBase):
     pass
 
 class MessageResponse(MessageBase):
-    id:        int
-    timestamp: datetime.datetime
-    read:      bool
+    id:                  int
+    timestamp:           datetime.datetime
+    read:                bool
+    deleted_by_sender:   bool = False
+    deleted_by_receiver: bool = False
+    attachments:         List[AttachmentResponse] = []
 
     class Config:
         from_attributes = True
@@ -82,6 +145,7 @@ class CommunityBase(BaseModel):
     name:        str
     description: Optional[str] = None
     category:    Optional[str] = None
+    role:        Optional[str] = None
 
 class CommunityCreate(CommunityBase):
     pass
@@ -93,13 +157,32 @@ class CommunityResponse(CommunityBase):
     class Config:
         from_attributes = True
 
+# ── CommunityPost schemas ──
+class CommunityPostBase(BaseModel):
+    body:       str
+    senderName: str
+    userId:     int
+
+class CommunityPostCreate(CommunityPostBase):
+    pass
+
+class CommunityPostResponse(CommunityPostBase):
+    id:          int
+    communityId: int
+    timestamp:   datetime.datetime
+    deleted:     bool = False
+    attachments: List[AttachmentResponse] = []
+
+    class Config:
+        from_attributes = True
+
 # ── Sales schemas ──
 class SaleBase(BaseModel):
     day:       str
     orders:    int
     completed: int
     pending:   int
-    period:    str  # weekly, monthly, yearly
+    period:    str
     item_name: Optional[str] = None
 
 class SaleCreate(SaleBase):
@@ -127,35 +210,16 @@ class ExpenseResponse(ExpenseBase):
     class Config:
         from_attributes = True
 
-# ── Revenue schemas ──
-class RevenueBase(BaseModel):
-    day:     str
-    revenue: float
-    profit:  float
-    loss:    float
-    period:  str
-
-class RevenueCreate(RevenueBase):
-    pass
-
-class RevenueResponse(RevenueBase):
-    id: int
-
-    class Config:
-        from_attributes = True
-
 # ── UserData schema ──
-# what gets sent back when user logs in — full data object
 class UserDataResponse(BaseModel):
     id:          int
     userId:      int
     role:        str
-    tasks:       List[TaskResponse]       = []
-    messages:    List[MessageResponse]    = []
-    communities: List[CommunityResponse]  = []
-    sales:       List[SaleResponse]       = []
-    expenses:    List[ExpenseResponse]    = []
-    revenue:     List[RevenueResponse]    = []
+    tasks:       List[TaskResponse]      = []
+    messages:    List[MessageResponse]   = []
+    communities: List[CommunityResponse] = []
+    sales:       List[SaleResponse]      = []
+    expenses:    List[ExpenseResponse]   = []
 
     class Config:
         from_attributes = True
@@ -248,28 +312,3 @@ class EmployeeLoginRequest(BaseModel):
 class EmployeeLoginResponse(BaseModel):
     employee: EmployeeResponse
     message:  str
-
-class CommunityPostBase(BaseModel):
-    body:       str
-    senderName: str
-    userId:     int
-
-class CommunityPostCreate(CommunityPostBase):
-    pass
-
-class CommunityPostResponse(CommunityPostBase):
-    id:          int
-    communityId: int
-    timestamp:   datetime.datetime
-
-    class Config:
-        from_attributes = True
-
-# update CommunityResponse to include role
-class CommunityResponse(CommunityBase):
-    id:      int
-    members: int
-    role:    Optional[str] = None
-
-    class Config:
-        from_attributes = True

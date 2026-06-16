@@ -17,7 +17,7 @@ const navLinks = {
     { label: "Home",        path: "/dash/cons" },
     { label: "To-Do",       path: "/dash/cons/todo" },
     { label: "Inbox",       path: "/dash/cons/inbox" },
-    { label: "Tools",       path: "/dash/bss/tools" },
+    { label: "Tools",       path: "/dash/cons/tools" },
     { label: "Communities", path: "/dash/cons/communities" },
     { label: "Settings",    path: "/dash/cons/settings" },
   ],

@@ -50,25 +50,25 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
     existing = db.query(models.User).filter(models.User.email == user.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
+
+     # create base user — same for all roles
     new_user = models.User(
-        first_name           = user.first_name,
-        second_name          = user.second_name,
-        email                = user.email,
-        phone_number         = user.phone_number,
-        password             = pwd_context.hash(user.password[:72]),
-        role                 = user.role,
-        name_of_business     = user.name_of_business,
-        nature_of_business   = user.nature_of_business,
-        location_of_business = user.location_of_business,
-        county               = user.county,
-        description          = user.description,
+        first_name   = user.first_name,
+        second_name  = user.second_name,
+        email        = user.email,
+        phone_number = user.phone_number,
+        password     = pwd_context.hash(user.password[:72]),
+        role         = user.role,
     )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
+
+    # create user data object
     user_data = models.UserData(userId=new_user.id, role=new_user.role)
     db.add(user_data)
     db.commit()
+
     return new_user
 
 @app.post("/login", response_model=schemas.LoginResponse)
@@ -503,3 +503,78 @@ def get_employee_logs(employee_id: int, db: Session = Depends(get_db)):
     return db.query(models.EmployeeLog).filter(
         models.EmployeeLog.employeeId == employee_id
     ).order_by(models.EmployeeLog.timestamp.desc()).all()
+
+# ── Profile routes ──
+# called after register to save role-specific info
+
+@app.post("/profiles/business/{user_id}", response_model=schemas.BusinessProfileResponse)
+def create_business_profile(user_id: int, profile: schemas.BusinessProfileCreate, db: Session = Depends(get_db)):
+    new_profile = models.BusinessProfile(
+        userId               = user_id,
+        name_of_business     = profile.name_of_business,
+        nature_of_business   = profile.nature_of_business,
+        location_of_business = profile.location_of_business,
+        county               = profile.county,
+        description          = profile.description,
+    )
+    db.add(new_profile)
+    db.commit()
+    db.refresh(new_profile)
+    return new_profile
+
+@app.post("/profiles/institution/{user_id}", response_model=schemas.InstitutionProfileResponse)
+def create_institution_profile(user_id: int, profile: schemas.InstitutionProfileCreate, db: Session = Depends(get_db)):
+    new_profile = models.InstitutionProfile(
+        userId              = user_id,
+        name_of_institution = profile.name_of_institution,
+        type_of_institution = profile.type_of_institution,
+        location            = profile.location,
+        county              = profile.county,
+        description         = profile.description,
+    )
+    db.add(new_profile)
+    db.commit()
+    db.refresh(new_profile)
+    return new_profile
+
+@app.post("/profiles/professional/{user_id}", response_model=schemas.ProfessionalProfileResponse)
+def create_professional_profile(user_id: int, profile: schemas.ProfessionalProfileCreate, db: Session = Depends(get_db)):
+    new_profile = models.ProfessionalProfile(
+        userId         = user_id,
+        profession     = profile.profession,
+        specialization = profile.specialization,
+        location       = profile.location,
+        county         = profile.county,
+        description    = profile.description,
+    )
+    db.add(new_profile)
+    db.commit()
+    db.refresh(new_profile)
+    return new_profile
+
+@app.get("/profiles/business/{user_id}", response_model=schemas.BusinessProfileResponse)
+def get_business_profile(user_id: int, db: Session = Depends(get_db)):
+    profile = db.query(models.BusinessProfile).filter(
+        models.BusinessProfile.userId == user_id
+    ).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    return profile
+
+@app.get("/profiles/institution/{user_id}", response_model=schemas.InstitutionProfileResponse)
+def get_institution_profile(user_id: int, db: Session = Depends(get_db)):
+    profile = db.query(models.InstitutionProfile).filter(
+        models.InstitutionProfile.userId == user_id
+    ).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    return profile
+
+@app.get("/profiles/professional/{user_id}", response_model=schemas.ProfessionalProfileResponse)
+def get_professional_profile(user_id: int, db: Session = Depends(get_db)):
+    profile = db.query(models.ProfessionalProfile).filter(
+        models.ProfessionalProfile.userId == user_id
+    ).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    return profile

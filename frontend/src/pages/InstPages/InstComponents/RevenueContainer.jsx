@@ -68,7 +68,7 @@ export default function RevenueContainer() {
     <div className="bss-revenue-container">
       <div className="bss-revenue-cards">
         <div className="bss-revenue-header">
-          <h2 className="bss-revenue-cardtitle">Revenue Overview</h2>
+          <h2 className="bss-revenue-cardtitle">Finances Overview</h2>
           <div className="bss-revenue-period-tabs">
             {periods.map(p => (
               <button

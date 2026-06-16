@@ -37,7 +37,7 @@ export default function DirectoryCard({ user }) {
         <div className="dir-card-info">
           <p className="dir-card-name">{getName(user)}</p>
           <p className="dir-card-location">
-            📍 {user.location_of_business || "Location not set"}
+            📍 {user.location || "Location not set"}
           </p>
           <span className="dir-card-tag">{getCategory(user)}</span>
         </div>

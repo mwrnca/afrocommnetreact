@@ -44,7 +44,7 @@ const formatDay = (day) => {
     <div className="bss-sales-container">
       <div className="bss-sales-card">
         <div className="bss-sales-header">
-          <h2 className="bss-sales-cardtitle">Sales Overview</h2>
+          <h2 className="bss-sales-cardtitle">Services Overview</h2>
           <div className="bss-sales-period-tabs">
             {periods.map(p => (
               <button
@@ -81,12 +81,12 @@ const formatDay = (day) => {
 
       <div className="bss-sales-cards-container">
         <div className="bss-sales-cards">
-          <h3>Total Orders</h3>
+          <h3>Total Services</h3>
           <h2>{totals.orders}</h2>
         </div>
 
         <div className="bss-sales-cards">
-          <h3>Completed</h3>
+          <h3>Completed </h3>
           <h2>{totals.completed}</h2>
         </div>
 
@@ -96,7 +96,7 @@ const formatDay = (day) => {
         </div>
       
         <div className="bss-sales-cards">
-          <h3>Sales Growth</h3>
+          <h3>Service Growth</h3>
           <h2 style={{ color: totals.growth >= 0 ? "#27ae60" : "#e74c3c" }}>
             {totals.growth >= 0 ? "+" : ""}{totals.growth}%
           </h2>
