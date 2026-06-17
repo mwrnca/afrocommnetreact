@@ -5,14 +5,10 @@ import Footer from "../../components/Generalcomponents/Footer";
 import { login, saveUser } from '../../api';
 import "./pages.css";
 
-
-export default function LoginEmployee() {
+export default function LogIn() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [form, setForm] = useState({ 
-    email: "", 
-    password: "" 
-  });
+  const [form, setForm] = useState({ email: "", password: "" });
   const roleRoutes = {
   business:     "bss",
   professional: "prof",
@@ -20,7 +16,7 @@ export default function LoginEmployee() {
   consumer:     "cons",
   management:   "empl-mgmt",
   employee:      "employee",
-  };
+};
 
 
   const handleChange = (e) =>
@@ -33,9 +29,12 @@ export default function LoginEmployee() {
     }
     try {
       const data = await login(form.email, form.password);
+      console.log("login response:", data);        // add this
+      console.log("role:", data.user.role);         // add this
+      console.log("route:", roleRoutes[data.user.role]);
       saveUser(data.user);
       // route based on role returned from backend
-     navigate(`/dash/${roleRoutes[data.user.role]}`);
+      navigate(`/dash/${roleRoutes[data.user.role]}`);
     } catch (err) {
       setError(err.message);
     }
@@ -53,6 +52,7 @@ export default function LoginEmployee() {
           <span>LOG IN</span>
         </button>
       </section>
+
       <Footer />
     </section>
   );

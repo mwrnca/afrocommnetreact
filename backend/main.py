@@ -336,8 +336,7 @@ def get_directory(role: str = None, county: str = None, search: str = None, db: 
 def search_users(name: str, db: Session = Depends(get_db)):
     return db.query(models.User).filter(
         (models.User.first_name.ilike(f"%{name}%")) |
-        (models.User.second_name.ilike(f"%{name}%")) |
-        (models.User.name_of_business.ilike(f"%{name}%"))
+        (models.User.second_name.ilike(f"%{name}%")) 
     ).all()
 
 # ──────────────────────────────────────────

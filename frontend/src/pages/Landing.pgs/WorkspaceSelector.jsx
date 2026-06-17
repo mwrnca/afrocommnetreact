@@ -15,7 +15,7 @@ export default function WorkspaceSelector () {
 
         <div className="role-buttons">
 
-          <div onClick={() => navigate('/login/bss')} className="role-btn">
+          <div onClick={() => navigate('/login')} className="role-btn">
             <span className="icon">⬢</span>
             <h2>LOGIN</h2>
             <small>Bussiness Operators • Consumers • Institutions • Professionals • Employees • Employee Management</small>

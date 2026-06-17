@@ -8,6 +8,26 @@ export function saveUser(user) {
   localStorage.setItem("userName", user.first_name);
 }
 
+export function logout() {
+  localStorage.removeItem("user");
+  localStorage.removeItem("userId");
+  localStorage.removeItem("userRole");
+  localStorage.removeItem("userName");
+}
+
+export function getBussiness() {
+  const stored = localStorage.getItem("bussiness_profiles");
+  if (stored) return JSON.parse(stored);
+  return {
+    id: localStorage.getItem("userId"),
+    name_of_business: localStorage.getItem("name_of_business"),
+    nature_of_business: localStorage.getItem("nature_of_business"),
+    location_of_business: localStorage.getItem("location_of_business"),
+    county: localStorage.getItem("county"),
+    description: localStorage.getItem("description"),
+  }
+}
+
 export function getUser() {
   const stored = localStorage.getItem("user");
   if (stored) return JSON.parse(stored);

@@ -1083,3 +1083,43 @@
   padding: 2px 8px;
   border-radius: 999px;
 }
+
+.logout-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  padding: 1em;
+  background-color: rgba(1, 1, 104, 0.1);
+  border-radius: 8px;
+  margin-bottom: 1em;
+  border: 1px solid var(--border);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.profile-detail-card {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  word-break: break-all;
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  margin-top: 8px ;
+  font-size: larger;
+  padding: 0.8rem;
+}
+
+.profile-detail-header {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.editing-container {
+  display: flex;
+  flex-direction: row;
+  
+}

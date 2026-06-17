@@ -10,12 +10,7 @@ import ToolsLng from './pages/Landing.pgs/ToolsLng'
 import WorkspaceSelector from './pages/Landing.pgs/WorkspaceSelector'
 
 // LOGIN PAGES
-import LogInBss from './pages/Landing.pgs/LogInBss'
-import LogInProf from './pages/Landing.pgs/LogInProf'
-import LogInInst from './pages/Landing.pgs/LogInInst'
-import LogInCons from './pages/Landing.pgs/LogInCons'
-import LogInMgmt from './pages/Landing.pgs/LogInMgmt'
-import LoginEmployee from './pages/Landing.pgs/LoginEmployee'
+import LogIn from './pages/Landing.pgs/LogIn'
 
 // SIGNUP PAGES
 import SignUpBss from './pages/Landing.pgs/SignUpBss'
@@ -86,12 +81,7 @@ function App() {
         <Route path="/about" element={<About />} />
 
         {/* AUTH PAGES */}
-        <Route path="/login/bss" element={<LogInBss />} />
-        <Route path="/login/prof" element={<LogInProf />} />
-        <Route path="/login/inst" element={<LogInInst />} />
-        <Route path="/login/cons" element={<LogInCons />} />
-        <Route path="/login/mgmt" element={<LogInMgmt />} />
-        <Route path="/login/employee" element={<LoginEmployee />} />
+        <Route path="/login" element={<LogIn />} />
 
         {/* SIGNUP PAGES */}
         <Route path="/signup/bss" element={<SignUpBss />} />
