@@ -123,6 +123,7 @@ class MessageBase(BaseModel):
     senderId:   int
     receiverId: int
     senderName: str
+    receiverName: Optional[str] = None
     subject:    str
     body:       str
 
@@ -146,6 +147,8 @@ class CommunityBase(BaseModel):
     description: Optional[str] = None
     category:    Optional[str] = None
     role:        Optional[str] = None
+    is_private:  Optional[bool] = False
+    password:    Optional[str]  = None
 
 class CommunityCreate(CommunityBase):
     pass
@@ -312,3 +315,9 @@ class EmployeeLoginRequest(BaseModel):
 class EmployeeLoginResponse(BaseModel):
     employee: EmployeeResponse
     message:  str
+
+class UserUpdate(BaseModel):
+    first_name:   Optional[str] = None
+    second_name:  Optional[str] = None
+    email:        Optional[str] = None
+    phone_number: Optional[str] = None

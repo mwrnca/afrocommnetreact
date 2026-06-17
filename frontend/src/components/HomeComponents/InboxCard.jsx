@@ -15,12 +15,17 @@ const fmtTime = (ts) => {
 
 const getInitial = (name) => name?.charAt(0).toUpperCase() || "?";
 
-export default function InboxCard({ message, onRead }) {
+export default function InboxCard({ message, onRead, onReply }) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
-    if (!message.read) onRead(message.id);
+    if (!message.read && onRead) onRead(message.id);
+  };
+
+  const handleReply = (e) => {
+    e.stopPropagation(); // don't trigger handleOpen
+    if (onReply) onReply(message);
   };
 
   return (
@@ -29,34 +34,31 @@ export default function InboxCard({ message, onRead }) {
         className={`inbox-card ${!message.read ? "inbox-unread" : ""}`}
         onClick={handleOpen}
       >
-        {/* avatar — circle with sender's first initial */}
         <div className="inbox-avatar">
           {getInitial(message.senderName)}
         </div>
 
         <div className="inbox-body">
           <div className="inbox-top">
-            {/* sender name — bold if unread */}
             <span className={`inbox-sender ${!message.read ? "inbox-bold" : ""}`}>
               {message.senderName}
             </span>
-
-            {/* timestamp — today shows time, older shows date */}
             <span className="inbox-time">{fmtTime(message.timestamp)}</span>
           </div>
 
-          {/* subject line */}
           <p className="inbox-subject">{message.subject}</p>
-
-          {/* message preview — truncated with CSS */}
           <p className="inbox-preview">{message.body}</p>
+
+          {onReply && (
+            <button className="inbox-reply-btn" onClick={handleReply}>
+              ↩ Reply
+            </button>
+          )}
         </div>
 
-        {/* unread blue dot — only shows if message.read is false */}
         {!message.read && <div className="inbox-dot" />}
       </div>
 
-      {/* MessageDetail opens as a modal when open is true */}
       {open && (
         <MessageDetail
           message={message}

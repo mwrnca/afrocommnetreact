@@ -159,6 +159,7 @@ def send_message(user_id: int, message: schemas.MessageCreate, db: Session = Dep
         senderId   = message.senderId,
         receiverId = message.receiverId,
         senderName = message.senderName,
+        receiverName = message.receiverName,
         subject    = message.subject,
         body       = message.body,
     )
@@ -214,12 +215,27 @@ def create_community(community: schemas.CommunityCreate, db: Session = Depends(g
     db.refresh(new_community)
     return new_community
 
+#── Community join check — prevent duplicate joins ──
 @app.post("/communities/{community_id}/join/{user_id}")
-def join_community(community_id: int, user_id: int, db: Session = Depends(get_db)):
+def join_community(community_id: int, user_id: int, password: str = None, db: Session = Depends(get_db)):
     user_data = db.query(models.UserData).filter(models.UserData.userId == user_id).first()
     community = db.query(models.Community).filter(models.Community.id == community_id).first()
     if not user_data or not community:
         raise HTTPException(status_code=404, detail="Not found")
+
+    # check if already joined
+    existing = db.query(models.UserCommunity).filter(
+        models.UserCommunity.userDataId == user_data.id,
+        models.UserCommunity.communityId == community_id
+    ).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="Already a member")
+
+    # check password if community is private
+    if community.is_private:
+        if not password or password != community.password:
+            raise HTTPException(status_code=403, detail="Incorrect password")
+
     community.members += 1
     join = models.UserCommunity(userDataId=user_data.id, communityId=community_id)
     db.add(join)
@@ -577,3 +593,54 @@ def get_professional_profile(user_id: int, db: Session = Depends(get_db)):
     if not profile:
         raise HTTPException(status_code=404, detail="Profile not found")
     return profile
+
+# ── Profile GET routes already exist — add an UPDATE route ──
+
+@app.put("/users/{user_id}", response_model=schemas.UserResponse)
+def update_user(user_id: int, updates: schemas.UserUpdate, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if updates.first_name:   user.first_name   = updates.first_name
+    if updates.second_name:  user.second_name  = updates.second_name
+    if updates.email:        user.email        = updates.email
+    if updates.phone_number: user.phone_number = updates.phone_number
+    db.commit()
+    db.refresh(user)
+    return user
+
+@app.put("/profiles/business/{user_id}", response_model=schemas.BusinessProfileResponse)
+def update_business_profile(user_id: int, updates: schemas.BusinessProfileCreate, db: Session = Depends(get_db)):
+    profile = db.query(models.BusinessProfile).filter(models.BusinessProfile.userId == user_id).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    profile.name_of_business     = updates.name_of_business
+    profile.nature_of_business   = updates.nature_of_business
+    profile.location_of_business = updates.location_of_business
+    profile.county                = updates.county
+    profile.description           = updates.description
+    db.commit()
+    db.refresh(profile)
+    return profile
+
+# ── Reply route — sends a reply linked to the original conversation ──
+# this just reuses /messages/{user_id} POST, no new route needed
+# the fix is on the frontend — explained below
+
+@app.get("/users/{user_id}", response_model=schemas.UserResponse)
+def get_single_user(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+
+@app.get("/messages/{user_id}/conversation/{other_id}", response_model=list[schemas.MessageResponse])
+def get_conversation(user_id: int, other_id: int, db: Session = Depends(get_db)):
+    return db.query(models.Message).filter(
+        (
+            (models.Message.senderId == user_id) & (models.Message.receiverId == other_id) & (models.Message.deleted_by_sender == False)
+        ) | (
+            (models.Message.senderId == other_id) & (models.Message.receiverId == user_id) & (models.Message.deleted_by_receiver == False)
+        )
+    ).order_by(models.Message.timestamp.asc()).all()

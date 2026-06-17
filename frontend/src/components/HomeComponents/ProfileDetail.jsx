@@ -1,183 +1,122 @@
-import { getUser, getBussiness } from "../../api";
-import { useState } from "react";
+import { getUser, saveUser } from "../../api";
+import { useState, useEffect } from "react";
 import "./Homecomponents.css";
 
+const BASE = "http://localhost:8000";
+
 export default function ProfileDetail({ onClose }) {
+  const { id, role } = getUser();
 
-  const { 
-    first_name,
-    second_name,
-    email,
-    phone_number,
- } = getUser();
-
- const {
-    name_of_business,
-    nature_of_business,
-    location_of_business,
-    county,
-    description,
- } = getBussiness();
-
+  const [current, setCurrent] = useState({});
   const [formData, setFormData] = useState({
-    first_name: "",
-    second_name: "",
-    email: "",
-    phone_number: "",
+    first_name: "", second_name: "", email: "", phone_number: "",
   });
-
   const [profile, setProfile] = useState({
-    name_of_business: "",
-    nature_of_business: "",
-    location_of_business: "",
-    county: "",
-    description: "",
+    name_of_business: "", nature_of_business: "",
+    location_of_business: "", county: "", description: "",
   });
+  const [msg, setMsg] = useState("");
+
+  // fetch current info on mount
+  useEffect(() => {
+    if (!id) return;
+
+    fetch(`${BASE}/users/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        setCurrent(data);
+        setFormData({
+          first_name:   data.first_name   || "",
+          second_name:  data.second_name  || "",
+          email:        data.email        || "",
+          phone_number: data.phone_number || "",
+        });
+      });
+
+    // only fetch business profile if role is business
+    if (role === "business" || role === "management") {
+      fetch(`${BASE}/profiles/business/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.name_of_business) setProfile(data);
+        })
+        .catch(() => {}); // profile might not exist yet
+    }
+  }, [id, role]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleProfile = (e) => {
-    const { name, value } = e.target;
-
-    setProfile((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setProfile(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedProfile = {
-      ...formData,
-      ...profile,
-    };
+    // update base user info
+    await fetch(`${BASE}/users/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-    console.log(updatedProfile);
+    // update business profile if applicable
+    if (role === "business" || role === "management") {
+      await fetch(`${BASE}/profiles/business/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profile),
+      });
+    }
 
-    // API call here
-  };
+    // update localStorage so navbar/etc reflects new name immediately
+    saveUser({ ...getUser(), ...formData });
 
-  const handleCancel = () => {
-    onClose();
+    setMsg("Profile updated successfully");
+    setTimeout(() => { setMsg(""); onClose(); }, 1500);
   };
 
   return (
     <div className="profile-detail-card">
-      <span className="profile-detail-header">
-        EDIT PROFILE DETAILS
-      </span>
+      <span className="profile-detail-header">EDIT PROFILE DETAILS</span>
 
       <div className="editing-container">
         <section className="new-info-container">
           <span>New Information</span>
-
           <form onSubmit={handleSubmit}>
-            <input
-              name="first_name"
-              type="text"
-              placeholder="First Name"
-              value={formData.first_name}
-              onChange={handleChange}
-            />
+            <input name="first_name"   placeholder="First Name"   value={formData.first_name}   onChange={handleChange} />
+            <input name="second_name"  placeholder="Second Name"  value={formData.second_name}  onChange={handleChange} />
+            <input name="email"        placeholder="Email"        value={formData.email}        onChange={handleChange} />
+            <input name="phone_number" placeholder="Phone Number" value={formData.phone_number} onChange={handleChange} />
 
-            <input
-              name="second_name"
-              type="text"
-              placeholder="Second Name"
-              value={formData.second_name}
-              onChange={handleChange}
-            />
+            {(role === "business" || role === "management") && (
+              <>
+                <input name="name_of_business"     placeholder="Business Name"     value={profile.name_of_business}     onChange={handleProfile} />
+                <input name="nature_of_business"   placeholder="Nature of Business" value={profile.nature_of_business}   onChange={handleProfile} />
+                <input name="location_of_business" placeholder="Location"           value={profile.location_of_business} onChange={handleProfile} />
+                <input name="county"               placeholder="County"             value={profile.county}               onChange={handleProfile} />
+                <textarea name="description" placeholder="Description" value={profile.description} onChange={handleProfile} />
+              </>
+            )}
 
-            <input
-              name="email"
-              type="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-            />
-
-            <input
-              name="phone_number"
-              type="text"
-              placeholder="Phone Number"
-              value={formData.phone_number}
-              onChange={handleChange}
-            />
-
-            <input
-              name="name_of_business"
-              type="text"
-              placeholder="Business Name"
-              value={profile.name_of_business}
-              onChange={handleProfile}
-            />
-
-            <input
-              name="nature_of_business"
-              type="text"
-              placeholder="Nature of Business"
-              value={profile.nature_of_business}
-              onChange={handleProfile}
-            />
-
-            <input
-              name="location_of_business"
-              type="text"
-              placeholder="Location"
-              value={profile.location_of_business}
-              onChange={handleProfile}
-            />
-
-            <input
-              name="county"
-              type="text"
-              placeholder="County"
-              value={profile.county}
-              onChange={handleProfile}
-            />
-
-            <textarea
-              name="description"
-              placeholder="Short description of your business"
-              value={profile.description}
-              onChange={handleProfile}
-            />
+            {msg && <p className="msg-success">{msg}</p>}
 
             <div className="button-group">
-              <button type="submit">
-                Save Changes
-              </button>
-
-              <button
-                type="button"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
+              <button type="submit" className="btn-green">Save Changes</button>
+              <button type="button" onClick={onClose} className="btn-green">Cancel</button>
             </div>
           </form>
         </section>
 
-        <section className="signup-container">
+        <section className="current-info-container">
           <span>Current Information</span>
-
-          <p>{first_name}</p>
-          <p>{second_name}</p>
-          <p>{email}</p>
-          <p>{phone_number}</p>
-          <p>{name_of_business}</p>
-          <p>{nature_of_business}</p>
-          <p>{location_of_business}</p>
-          <p>{county}</p>
-          <p>{description}</p>
+          <p>{current.first_name}</p>
+          <p>{current.second_name}</p>
+          <p>{current.email}</p>
+          <p>{current.phone_number}</p>
+          {profile.name_of_business && <p>{profile.name_of_business}</p>}
         </section>
       </div>
     </div>

@@ -10,45 +10,64 @@ const categories = [
   "Health", "Education", "Agriculture", "Retail", "Other"
 ];
 
-export default function ProfCommunities() {
-  const [communities,   setCommunities]   = useState([]);
-  const [myCommunities, setMyCommunities] = useState([]);
-  const [view,          setView]          = useState("all"); // "all" or "mine"
-  const [category,      setCategory]      = useState("All");
-  const [showForm,      setShowForm]      = useState(false);
-  const [form,          setForm]          = useState({ name: "", description: "", category: "" });
-  const [error,         setError]         = useState("");
+const compatibleRoles = {
+  consumer:     ["consumer"],
+  business:     ["business", "consumer"],
+  professional: ["professional", "consumer"],
+  institution:  ["institution", "consumer"],
+};
 
+export default function ProfCommunities() {
   const { id, role } = getUser();
 
+  const [communities,   setCommunities]   = useState([]);
+  const [myCommunities, setMyCommunities] = useState([]);
+  const [view,          setView]          = useState("mine");
+  const [category,      setCategory]      = useState("All");
+  const [showForm,      setShowForm]      = useState(false);
+  const [form,          setForm]          = useState({
+    name: "", description: "", category: "",
+    is_private: false, password: "",
+  });
+  const [error, setError] = useState("");
+
+  // fetch communities + my communities on mount
   useEffect(() => {
     if (!id) return;
 
-    // fetch all communities for this role
-    fetch(`${BASE}/communities?role=${role}`)
-      .then(res => res.json())
-      .then(data => { if (Array.isArray(data)) setCommunities(data); });
+    const rolesToFetch = compatibleRoles[role] || [role];
 
-    // fetch communities this user has joined
+    Promise.all(
+      rolesToFetch.map(r => fetch(`${BASE}/communities?role=${r}`).then(res => res.json()))
+    ).then(results => {
+      const merged = results.flat();
+      setCommunities(merged);
+    });
+
     fetch(`${BASE}/communities/user/${id}`)
       .then(res => res.json())
       .then(data => { if (Array.isArray(data)) setMyCommunities(data); });
   }, [id, role]);
 
+  // build the set of joined ids — recalculated whenever myCommunities changes
   const joinedIds = new Set(myCommunities.map(c => c.id));
 
-  // filter by category
   const filtered = communities.filter(c =>
     category === "All" || c.category === category
   );
 
   const handleChange = (e) => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value, type, checked } = e.target;
+    setForm(prev => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
   };
 
   const handleCreate = async () => {
     if (!form.name.trim() || !form.description.trim() || !form.category.trim()) {
       setError("All fields are required");
+      return;
+    }
+    if (form.is_private && !form.password.trim()) {
+      setError("Set a password for the private community");
       return;
     }
 
@@ -63,16 +82,14 @@ export default function ProfCommunities() {
     const saved = await res.json();
     setCommunities(prev => [...prev, saved]);
     setMyCommunities(prev => [...prev, saved]);
-    setForm({ name: "", description: "", category: "" });
+    setForm({ name: "", description: "", category: "", is_private: false, password: "" });
     setShowForm(false);
   };
 
   const handleJoin = (communityId) => {
-    // update member count
     setCommunities(prev =>
       prev.map(c => c.id === communityId ? { ...c, members: c.members + 1 } : c)
     );
-    // add to my communities
     const joined = communities.find(c => c.id === communityId);
     if (joined) setMyCommunities(prev => [...prev, joined]);
   };
@@ -82,7 +99,6 @@ export default function ProfCommunities() {
   return (
     <div className="bss-page-container">
 
-      {/* header */}
       <div className="communities-header">
         <h2 className="communities-title">Communities</h2>
         <div className="communities-btns">
@@ -90,7 +106,7 @@ export default function ProfCommunities() {
             className="communities-create-btn"
             onClick={() => { setView("mine"); setShowForm(false); }}
           >
-            MyCommunities
+            My Communities
           </button>
           <button
             className="communities-create-btn"
@@ -107,7 +123,6 @@ export default function ProfCommunities() {
         </div>
       </div>
 
-      {/* category filter — only show when browsing */}
       {view === "all" && (
         <div className="communities-categories">
           {categories.map(cat => (
@@ -122,7 +137,6 @@ export default function ProfCommunities() {
         </div>
       )}
 
-      {/* create form */}
       {showForm && (
         <div className="task-form">
           <input
@@ -143,12 +157,32 @@ export default function ProfCommunities() {
             value={form.description}
             onChange={handleChange}
           />
+
+          <label>
+            <input
+              type="checkbox"
+              name="is_private"
+              checked={form.is_private}
+              onChange={handleChange}
+            />
+            Make this community private
+          </label>
+
+          {form.is_private && (
+            <input
+              type="password"
+              name="password"
+              placeholder="Set community password"
+              value={form.password}
+              onChange={handleChange}
+            />
+          )}
+
           {error && <p className="msg-error">{error}</p>}
           <button onClick={handleCreate}>Create</button>
         </div>
       )}
 
-      {/* list */}
       <div className="communities-list">
         {displayList.length === 0 ? (
           <p className="inbox-empty">

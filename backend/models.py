@@ -102,6 +102,7 @@ class Message(Base):
     senderId            = Column(Integer, nullable=False)
     receiverId          = Column(Integer, nullable=False)
     senderName          = Column(String, nullable=False)
+    receiverName        = Column(String, nullable=True)
     subject             = Column(String, nullable=False)
     body                = Column(Text,   nullable=False)
     timestamp           = Column(DateTime, default=datetime.datetime.utcnow)
@@ -136,6 +137,8 @@ class Community(Base):
     category    = Column(String, nullable=True)
     members     = Column(Integer, default=1)
     role        = Column(String, nullable=True)
+    is_private  = Column(Boolean, default=False)  # ← add this
+    password    = Column(String, nullable=True)   # ← add this
 
     members_list = relationship("UserCommunity", back_populates="community")
     posts        = relationship("CommunityPost", back_populates="community")

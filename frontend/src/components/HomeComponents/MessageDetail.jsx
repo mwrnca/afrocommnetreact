@@ -22,19 +22,20 @@ export default function MessageDetail({ message, onClose }) {
 
   // replace handleReply with:
 const handleReply = async () => {
-  if (!reply.trim()) return;
-  setSending(true);
-  const { id, name } = getUser();
+  const { id, first_name } = getUser();
+  
+  // determine who to reply to — whoever isn't me
+  const replyToId = message.senderId === id ? message.receiverId : message.senderId;
 
   await fetch(`http://localhost:8000/messages/${id}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      senderId:   Number(id),
-      receiverId: message.senderId,
-      senderName: name,
+      senderId:   id,
+      receiverId: replyToId,   // ✅ correct person now
+      senderName: first_name,
       subject:    `Re: ${message.subject}`,
-      body:       reply,
+      // body:       replyText,
     }),
   });
 
