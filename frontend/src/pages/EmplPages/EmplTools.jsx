@@ -1,13 +1,13 @@
 import { useState } from "react"
 import "./Dash.css"
-import Calculator from "../../components/ToolsComponents.jsx/Calculator"
-import ROIcalc from "../../components/ToolsComponents.jsx/ROIcalc"
-import BusinessNetWorthCalculator from "../../components/ToolsComponents.jsx/BusinessNetWorthCalculator"
-import RiskRewardCalculator from "../../components/ToolsComponents.jsx/RiskRewardCalculator"
-import SimpleInterestCalculator from "../../components/ToolsComponents.jsx/SimpleInterestCalculator"
-import CompoundInterestCalculator from "../../components/ToolsComponents.jsx/CompoundInterestCalculator"
-import MarketCapCalculator from "../../components/ToolsComponents.jsx/MarketCapCalculator"
-import UpdateDataForm from "../../components/ToolsComponents.jsx/UpdateDataForm"
+import Calculator from "./EmplComponents/Tools/Calculator"
+import ROIcalc from "./EmplComponents/Tools/ROIcalc"
+import BusinessNetWorthCalculator from "./EmplComponents/Tools/BusinessNetWorthCalculator"
+import RiskRewardCalculator from "./EmplComponents/Tools/RiskRewardCalculator"
+import SimpleInterestCalculator from "./EmplComponents/Tools/SimpleInterestCalculator"
+import CompoundInterestCalculator from "./EmplComponents/Tools/CompoundInterestCalculator"
+import MarketCapCalculator from "./EmplComponents/Tools/MarketCapCalculator"
+import UpdateDataForm from "./EmplComponents/Tools/UpdateDataForm"
 
 
 export default function EmplTools() {

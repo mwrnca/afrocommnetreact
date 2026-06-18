@@ -13,23 +13,22 @@ const emptyForm = {
 };
 
 export default function UpdateDataForm() {
+  // separate state for each form
   const [salesForm,    setSalesForm]    = useState(emptyForm);
   const [expensesForm, setExpensesForm] = useState(emptyForm);
   const [salesMsg,     setSalesMsg]     = useState("");
   const [expensesMsg,  setExpensesMsg]  = useState("");
 
+  // get logged in user from localStorage
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  // generic change handler — takes the setter as argument
   const handleChange = (setter) => (e) => {
     setter(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  // submit sales entry
   const handleSalesSubmit = async () => {
-    console.log("submit clicked"); // add this first
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    console.log("user:", user);
-    console.log("user.id:", user.id);
-
-    if (!user.id) { setSalesMsg("Not logged in"); return; }
-
     if (!salesForm.itemName || !salesForm.amount || !salesForm.date) {
       setSalesMsg("Please fill in required fields");
       return;
@@ -44,24 +43,23 @@ export default function UpdateDataForm() {
         completed: 1,
         pending:   0,
         period:    "weekly",
-        item_name: salesForm.itemName,
+        itemName:  salesForm.itemName,
+        amount:    parseFloat(salesForm.amount),
       }),
     });
 
     if (res.ok) {
-      setSalesMsg("Sale recorded successfully");
+      setSalesMsg("Sales updated successfully");
       setSalesForm(emptyForm);
     } else {
-      setSalesMsg("Failed to record sale");
+      setSalesMsg("Failed to update sales");
     }
+
     setTimeout(() => setSalesMsg(""), 3000);
   };
 
+  // submit expenses entry
   const handleExpensesSubmit = async () => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-
-    if (!user.id) { setExpensesMsg("Not logged in"); return; }
-
     if (!expensesForm.itemName || !expensesForm.amount || !expensesForm.date) {
       setExpensesMsg("Please fill in required fields");
       return;
@@ -79,11 +77,12 @@ export default function UpdateDataForm() {
     });
 
     if (res.ok) {
-      setExpensesMsg("Expense recorded successfully");
+      setExpensesMsg("Expenses updated successfully");
       setExpensesForm(emptyForm);
     } else {
-      setExpensesMsg("Failed to record expense");
+      setExpensesMsg("Failed to update expenses");
     }
+
     setTimeout(() => setExpensesMsg(""), 3000);
   };
 
@@ -92,13 +91,22 @@ export default function UpdateDataForm() {
 
       {/* ── Sales Form ── */}
       <div className="sales-update">
-        <h3 className="update-title">Update Services</h3>
+        <h3 className="update-title">Record Sale</h3>
+
         <input
           type="text"
           name="itemName"
-          placeholder="Client Name"
+          placeholder="Item Name"
           className="update-input"
           value={salesForm.itemName}
+          onChange={handleChange(setSalesForm)}
+        />
+        <input
+          type="number"
+          name="quantity"
+          placeholder="Quantity"
+          className="update-input"
+          value={salesForm.quantity}
           onChange={handleChange(setSalesForm)}
         />
         <input
@@ -132,22 +140,18 @@ export default function UpdateDataForm() {
           value={salesForm.date}
           onChange={handleChange(setSalesForm)}
         />
-        {/* <textarea
-          type="text"
-          name="description"
-          className="update-input"
-          value={salesForm.description}
-          onChange={handleChange(setSalesForm)}
-        /> */}
+
         {salesMsg && <p className="update-msg">{salesMsg}</p>}
+
         <button className="update-button" onClick={handleSalesSubmit}>
-          Update Services
+          Record Sale
         </button>
       </div>
 
       {/* ── Expenses Form ── */}
       <div className="expenses-update">
         <h3 className="update-title">Record Expense</h3>
+
         <input
           type="text"
           name="itemName"
@@ -195,7 +199,9 @@ export default function UpdateDataForm() {
           value={expensesForm.date}
           onChange={handleChange(setExpensesForm)}
         />
+
         {expensesMsg && <p className="update-msg">{expensesMsg}</p>}
+
         <button className="update-button" onClick={handleExpensesSubmit}>
           Record Expense
         </button>

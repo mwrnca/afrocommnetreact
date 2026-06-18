@@ -200,7 +200,7 @@
     height: 100dvh;
     z-index: 99;
     transition: left 0.3s ease;
-    background: var(--secondary); /* needs background or it's transparent */
+    background: var(--bg); 
     border-right: 1px solid var(--border);
   }
 
