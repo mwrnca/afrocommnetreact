@@ -1,16 +1,14 @@
 import { useState } from "react"
 import "./Dash.css"
-import Calculator from "../../components/ToolsComponents.jsx/Calculator"
-import ROIcalc from "../../components/ToolsComponents.jsx/ROIcalc"
-import BusinessNetWorthCalculator from "../../components/ToolsComponents.jsx/BusinessNetWorthCalculator"
-import RiskRewardCalculator from "../../components/ToolsComponents.jsx/RiskRewardCalculator"
-import SimpleInterestCalculator from "../../components/ToolsComponents.jsx/SimpleInterestCalculator"
-import CompoundInterestCalculator from "../../components/ToolsComponents.jsx/CompoundInterestCalculator"
-import MarketCapCalculator from "../../components/ToolsComponents.jsx/MarketCapCalculator"
-import UpdateDataForm from "../../components/ToolsComponents.jsx/UpdateDataForm"
+import Calculator from "./ConsComponents/Tools/Calculator"
+import ROIcalc from "./ConsComponents/Tools/ROIcalc"
+import RiskRewardCalculator from "./ConsComponents/Tools/RiskRewardCalculator"
+import SimpleInterestCalculator from "./ConsComponents/Tools/SimpleInterestCalculator"
+import CompoundInterestCalculator from "./ConsComponents/Tools/CompoundInterestCalculator"
+import MarketCapCalculator from "./ConsComponents/Tools/MarketCapCalculator"
 
 
-export default function InstTools() {
+export default function ConsTools() {
 
     const [ open, setOpen ] = useState(false);
 
@@ -27,7 +25,6 @@ export default function InstTools() {
                 <div className="bss-tool-btn-cont">
                     <div onClick={() => setActiveForm("Calculator")}>Calculator</div>
                     <div onClick={() => setActiveForm("ROIcalc")}>ROI calc</div>
-                    <div onClick={() => setActiveForm("BusinessNetWorthCalculator")}>Net Worth Calculator</div>
                     <div onClick={() => setActiveForm("RiskRewardCalculator")}>RiskRewardCalculato</div>
                     <div onClick={() => setActiveForm("SimpleInterestCalculator")}>SimpleInterestCalculator</div>
                     <div onClick={() => setActiveForm("CompoundInterestCalculator")}>CompoundInterestCalculator</div>

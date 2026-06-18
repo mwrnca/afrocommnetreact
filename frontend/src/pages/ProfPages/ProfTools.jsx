@@ -1,14 +1,13 @@
 import { useState } from "react"
 import "./Dash.css"
-import Calculator from "../../components/ToolsComponents.jsx/Calculator"
-import ROIcalc from "../../components/ToolsComponents.jsx/ROIcalc"
-import BusinessNetWorthCalculator from "../../components/ToolsComponents.jsx/BusinessNetWorthCalculator"
-import RiskRewardCalculator from "../../components/ToolsComponents.jsx/RiskRewardCalculator"
-import SimpleInterestCalculator from "../../components/ToolsComponents.jsx/SimpleInterestCalculator"
-import CompoundInterestCalculator from "../../components/ToolsComponents.jsx/CompoundInterestCalculator"
-import MarketCapCalculator from "../../components/ToolsComponents.jsx/MarketCapCalculator"
-import UpdateDataForm from "../../components/ToolsComponents.jsx/UpdateDataForm"
-
+import Calculator from "./ProfComponents/Tools/Calculator"
+import ROIcalc from "./ProfComponents/Tools/ROIcalc"
+import BusinessNetWorthCalculator from "./ProfComponents/Tools/BusinessNetWorthCalculator"
+import RiskRewardCalculator from "./ProfComponents/Tools/RiskRewardCalculator"
+import SimpleInterestCalculator from "./ProfComponents/Tools/SimpleInterestCalculator"
+import CompoundInterestCalculator from "./ProfComponents/Tools/CompoundInterestCalculator"
+import MarketCapCalculator from "./ProfComponents/Tools/MarketCapCalculator"
+import UpdateDataForm from "./ProfComponents/Tools/UpdateDataForm"
 
 export default function ProfTools() {
 

@@ -1,13 +1,13 @@
 import { useState } from "react"
 import "./Dash.css"
-import Calculator from "../../components/ToolsComponents.jsx/Calculator"
-import ROIcalc from "../../components/ToolsComponents.jsx/ROIcalc"
-import BusinessNetWorthCalculator from "../../components/ToolsComponents.jsx/BusinessNetWorthCalculator"
-import RiskRewardCalculator from "../../components/ToolsComponents.jsx/RiskRewardCalculator"
-import SimpleInterestCalculator from "../../components/ToolsComponents.jsx/SimpleInterestCalculator"
-import CompoundInterestCalculator from "../../components/ToolsComponents.jsx/CompoundInterestCalculator"
-import MarketCapCalculator from "../../components/ToolsComponents.jsx/MarketCapCalculator"
-import UpdateDataForm from "../../components/ToolsComponents.jsx/UpdateDataForm"
+import Calculator from "./BssComponents/Tools/Calculator"
+import ROIcalc from "./BssComponents/Tools/ROIcalc"
+import BusinessNetWorthCalculator from "./BssComponents/Tools/BusinessNetWorthCalculator"
+import RiskRewardCalculator from "./BssComponents/Tools/RiskRewardCalculator"
+import SimpleInterestCalculator from "./BssComponents/Tools/SimpleInterestCalculator"
+import CompoundInterestCalculator from "./BssComponents/Tools/CompoundInterestCalculator"
+import MarketCapCalculator from "./BssComponents/Tools/MarketCapCalculator"
+import UpdateDataForm from "./BssComponents/Tools/UpdateDataForm"
 
 
 export default function BssTools() {

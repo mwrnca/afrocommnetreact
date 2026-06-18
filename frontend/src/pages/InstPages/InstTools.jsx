@@ -1,13 +1,13 @@
 import { useState } from "react"
 import "./Dash.css"
-import Calculator from "../../components/ToolsComponents.jsx/Calculator"
-import ROIcalc from "../../components/ToolsComponents.jsx/ROIcalc"
-import BusinessNetWorthCalculator from "../../components/ToolsComponents.jsx/BusinessNetWorthCalculator"
-import RiskRewardCalculator from "../../components/ToolsComponents.jsx/RiskRewardCalculator"
-import SimpleInterestCalculator from "../../components/ToolsComponents.jsx/SimpleInterestCalculator"
-import CompoundInterestCalculator from "../../components/ToolsComponents.jsx/CompoundInterestCalculator"
-import MarketCapCalculator from "../../components/ToolsComponents.jsx/MarketCapCalculator"
-import UpdateDataForm from "../../components/ToolsComponents.jsx/UpdateDataForm"
+import Calculator from "./InstComponents/Tools/Calculator"
+import ROIcalc from "./InstComponents/Tools/ROIcalc"
+import BusinessNetWorthCalculator from "./InstComponents/Tools/BusinessNetWorthCalculator"
+import RiskRewardCalculator from "./InstComponents/Tools/RiskRewardCalculator"
+import SimpleInterestCalculator from "./InstComponents/Tools/SimpleInterestCalculator"
+import CompoundInterestCalculator from "./InstComponents/Tools/CompoundInterestCalculator"
+import MarketCapCalculator from "./InstComponents/Tools/MarketCapCalculator"
+import UpdateDataForm from "./InstComponents/Tools/UpdateDataForm"
 
 
 export default function InstTools() {
@@ -19,9 +19,9 @@ export default function InstTools() {
     return (
         <section className="bss-tools-page-container">
 
-            {/* <div className="update-data-forms">
+            <div className="update-data-forms">
                 <UpdateDataForm />
-            </div> */}
+            </div>
 
             <div className="bss-tools-cont">
                 <div className="bss-tool-btn-cont">
@@ -32,6 +32,7 @@ export default function InstTools() {
                     <div onClick={() => setActiveForm("SimpleInterestCalculator")}>SimpleInterestCalculator</div>
                     <div onClick={() => setActiveForm("CompoundInterestCalculator")}>CompoundInterestCalculator</div>
                     <div onClick={() => setActiveForm("MarketCapCalculator")}>MarketCapCalculator</div>
+                    
                 </div>
         
                     {activeForm === "Calculator" && <Calculator />}
