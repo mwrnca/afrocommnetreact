@@ -253,3 +253,18 @@ class EmployeeLog(Base):
     timestamp   = Column(DateTime, default=datetime.datetime.utcnow)
 
     employee = relationship("Employee", back_populates="logs")
+
+# models.py — add to User
+is_verified = Column(Boolean, default=False)  # admin sets this manually for now
+
+# new table for public posts
+class PublicPost(Base):
+    __tablename__ = "public_posts"
+
+    id          = Column(Integer, primary_key=True, index=True)
+    userId      = Column(Integer, ForeignKey("users.id"), nullable=False)
+    senderName  = Column(String, nullable=False)
+    role        = Column(String, nullable=False)  # so landing page can show a badge
+    body        = Column(Text, nullable=False)
+    timestamp   = Column(DateTime, default=datetime.datetime.utcnow)
+    deleted     = Column(Boolean, default=False)

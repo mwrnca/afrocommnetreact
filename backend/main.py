@@ -644,3 +644,32 @@ def get_conversation(user_id: int, other_id: int, db: Session = Depends(get_db))
             (models.Message.senderId == other_id) & (models.Message.receiverId == user_id) & (models.Message.deleted_by_receiver == False)
         )
     ).order_by(models.Message.timestamp.asc()).all()
+
+# main.py — add these routes
+
+# POST to public channel — only verified accounts allowed
+@app.post("/public-posts/{user_id}", response_model=schemas.PublicPostResponse)
+def create_public_post(user_id: int, post: schemas.PublicPostCreate, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if not user.is_verified:
+        raise HTTPException(status_code=403, detail="Only verified accounts can post here")
+
+    new_post = models.PublicPost(
+        userId     = user_id,
+        senderName = user.first_name,
+        role       = user.role,
+        body       = post.body,
+    )
+    db.add(new_post)
+    db.commit()
+    db.refresh(new_post)
+    return new_post
+
+# GET public posts — no auth needed, this is for the landing page
+@app.get("/public-posts", response_model=list[schemas.PublicPostResponse])
+def get_public_posts(db: Session = Depends(get_db)):
+    return db.query(models.PublicPost).filter(
+        models.PublicPost.deleted == False
+    ).order_by(models.PublicPost.timestamp.desc()).limit(20).all()

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Generalcomponents/Header';
+import PublicChannel from './PublicChannel';
 import './Pages.css';
 
 function Landing() {
@@ -72,6 +73,10 @@ function Landing() {
           <h4>A platform for people to manage risk and resources as well as grow capital and expertise in their areas of involvement allowing us to grow.</h4>
         </div>
       </section>
+
+      <div className="investors">
+          <PublicChannel/>
+      </div>
 
       {/* <section className="investors">
         <h2 style={{ color: 'black' }}>credits</h2>

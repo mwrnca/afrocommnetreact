@@ -321,3 +321,20 @@ class UserUpdate(BaseModel):
     second_name:  Optional[str] = None
     email:        Optional[str] = None
     phone_number: Optional[str] = None
+
+# schemas.py
+class PublicPostBase(BaseModel):
+    body: str
+
+class PublicPostCreate(PublicPostBase):
+    pass
+
+class PublicPostResponse(PublicPostBase):
+    id:         int
+    userId:     int
+    senderName: str
+    role:       str
+    timestamp:  datetime.datetime
+
+    class Config:
+        from_attributes = True

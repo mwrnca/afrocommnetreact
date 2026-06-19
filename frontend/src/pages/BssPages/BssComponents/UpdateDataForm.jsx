@@ -1,4 +1,5 @@
 import { useState } from "react";
+import VoiceInput from "../../../components/Generalcomponents/VoiceInput";
 import "./ToolsComponents.css";
 
 const BASE_URL = "http://localhost:8000";
@@ -132,6 +133,7 @@ export default function UpdateDataForm() {
           value={salesForm.date}
           onChange={handleChange(setSalesForm)}
         />
+        <VoiceInput />
         {salesMsg && <p className="update-msg">{salesMsg}</p>}
         <button className="update-button" onClick={handleSalesSubmit}>
           Record Sale
@@ -188,6 +190,7 @@ export default function UpdateDataForm() {
           value={expensesForm.date}
           onChange={handleChange(setExpensesForm)}
         />
+        <VoiceInput />
         {expensesMsg && <p className="update-msg">{expensesMsg}</p>}
         <button className="update-button" onClick={handleExpensesSubmit}>
           Record Expense
