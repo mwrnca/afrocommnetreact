@@ -191,7 +191,7 @@
   background: var(--secondary);
   border: 1px solid var(--border);
   border-radius: 16px;
-  width: clamp(300px, 90vw, 520px);
+  width: clamp(300px, 90vw, 920px);
   max-height: 90dvh;
   overflow-y: auto;
   position: relative;

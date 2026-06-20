@@ -285,7 +285,7 @@ input{
     gap: 15px;
     justify-content: center;
     align-items: center;
-     background: linear-gradient(to bottom, rgba(4, nhf0, 30, 0.886),rgba(0, 0, 1, 0.9));
+    background: linear-gradient(to bottom, rgba(4, nhf0, 30, 0.886),rgba(0, 0, 1, 0.9));
    padding:30px;
    border-radius:10px;
    width:400px;
@@ -295,6 +295,10 @@ input{
    overflow: hidden;
     word-break: break-word;
     font-size: clamp(1.75rem, 2vw, 3rem);
+}
+
+.signup-container textarea {
+    width: 100%;
 }
 
 .signup-title {

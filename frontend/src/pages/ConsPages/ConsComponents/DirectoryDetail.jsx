@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./ConsumerComponents.css";
+import { getUser } from "../../../api";
 
 const getName = (user) =>
   user.name_of_business || `${user.first_name} ${user.second_name}`;
@@ -11,6 +12,8 @@ export default function DirectoryDetail({ user, onClose }) {
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [ open, setOpen ] = useState(false);
+  // const [ id, role ] = getUser();
 
   const loggedIn = JSON.parse(localStorage.getItem("user") || "{}");
 
@@ -58,7 +61,7 @@ export default function DirectoryDetail({ user, onClose }) {
         {/* details */}
         <div className="dir-detail-info">
           {user.location_of_business && (
-            <p>📍 {user.location}</p>
+            <p>📍 {role.location}</p>
           )}
           {user.county && (
             <p>🗺 {user.county}</p>
@@ -70,9 +73,14 @@ export default function DirectoryDetail({ user, onClose }) {
             <p className="dir-detail-desc">{user.description}</p>
           )}
         </div>
-
+        
+        <section className="contactact-container">
+            <div className="contact-btn" onClick={() => setOpen(true)}>
+            CONTACT
+        </div>
         {/* message section */}
-        <div className="dir-message-section">
+        {open && (
+          <div className="dir-message-section">
           <textarea
             placeholder={`Send a message to ${getName(user)}...`}
             value={message}
@@ -88,6 +96,9 @@ export default function DirectoryDetail({ user, onClose }) {
             {sending ? "Sending..." : "Send Message"}
           </button>
         </div>
+        )}
+        </section>
+        
 
       </div>
     </div>
