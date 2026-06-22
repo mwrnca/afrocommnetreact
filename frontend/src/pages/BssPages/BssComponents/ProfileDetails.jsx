@@ -2,14 +2,16 @@ import "./BussinessComponents.css"
 
 export default function ProfileDetails () {
     return(
-        <>
+        <section className="profile-display-cont">
         <span>This is how people view your profile.</span>
         <section className="profile-display">
             <div className="profile-header">
-                <div>
+                <div className="profile-header-info">
                     <img src="#" alt="profile picture goes here"/>
-                    <span>mm</span>
-                    <span>mm</span>
+                    <div>
+                        <span>mm</span>
+                        <span>mm</span>
+                    </div>
                 </div>
                 <div>
                     <button>
@@ -32,6 +34,6 @@ export default function ProfileDetails () {
                 </div>
             </div>
         </section>
-        </>
+        </section>
     )
 }

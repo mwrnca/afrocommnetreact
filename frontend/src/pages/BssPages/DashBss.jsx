@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUser, fetchSales, fetchExpenses } from "../../api";
+import ProfileDetails from "./BssComponents/ProfileDetails";
+import ProfileViews from "../../components/HomeComponents/ProfileViews";
 import SalesContainer from './BssComponents/SalesContainer';
 import ExpensesContainer from './BssComponents/ExpensesContainer';
 import RevenueContainer from './BssComponents/RevenueContainer';
@@ -38,16 +40,17 @@ export default function DashBss() {
 
   return (
     <section className="bss-page-container">
-      <div>
+      {/* <div>
         <SalesContainer initialData={sales} userId={user.id} />
       </div>
       <div>
         <ExpensesContainer initialData={expenses} userId={user.id} />
       </div>
       <div>
-        {/* <RevenueContainer    initialData={revenue}    userId={user.id} /> */}
         <RevenueContainer />
-      </div>
+      </div> */}
+      <ProfileDetails /><br></br>
+      <ProfileViews />
     </section>
   ); 
 }

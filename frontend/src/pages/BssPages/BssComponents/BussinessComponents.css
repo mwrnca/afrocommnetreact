@@ -269,3 +269,41 @@
     width: 100%;
     height: 100%;
 }
+
+.profile-display-cont {
+    background-color: black;
+    padding: 12px ;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+}
+
+.profile-display {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff8f8;
+}
+
+.profile-header {
+    background-color: aqua;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.profile-header-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.profile-header-info div {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-body {
+    background-color: blue;
+    padding: 15px;
+}
