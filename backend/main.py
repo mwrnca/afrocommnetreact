@@ -673,3 +673,69 @@ def get_public_posts(db: Session = Depends(get_db)):
     return db.query(models.PublicPost).filter(
         models.PublicPost.deleted == False
     ).order_by(models.PublicPost.timestamp.desc()).limit(20).all()
+
+# main.py — add this route
+@app.get("/directory/full", response_model=list[schemas.DirectoryEntryResponse])
+def get_directory_full(role: str = None, county: str = None, search: str = None, db: Session = Depends(get_db)):
+    query = db.query(models.User).filter(models.User.role != "consumer")
+    if role:
+        query = query.filter(models.User.role == role)
+    if search:
+        query = query.filter(
+            models.User.first_name.ilike(f"%{search}%") |
+            models.User.second_name.ilike(f"%{search}%")
+        )
+
+    users = query.all()
+    results = []
+
+    for user in users:
+        entry = {
+            "id": user.id,
+            "first_name": user.first_name,
+            "second_name": user.second_name,
+            "email": user.email,
+            "phone_number": user.phone_number,
+            "role": user.role,
+            "name": None,
+            "category": None,
+            "location": None,
+            "county": None,
+            "description": None,
+        }
+
+        if user.role == "business" and user.business_profile:
+            p = user.business_profile
+            entry.update({
+                "name": p.name_of_business,
+                "category": p.nature_of_business,
+                "location": p.location_of_business,
+                "county": p.county,
+                "description": p.description,
+            })
+        elif user.role == "institution" and user.institution_profile:
+            p = user.institution_profile
+            entry.update({
+                "name": p.name_of_institution,
+                "category": p.type_of_institution,
+                "location": p.location,
+                "county": p.county,
+                "description": p.description,
+            })
+        elif user.role == "professional" and user.professional_profile:
+            p = user.professional_profile
+            entry.update({
+                "name": f"{user.first_name} {user.second_name}",
+                "category": p.profession,
+                "location": p.location,
+                "county": p.county,
+                "description": p.description,
+            })
+
+        # apply county filter after merging since it's on the profile not the user
+        if county and entry["county"] != county:
+            continue
+
+        results.append(entry)
+
+    return results

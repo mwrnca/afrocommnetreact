@@ -14,7 +14,7 @@ export default function LogIn() {
   professional: "prof",
   institution:  "inst",
   consumer:     "cons",
-  management:   "empl-mgmt",
+  management:   "mgmt",
   employee:      "employee",
 };
 

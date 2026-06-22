@@ -1,21 +1,15 @@
+// DirectoryDetail.jsx — fixed, no more broken `role.location` reference
 import { useState } from "react";
 import "./ConsumerComponents.css";
-import { getUser } from "../../../api";
-
-const getName = (user) =>
-  user.name_of_business || `${user.first_name} ${user.second_name}`;
-
-const getCategory = (user) =>
-  user.nature_of_business || user.role;
 
 export default function DirectoryDetail({ user, onClose }) {
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
-  const [ open, setOpen ] = useState(false);
-  // const [ id, role ] = getUser();
+  const [open, setOpen] = useState(false);
 
   const loggedIn = JSON.parse(localStorage.getItem("user") || "{}");
+  const displayName = user.name || `${user.first_name} ${user.second_name}`;
 
   const handleSend = async () => {
     if (!message.trim()) return;
@@ -25,11 +19,12 @@ export default function DirectoryDetail({ user, onClose }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        senderId:   loggedIn.id,
-        receiverId: user.id,
-        senderName: `${loggedIn.first_name} ${loggedIn.second_name}`,
-        subject:    `Message from ${loggedIn.first_name}`,
-        body:       message,
+        senderId:     loggedIn.id,
+        receiverId:   user.id,
+        receiverName: displayName,
+        senderName:   `${loggedIn.first_name} ${loggedIn.second_name}`,
+        subject:      `Message from ${loggedIn.first_name}`,
+        body:         message,
       }),
     });
 
@@ -42,64 +37,42 @@ export default function DirectoryDetail({ user, onClose }) {
   return (
     <div className="dir-overlay" onClick={onClose}>
       <div className="dir-detail" onClick={(e) => e.stopPropagation()}>
-
-        {/* close button */}
         <button className="dir-close" onClick={onClose}>✕</button>
 
-        {/* image / avatar */}
         <div className="dir-detail-image">
-          {user.profile_image
-            ? <img src={user.profile_image} alt={getName(user)} />
-            : <div className="dir-detail-avatar">{getName(user).charAt(0)}</div>
-          }
+          <div className="dir-detail-avatar">{displayName.charAt(0)}</div>
         </div>
 
-        {/* name and category */}
-        <h2 className="dir-detail-name">{getName(user)}</h2>
-        <p className="dir-detail-category">{getCategory(user)}</p>
+        <h2 className="dir-detail-name">{displayName}</h2>
+        <p className="dir-detail-category">{user.category || user.role}</p>
 
-        {/* details */}
         <div className="dir-detail-info">
-          {user.location_of_business && (
-            <p>📍 {role.location}</p>
-          )}
-          {user.county && (
-            <p>🗺 {user.county}</p>
-          )}
-          {user.phone_number && (
-            <p>📞 {user.phone_number}</p>
-          )}
-          {user.description && (
-            <p className="dir-detail-desc">{user.description}</p>
-          )}
+          {user.location && <p>📍 {user.location}</p>}
+          {user.county   && <p>🗺 {user.county}</p>}
+          {user.phone_number && <p>📞 {user.phone_number}</p>}
+          {user.description && <p className="dir-detail-desc">{user.description}</p>}
         </div>
-        
-        <section className="contactact-container">
-            <div className="contact-btn" onClick={() => setOpen(true)}>
-            CONTACT
-        </div>
-        {/* message section */}
-        {open && (
-          <div className="dir-message-section">
-          <textarea
-            placeholder={`Send a message to ${getName(user)}...`}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="dir-message-input"
-          />
-          {sent && <p className="dir-sent">Message sent!</p>}
-          <button
-            className="dir-send-btn"
-            onClick={handleSend}
-            disabled={sending}
-          >
-            {sending ? "Sending..." : "Send Message"}
-          </button>
-        </div>
-        )}
-        </section>
-        
 
+        <section className="contactact-container">
+          <div className="contact-btn" onClick={() => setOpen(true)}>
+            CONTACT
+          </div>
+
+          {open && (
+            <div className="dir-message-section">
+              <textarea
+                placeholder={`Send a message to ${displayName}...`}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="dir-message-input"
+              />
+              {sent && <p className="dir-sent">Message sent!</p>}
+              <button className="dir-send-btn" onClick={handleSend} disabled={sending}>
+                {sending ? "Sending..." : "Send Message"}
+              </button>
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );

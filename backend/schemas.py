@@ -338,3 +338,17 @@ class PublicPostResponse(PublicPostBase):
 
     class Config:
         from_attributes = True
+
+# schemas.py — add this
+class DirectoryEntryResponse(BaseModel):
+    id: int
+    first_name: str
+    second_name: str
+    email: str
+    phone_number: str
+    role: str
+    name: Optional[str] = None
+    category: Optional[str] = None
+    location: Optional[str] = None
+    county: Optional[str] = None
+    description: Optional[str] = None

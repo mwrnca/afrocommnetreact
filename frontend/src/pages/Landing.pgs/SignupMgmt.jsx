@@ -50,7 +50,7 @@ export default function SignUpMgmt() {
         body: JSON.stringify(profile),
       });
 
-      navigate("/dash/empl-mgmt");
+      navigate("/dash/mgmt");
     } catch (err) {
       setError(err.message);
     }

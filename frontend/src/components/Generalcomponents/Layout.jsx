@@ -45,7 +45,11 @@ const pageNames = {
   "/dash/employee/tools":   "Tools",
 
   // management
-  "/dash/empl-mgmt":        "Employee Management",
+  "/dash/mgmt":         "Home",
+  "/dash/mgmt/tasks":   "Tasks",
+  "/dash/mgmt/notice":  "Notice Board",
+  "/dash/mgmt/inbox":   "Inbox",
+  "/dash/mgmt/tools":   "Tools",
 };
 
 export default function Layout() {

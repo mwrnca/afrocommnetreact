@@ -16,9 +16,7 @@ export default function DashCons({ userData, communities }) {
       if (filters.role)   params.append("role",   filters.role);
       if (filters.county) params.append("county", filters.county);
 
-      const res  = await fetch(
-        `http://localhost:8000/directory${params.toString() ? `?${params}` : ""}`
-      );
+      const res  = await fetch(`http://localhost:8000/directory/full?role=${roleFilter}`);
       const data = await res.json();
       setUsers(data);
       setLoading(false);

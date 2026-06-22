@@ -29,10 +29,12 @@
   gap: 0.5em;
 }
 
-.tools-page-container {
+.bss-tools-page-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1em;
+  min-height: 100vh;
+  
 }
 
 .tool-btn-cont {

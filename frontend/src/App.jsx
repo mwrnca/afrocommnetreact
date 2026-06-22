@@ -67,12 +67,21 @@ import MgmtCommunities from './pages/MgmtPages/MgmtCommunities'
 import MgmtTools from './pages/MgmtPages/MgmtTools'
 import MgmtInbox from './pages/MgmtPages/MgmtInbox'
 
-function App() {
+import { FEATURES } from "./featureFlags";
 
+// shows a friendly placeholder instead of the real page when a flag is off
+function FeatureGate({ enabled, children }) {
+  if (!enabled) {
+    return <div className="feature-disabled">This feature isn't available yet.</div>;
+  }
+  return children;
+}
+
+function App() {
   return (
     <section className='app-container'>
       <Routes>
-        {/* LANDING PAGES */}
+        {/* LANDING PAGES — always on, never gated */}
         <Route path="/" element={<Landing />} />
         <Route path="/communitiesLand" element={<CommunitiesLand />} />
         <Route path="/toolsLand" element={<ToolsLng />} />
@@ -80,77 +89,141 @@ function App() {
         <Route path="/workspaces" element={<WorkspaceSelector />} />
         <Route path="/about" element={<About />} />
 
-        {/* AUTH PAGES */}
+        {/* AUTH PAGES — always on */}
         <Route path="/login" element={<LogIn />} />
 
-        {/* SIGNUP PAGES */}
+        {/* SIGNUP PAGES — always on */}
         <Route path="/signup/bss" element={<SignUpBss />} />
         <Route path="/signup/prof" element={<SignUpProf />} />
         <Route path="/signup/inst" element={<SignUpInst />} />
         <Route path="/signup/cons" element={<SignUpCons />} />
         <Route path="/signup/mgmt" element={<SignUpMgmt />} />
 
-        {/* Bussiness DASHBOARD PAGES */}
+        {/* Business DASHBOARD PAGES */}
         <Route path="/dash/bss" element={<Layout />}>
-          <Route index          element={<DashBss />} />
-          <Route path="todo"        element={<BssToDo />} />
-          <Route path="inbox"       element={<BssInbox />} />
-          <Route path="tools"       element={<BssTools />} />
-          <Route path="communities" element={<BssCommunities />} />
-          <Route path="settings"    element={<BssSettings />} />
+          <Route index element={<DashBss />} />
+          <Route path="todo" element={
+            <FeatureGate enabled={FEATURES.todo}><BssToDo /></FeatureGate>
+          } />
+          <Route path="inbox" element={
+            <FeatureGate enabled={FEATURES.inbox}><BssInbox /></FeatureGate>
+          } />
+          <Route path="tools" element={
+            <FeatureGate enabled={FEATURES.tools}><BssTools /></FeatureGate>
+          } />
+          <Route path="communities" element={
+            <FeatureGate enabled={FEATURES.communities}><BssCommunities /></FeatureGate>
+          } />
+          <Route path="settings" element={
+            <FeatureGate enabled={FEATURES.settings}><BssSettings /></FeatureGate>
+          } />
         </Route>
 
         {/* CONSUMER DASHBOARD PAGES */}
         <Route path="/dash/cons" element={<Layout />}>
-          <Route index          element={<DashCons />} />
-          <Route path="todo"        element={<ConsToDo />} />
-          <Route path="tools"       element={<ConsTools />} />
-          <Route path="inbox"       element={<ConsInbox />} />
-          <Route path="communities" element={<ConsCommunities />} />
-          <Route path="settings"    element={<ConsSettings />} />
+          <Route index element={<DashCons />} />
+          <Route path="todo" element={
+            <FeatureGate enabled={FEATURES.todo}><ConsToDo /></FeatureGate>
+          } />
+          <Route path="tools" element={
+            <FeatureGate enabled={FEATURES.tools}><ConsTools /></FeatureGate>
+          } />
+          <Route path="inbox" element={
+            <FeatureGate enabled={FEATURES.inbox}><ConsInbox /></FeatureGate>
+          } />
+          <Route path="communities" element={
+            <FeatureGate enabled={FEATURES.communities}><ConsCommunities /></FeatureGate>
+          } />
+          <Route path="settings" element={
+            <FeatureGate enabled={FEATURES.settings}><ConsSettings /></FeatureGate>
+          } />
         </Route>
 
         {/* ── Institution dashboard ── */}
         <Route path="/dash/inst" element={<Layout />}>
-          <Route index             element={<DashInst />} />
-          <Route path="tools"       element={<InstTools />} />
-          <Route path="todo"        element={<InstToDo />} />
-          <Route path="inbox"       element={<InstInbox />} />
-          <Route path="communities" element={<InstCommunities />} />
-          <Route path="settings"    element={<InstSettings />} />
+          <Route index element={<DashInst />} />
+          <Route path="tools" element={
+            <FeatureGate enabled={FEATURES.tools}><InstTools /></FeatureGate>
+          } />
+          <Route path="todo" element={
+            <FeatureGate enabled={FEATURES.todo}><InstToDo /></FeatureGate>
+          } />
+          <Route path="inbox" element={
+            <FeatureGate enabled={FEATURES.inbox}><InstInbox /></FeatureGate>
+          } />
+          <Route path="communities" element={
+            <FeatureGate enabled={FEATURES.communities}><InstCommunities /></FeatureGate>
+          } />
+          <Route path="settings" element={
+            <FeatureGate enabled={FEATURES.settings}><InstSettings /></FeatureGate>
+          } />
         </Route>
 
         {/* ── Professional dashboard ── */}
         <Route path="/dash/prof" element={<Layout />}>
-          <Route index             element={<DashProf />} />
-          <Route path="todo"        element={<ProfToDo />} />
-          <Route path="inbox"       element={<ProfInbox />} />
-          <Route path="tools"       element={<ProfTools />} />
-          <Route path="communities" element={<ProfCommunities />} />
-          <Route path="settings"    element={<ProfSettings />} />
+          <Route index element={<DashProf />} />
+          <Route path="todo" element={
+            <FeatureGate enabled={FEATURES.todo}><ProfToDo /></FeatureGate>
+          } />
+          <Route path="inbox" element={
+            <FeatureGate enabled={FEATURES.inbox}><ProfInbox /></FeatureGate>
+          } />
+          <Route path="tools" element={
+            <FeatureGate enabled={FEATURES.tools}><ProfTools /></FeatureGate>
+          } />
+          <Route path="communities" element={
+            <FeatureGate enabled={FEATURES.communities}><ProfCommunities /></FeatureGate>
+          } />
+          <Route path="settings" element={
+            <FeatureGate enabled={FEATURES.settings}><ProfSettings /></FeatureGate>
+          } />
         </Route>
 
         {/* ── Employee dashboard ── */}
         <Route path="/dash/empl" element={<Layout />}>
-          <Route index             element={<DashEmpl />} />
-          <Route path="todo"       element={<EmplToDo />} />
-          <Route path="communities" element={<EmplCommunities />} />
-          <Route path="inbox"       element={<EmplInbox />} />
-          <Route path="tools"       element={<EmplTools />} />
-          <Route path="settings"    element={<EmplSettings />} />
+          <Route index element={
+            <FeatureGate enabled={FEATURES.employeeApp}><DashEmpl /></FeatureGate>
+          } />
+          <Route path="todo" element={
+            <FeatureGate enabled={FEATURES.employeeApp}><EmplToDo /></FeatureGate>
+          } />
+          <Route path="communities" element={
+            <FeatureGate enabled={FEATURES.employeeApp && FEATURES.communities}><EmplCommunities /></FeatureGate>
+          } />
+          <Route path="inbox" element={
+            <FeatureGate enabled={FEATURES.employeeApp && FEATURES.inbox}><EmplInbox /></FeatureGate>
+          } />
+          <Route path="tools" element={
+            <FeatureGate enabled={FEATURES.employeeApp && FEATURES.tools}><EmplTools /></FeatureGate>
+          } />
+          <Route path="settings" element={
+            <FeatureGate enabled={FEATURES.employeeApp && FEATURES.settings}><EmplSettings /></FeatureGate>
+          } />
         </Route>
 
         {/* ── Employee management dashboard ── */}
         <Route path="/dash/mgmt" element={<Layout />}>
-          <Route index             element={<DashMgmt />} />
-          <Route path="todo"       element={<MgmtToDo />} />
-          <Route path="inbox"       element={<MgmtInbox />} />
-          <Route path="tools"       element={<MgmtTools />} />
-          <Route path="communities" element={<MgmtCommunities />} />
-          <Route path="settings"    element={<MgmtSettings />} />
+          <Route index element={
+            <FeatureGate enabled={FEATURES.employeeMgmt}><DashMgmt /></FeatureGate>
+          } />
+          <Route path="tasks" element={
+            <FeatureGate enabled={FEATURES.employeeMgmt}><MgmtToDo /></FeatureGate>
+          } />
+          <Route path="inbox" element={
+            <FeatureGate enabled={FEATURES.employeeMgmt && FEATURES.inbox}><MgmtInbox /></FeatureGate>
+          } />
+          <Route path="tools" element={
+            <FeatureGate enabled={FEATURES.employeeMgmt && FEATURES.tools}><MgmtTools /></FeatureGate>
+          } />
+          <Route path="communities" element={
+            <FeatureGate enabled={FEATURES.employeeMgmt && FEATURES.communities}><MgmtCommunities /></FeatureGate>
+          } />
+          <Route path="settings" element={
+            <FeatureGate enabled={FEATURES.employeeMgmt && FEATURES.settings}><MgmtSettings /></FeatureGate>
+          } />
         </Route>
 
-        </Routes>  
+      </Routes>
     </section>
   )
 }

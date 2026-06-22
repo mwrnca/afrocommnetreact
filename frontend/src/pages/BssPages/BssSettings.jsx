@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import ProfileBar from '../../components/HomeComponents/ProfileBar'
+import ProfileDetail from './BssComponents/ProfileDetails'
 import Logout from '../../components/HomeComponents/Logout'
 import "./Dash.css"
 
@@ -11,6 +12,9 @@ export default function BssSettings () {
         <div className="bss-settings-page-container">
             <div>
                 <ProfileBar />  
+            </div>
+            <div>
+                <ProfileDetail />
             </div>
                 
             
