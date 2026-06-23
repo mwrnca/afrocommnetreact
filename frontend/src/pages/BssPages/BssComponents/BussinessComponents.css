@@ -270,40 +270,105 @@
     height: 100%;
 }
 
-.profile-display-cont {
-    background-color: black;
-    padding: 12px ;
-    border: 1px solid var(--border);
-    border-radius: 7px;
+.profile-appearance-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.profile-display {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff8f8;
+.profile-appearance {
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .profile-header {
-    background-color: aqua;
-    padding: 12px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .profile-header-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.profile-header-info div {
-    display: flex;
-    flex-direction: column;
+.profile-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  display: block;
+}
+
+.category {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.profile-contact-btn {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .profile-body {
-    background-color: blue;
-    padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.location-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.description textarea,
+.profile-header-info input,
+.location-info input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  color: var(--text);
+  font-family: var(--font-family);
+  font-size: 13px;
+  margin-bottom: 0.4rem;
+  width: 100%;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.edit-buttons button {
+  background: var(--primary);
+  color: var(--secondary);
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.profile-loading {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 2rem;
 }

@@ -15,9 +15,9 @@ export const FEATURES = {
   employeeApp:  true,   // employee-side dashboard
 
   // ── In-page features (finer grained) ──
-  salesGraph:        true,
-  expensesGraph:     true,
-  revenueGraph:      true,
+  salesGraph:        false,
+  expensesGraph:     false,
+  revenueGraph:      false,
   voiceInput:        true,
   attachments:       true,
   publicChannel:     true,
