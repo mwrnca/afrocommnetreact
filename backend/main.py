@@ -739,3 +739,31 @@ def get_directory_full(role: str = None, county: str = None, search: str = None,
         results.append(entry)
 
     return results
+
+@app.put("/profiles/institution/{user_id}", response_model=schemas.InstitutionProfileResponse)
+def update_institution_profile(user_id: int, updates: schemas.InstitutionProfileCreate, db: Session = Depends(get_db)):
+    profile = db.query(models.InstitutionProfile).filter(models.InstitutionProfile.userId == user_id).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    profile.name_of_institution = updates.name_of_institution
+    profile.type_of_institution  = updates.type_of_institution
+    profile.location             = updates.location
+    profile.county               = updates.county
+    profile.description          = updates.description
+    db.commit()
+    db.refresh(profile)
+    return profile
+
+@app.put("/profiles/professional/{user_id}", response_model=schemas.ProfessionalProfileResponse)
+def update_professional_profile(user_id: int, updates: schemas.ProfessionalProfileCreate, db: Session = Depends(get_db)):
+    profile = db.query(models.ProfessionalProfile).filter(models.ProfessionalProfile.userId == user_id).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    profile.profession     = updates.profession
+    profile.specialization = updates.specialization
+    profile.location        = updates.location
+    profile.county          = updates.county
+    profile.description     = updates.description
+    db.commit()
+    db.refresh(profile)
+    return profile
