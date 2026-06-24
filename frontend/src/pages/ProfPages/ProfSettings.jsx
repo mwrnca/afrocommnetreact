@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import ProfileBar from '../../components/HomeComponents/ProfileBar'
 import Logout from '../../components/HomeComponents/Logout'
 import "./Dash.css"
+import ProfileAppearance from './ProfComponents/ProfileAppearance'
 
 export default function ProfSettings () {
 
@@ -12,7 +13,9 @@ export default function ProfSettings () {
             <div>
                 <ProfileBar />  
             </div>
-                
+            <div>
+                <ProfileAppearance />
+            </div>
             
         </div>
     );

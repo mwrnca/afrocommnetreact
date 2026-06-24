@@ -6,6 +6,7 @@ export default function DashCons({ userData, communities }) {
   const [users,   setUsers]   = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({ search: "", role: "", county: "" });
+  const [ roleFilter, setRoleFilter ] = useState("")
 
   useEffect(() => {
     const fetchDirectory = async () => {

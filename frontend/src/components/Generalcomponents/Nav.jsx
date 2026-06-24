@@ -16,9 +16,11 @@ const allNavLinks = {
   ],
   consumer: [
     { label: "Home",        path: "/dash/cons",              flag: true },
+    { label: "To-Do",       path: "/dash/cons/todo",         flag: FEATURES.todo },
     { label: "Inbox",       path: "/dash/cons/inbox",        flag: FEATURES.inbox },
+    { label: "Tools",       path: "/dash/prof/tools",        flag: FEATURES.tools },
     { label: "Communities", path: "/dash/cons/communities",  flag: FEATURES.communities },
-    { label: "Directory",   path: "/dash/cons/directory",    flag: FEATURES.directory },
+    // { label: "Directory",   path: "/dash/cons/directory",    flag: FEATURES.directory },
     { label: "Settings",    path: "/dash/cons/settings",     flag: FEATURES.settings },
   ],
   professional: [
@@ -33,6 +35,7 @@ const allNavLinks = {
     { label: "Home",        path: "/dash/inst",              flag: true },
     { label: "To-Do",       path: "/dash/inst/todo",         flag: FEATURES.todo },
     { label: "Inbox",       path: "/dash/inst/inbox",        flag: FEATURES.inbox },
+    { label: "Tools",       path: "/dash/inst/tools",        flag: FEATURES.tools },
     { label: "Communities", path: "/dash/inst/communities",  flag: FEATURES.communities },
     { label: "Settings",    path: "/dash/inst/settings",     flag: FEATURES.settings },
   ],

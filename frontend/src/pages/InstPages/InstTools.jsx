@@ -8,31 +8,52 @@ import SimpleInterestCalculator from "./InstComponents/Tools/SimpleInterestCalcu
 import CompoundInterestCalculator from "./InstComponents/Tools/CompoundInterestCalculator"
 import MarketCapCalculator from "./InstComponents/Tools/MarketCapCalculator"
 import UpdateDataForm from "./InstComponents/Tools/UpdateDataForm"
-
+import { FEATURES } from "../../featureFlags"
 
 export default function InstTools() {
 
     const [ open, setOpen ] = useState(false);
-
+    const [refreshKey, setRefreshKey] = useState(0);
+    const [userId,     setUserId]     = useState(null);
     const [ activeForm, setActiveForm ] = useState(false);
 
     return (
         <section className="bss-tools-page-container">
 
             <div className="update-data-forms">
+                {FEATURES.updateform && (
                 <UpdateDataForm />
+                )}
             </div>
 
             <div className="bss-tools-cont">
                 <div className="bss-tool-btn-cont">
+                    {FEATURES.calculator && (
                     <div onClick={() => setActiveForm("Calculator")}>Calculator</div>
+                    )}
+                    {FEATURES.roicalc && (
                     <div onClick={() => setActiveForm("ROIcalc")}>ROI calc</div>
-                    <div onClick={() => setActiveForm("BusinessNetWorthCalculator")}>Net Worth Calculator</div>
+                    )}
+
+                    {FEATURES.networthcalc && (
+                    <div onClick={() => setActiveForm("BusinessNetWorthCalculator")}>BusinessNetWorthCalculator</div>
+                    )}
+
+                    {FEATURES.rrcalc && (
                     <div onClick={() => setActiveForm("RiskRewardCalculator")}>RiskRewardCalculato</div>
+                    )}
+
+                    {FEATURES.simpleintrcalc && (
                     <div onClick={() => setActiveForm("SimpleInterestCalculator")}>SimpleInterestCalculator</div>
+                    )}
+
+                    {FEATURES.compoundcalc && (
                     <div onClick={() => setActiveForm("CompoundInterestCalculator")}>CompoundInterestCalculator</div>
+                    )}
+
+                    {FEATURES.marketcapcalc && (
                     <div onClick={() => setActiveForm("MarketCapCalculator")}>MarketCapCalculator</div>
-                    
+                    )}
                 </div>
         
                     {activeForm === "Calculator" && <Calculator />}

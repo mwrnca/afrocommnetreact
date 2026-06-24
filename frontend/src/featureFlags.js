@@ -27,5 +27,12 @@ export const FEATURES = {
   privateCommunities: true,
   calendarBooking:   true,  // not built yet, placeholder for later
   aiAssistant:       true,  // not built yet, placeholder for later
-  updateDataForm:    false,
+  updateform:        false,
+  calculator:        true,
+  roicalc:           true,
+  networthcalc:      true,
+  rrcalc:            true,
+  simpleintrcalc:    true,
+  compoundcalc:      true,
+  marketcapcalc:     true,
 };

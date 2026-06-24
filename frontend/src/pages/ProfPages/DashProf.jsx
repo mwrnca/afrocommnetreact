@@ -5,6 +5,8 @@ import SalesContainer from './ProfComponents/SalesContainer';
 import ExpensesContainer from './ProfComponents/ExpensesContainer';
 import RevenueContainer from './ProfComponents/RevenueContainer';
 import "./Dash.css";
+import { FEATURES } from "../../featureFlags";
+import ProfileViews from "../../components/HomeComponents/ProfileViews";
 
 export default function DashProf() {
   const navigate = useNavigate();
@@ -12,7 +14,11 @@ export default function DashProf() {
   const [expenses, setExpenses] = useState([]);
   const [revenue,  setRevenue]  = useState([]);
   const [loading,  setLoading]  = useState(true);
-  const user = getUser
+  const user = getUser 
+  const [refreshKey, setRefreshKey] = useState(0);   // ← added
+  const [userId,     setUserId]     = useState(null); // ← added, fixes the user.id issue properly
+
+  const triggerRefresh = () => setRefreshKey(prev => prev + 1); // ← added, call this after a sale/expense is logged
 
 
   useEffect(() => {
@@ -36,15 +42,22 @@ export default function DashProf() {
 
   return (
     <section className="bss-page-container">
-      <div>
-        <SalesContainer initialData={sales} userId={user.id} />
-      </div>
-      <div>
-        <ExpensesContainer initialData={expenses} userId={user.id} />
-      </div>
-      <div>
-        <RevenueContainer />
-      </div>
-    </section>
+          <div>
+            {FEATURES.salesGraph && (
+              <SalesContainer initialData={sales} userId={userId} refreshKey={refreshKey} />
+            )}
+          </div>
+          <div>
+            {FEATURES.expensesGraph && (
+              <ExpensesContainer initialData={expenses} userId={userId} refreshKey={refreshKey} />
+            )}
+          </div>
+          <div>
+            {FEATURES.revenueGraph && (
+              <RevenueContainer userId={userId} refreshKey={refreshKey} />
+            )}
+          </div>
+          <ProfileViews />
+        </section>
   ); 
 }
