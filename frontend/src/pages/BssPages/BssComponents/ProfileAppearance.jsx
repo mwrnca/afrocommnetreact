@@ -7,11 +7,11 @@ const BASE = "http://localhost:8000";
 export default function ProfileAppearance() {
   const { id, role } = getUser();
 
-  const [profile, setProfile] = useState(null);
-  const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({});
-  const [saving, setSaving] = useState(false);
-  const [msg, setMsg] = useState("");
+  const [ profile, setProfile ] = useState(null);
+  const [ editing, setEditing ] = useState(false);
+  const [ form, setForm ] = useState({});
+  const [ saving, setSaving ] = useState(false);
+  const [ msg, setMsg ] = useState("");
 
   // fetch this user's own merged directory-style profile
   useEffect(() => {
