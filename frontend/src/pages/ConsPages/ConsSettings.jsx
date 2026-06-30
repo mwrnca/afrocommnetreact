@@ -13,9 +13,9 @@ export default function ConsSettings () {
             <div>
                 <ProfileBar />  
             </div>
-            <div>
+            {/* <div>
                 <ProfileAppearance />
-            </div>
+            </div> */}
         </div>
     );
 }

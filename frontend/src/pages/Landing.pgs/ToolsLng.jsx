@@ -10,6 +10,7 @@ export default function ToolsLng () {
 
             <div className="hero">
                 <h1>Tools</h1>
+                <p>We offer a variety of tools to easen your work and day</p>
             </div>
 
             <Footer />

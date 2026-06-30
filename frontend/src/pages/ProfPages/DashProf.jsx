@@ -7,6 +7,7 @@ import RevenueContainer from './ProfComponents/RevenueContainer';
 import "./Dash.css";
 import { FEATURES } from "../../featureFlags";
 import ProfileViews from "../../components/HomeComponents/ProfileViews";
+import DashHome from "../../components/HomeComponents/DashHome";
 
 export default function DashProf() {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ export default function DashProf() {
               <RevenueContainer userId={userId} refreshKey={refreshKey} />
             )}
           </div>
-          <ProfileViews />
+          <DashHome rolePrefix="prof" />
         </section>
   ); 
 }

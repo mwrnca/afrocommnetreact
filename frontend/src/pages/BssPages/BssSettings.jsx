@@ -16,8 +16,6 @@ export default function BssSettings () {
             <div>
                 <ProfileAppearance />
             </div>
-                
-            
         </div>
     );
 }

@@ -7,6 +7,7 @@ import RevenueContainer from "./InstComponents/RevenueContainer";
 import "./Dash.css"
 import { FEATURES } from "../../featureFlags";
 import ProfileViews from "../../components/HomeComponents/ProfileViews";
+import DashHome from "../../components/HomeComponents/DashHome";
 
 export default function DashInst() {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ export default function DashInst() {
           <RevenueContainer userId={userId} refreshKey={refreshKey} />
         )}
       </div>
-      <ProfileViews />
+      <DashHome rolePrefix="inst" />
     </section>
   ); 
 }

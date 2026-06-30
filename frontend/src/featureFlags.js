@@ -7,7 +7,7 @@ export const FEATURES = {
   // ── Nav sections / whole pages ──
   todo:         true,
   inbox:        true,
-  tools:        true,
+  tools:        false,
   communities:  true,
   settings:     true,
   directory:    true,   // consumer directory browsing

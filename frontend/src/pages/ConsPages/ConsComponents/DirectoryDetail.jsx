@@ -39,12 +39,23 @@ export default function DirectoryDetail({ user, onClose }) {
       <div className="dir-detail" onClick={(e) => e.stopPropagation()}>
         <button className="dir-close" onClick={onClose}>✕</button>
 
-        <div className="dir-detail-image">
-          <div className="dir-detail-avatar">{displayName.charAt(0)}</div>
+      <section className="dir-header-cont">
+        <div className="dir-header-major">
+          <div className="dir-detail-image">
+            <div className="dir-detail-avatar">{displayName.charAt(0)}</div>
+          </div>
+
+          <div>
+            <h2 className="dir-detail-name">{displayName}</h2>
+            <p className="dir-detail-category">{user.category || user.role}</p>
+          </div>
+          
         </div>
 
-        <h2 className="dir-detail-name">{displayName}</h2>
-        <p className="dir-detail-category">{user.category || user.role}</p>
+        <div className="contact-btn" onClick={() => setOpen(true)}>
+            CONTACT
+        </div>
+      </section>
 
         <div className="dir-detail-info">
           {user.location && <p>📍 {user.location}</p>}
@@ -54,9 +65,9 @@ export default function DirectoryDetail({ user, onClose }) {
         </div>
 
         <section className="contactact-container">
-          <div className="contact-btn" onClick={() => setOpen(true)}>
+          {/* <div className="contact-btn" onClick={() => setOpen(true)}>
             CONTACT
-          </div>
+          </div> */}
 
           {open && (
             <div className="dir-message-section">

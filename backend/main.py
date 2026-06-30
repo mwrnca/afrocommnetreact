@@ -767,3 +767,29 @@ def update_professional_profile(user_id: int, updates: schemas.ProfessionalProfi
     db.commit()
     db.refresh(profile)
     return profile
+
+# main.py — add this route, combines the two signals simply
+@app.get("/notifications/communities/{user_id}")
+def get_community_notifications(user_id: int, db: Session = Depends(get_db)):
+    user_data = db.query(models.UserData).filter(models.UserData.userId == user_id).first()
+    if not user_data:
+        return {"count": 0}
+
+    joined = db.query(models.UserCommunity).filter(
+        models.UserCommunity.userDataId == user_data.id
+    ).all()
+    community_ids = [j.communityId for j in joined]
+
+    if not community_ids:
+        return {"count": 0}
+
+    # count recent posts (last 48 hours) in joined communities, excluding the user's own posts
+    cutoff = datetime.datetime.utcnow() - datetime.timedelta(hours=48)
+    count = db.query(models.CommunityPost).filter(
+        models.CommunityPost.communityId.in_(community_ids),
+        models.CommunityPost.userId != user_id,
+        models.CommunityPost.timestamp >= cutoff,
+        models.CommunityPost.deleted == False
+    ).count()
+
+    return {"count": count}

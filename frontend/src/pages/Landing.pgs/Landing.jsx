@@ -16,19 +16,24 @@ function Landing() {
         <div className="hero-content">
           <h2>WELCOME!</h2>
           <h3>TO THE </h3>
+          <h1>ALL IN</h1>
           <h1>ONE</h1>
-          <h3>COMMERCE MANAGEMENT</h3>
-          <h3>PAGE</h3>
+          <h1>COMMUNITY</h1>
+          {/* <h1>ONE</h1>
+          <h3>COMMUNITY IN KENYA</h3>
+          <h3>WHERE ALL CAN FIND WHATEVER</h3>
+          <h3>SERVICE OR GOODS THEY</h3>
+          <h3>ARE IN SEARCH FOR</h3> */}
 
           <a onClick={() => navigate('/about')} className="btn-green">WHO WE ARE</a>
         </div>
       </section>
 
-      <nav className="vertical-nav">
+      {/* <nav className="vertical-nav">
         <a onClick={() => navigate('/communitiesLand')}>Communities</a>
         <a onClick={() => navigate('/eduLand')}>Education</a>
         <a onClick={() => navigate('/toolsLand')}>Tools</a>
-      </nav>
+      </nav> */}
 
       <section className="roles">
         <h2>ARE YOU A:</h2>
@@ -59,16 +64,16 @@ function Landing() {
             <small>Lawyers • Engineers • Doctors</small>
           </a>
 
-         <a onClick={() => navigate('/signup/mgmt')} className="role-btn">
+         {/* <a onClick={() => navigate('/signup/mgmt')} className="role-btn">
             <span className="icon">⬢</span>
             <h2>Employee Management</h2>
             <small>Business Owners and Managers</small>
-          </a>
+          </a> */}
 
         </div>
       </section>
 
-      <section className="hero">
+      {/* <section className="hero">
         <div>
           <h4>A platform for people to manage risk and resources as well as grow capital and expertise in their areas of involvement allowing us to grow.</h4>
         </div>
@@ -76,7 +81,7 @@ function Landing() {
 
       <div className="investors">
           <PublicChannel/>
-      </div>
+      </div> */}
 
       {/* <section className="investors">
         <h2 style={{ color: 'black' }}>credits</h2>

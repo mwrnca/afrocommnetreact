@@ -9,11 +9,11 @@ function Header() {
     <header className="header">
 
           <div>
-            <img src="assets/ACN__1_-removebg-preview.png" alt="Afrocommnet Logo" className="logo" />
+            <img src="assets/ACN__1_-removebg-preview.png" alt="Logo" className="logo" />
           </div>
           
           <div className="brand-text">
-              <span onClick={() => navigate('/')}>.AFROCOMMNET.</span>
+              <span onClick={() => navigate('/')}>.CYBER .. EZ.</span>
               {/* <small>ONE</small> */}
           </div>
 

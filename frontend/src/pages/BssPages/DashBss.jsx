@@ -7,6 +7,9 @@ import ExpensesContainer from './BssComponents/ExpensesContainer';
 import RevenueContainer from './BssComponents/RevenueContainer';
 import "./Dash.css";
 import { FEATURES } from "../../featureFlags";
+import DashHome from "../../components/HomeComponents/DashHome";
+
+const BASE = "http://localhost:8000";
 
 export default function DashBss() {
   const navigate = useNavigate();
@@ -57,7 +60,7 @@ export default function DashBss() {
           <RevenueContainer userId={userId} refreshKey={refreshKey} />
         )}
       </div>
-      <ProfileViews />
+      <DashHome rolePrefix="bss" />
     </section>
   );
 }
