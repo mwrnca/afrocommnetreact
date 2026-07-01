@@ -39,6 +39,8 @@
   justify-content: space-around;
   align-items: center;
   padding-bottom: 8px;
+  gap: 1rem;
+  width: 100%;
 }
 
 .todo-card {
@@ -535,6 +537,7 @@
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 12px;
+  width: 70%;
 }
 
 .task-form input,
