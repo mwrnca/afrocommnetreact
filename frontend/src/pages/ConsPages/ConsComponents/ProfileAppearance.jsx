@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getUser } from "../../../api";
 import "./ConsumerComponents.css";
+import AvatarImage from "../../../components/HomeComponents/AvatarImage";
 
 const BASE = "http://localhost:8000";
 
@@ -107,7 +108,8 @@ export default function ProfileAppearance() {
         <div className="profile-header">
           <div className="profile-header-info">
             <div className="dir-detail-image">
-              <div className="dir-detail-avatar">{displayName.charAt(0)}</div>
+              {/* <div className="dir-detail-avatar">{displayName.charAt(0)}</div> */}
+              <AvatarImage src={profile.profile_image} name={displayName} size={64} onClick={imageChange} />
             </div>
 
             <div className="profile-header-info">
@@ -177,6 +179,13 @@ export default function ProfileAppearance() {
               <p>{profile.description || "No description set yet."}</p>
             )}
           </div>
+          <div className="profile-image-change">
+            
+          </div>
+          <button onClick={imageChange}>
+            CHANGE PROFILE IMAGE
+          </button>
+          {editing && <ProfileImageUpload />}
 
           {msg && <p className="msg-success">{msg}</p>}
 

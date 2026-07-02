@@ -13,6 +13,8 @@ class User(Base):
     phone_number = Column(String, nullable=False)
     password     = Column(String, nullable=False)
     role         = Column(String, nullable=False)
+    profile_image = Column(Text, nullable=True)  # ← add this, base64 string
+    created_at   = Column(DateTime, default=datetime.datetime.utcnow)
 
     user_data            = relationship("UserData",            back_populates="user", uselist=False)
     business_profile     = relationship("BusinessProfile",     back_populates="user", uselist=False)
@@ -268,3 +270,19 @@ class PublicPost(Base):
     body        = Column(Text, nullable=False)
     timestamp   = Column(DateTime, default=datetime.datetime.utcnow)
     deleted     = Column(Boolean, default=False)
+
+class ProfileView(Base):
+    __tablename__ = "profile_views"
+
+    id         = Column(Integer, primary_key=True, index=True)
+    profileId  = Column(Integer, ForeignKey("users.id"), nullable=False)
+    viewerId   = Column(Integer, nullable=True)
+    viewerName = Column(String, nullable=True)
+    timestamp  = Column(DateTime, default=datetime.datetime.utcnow)
+
+class CommunityNotifSeen(Base):
+    __tablename__ = "community_notif_seen"
+
+    id     = Column(Integer, primary_key=True, index=True)
+    userId = Column(Integer, ForeignKey("users.id"), nullable=False)
+    seenAt = Column(DateTime, default=datetime.datetime.utcnow)

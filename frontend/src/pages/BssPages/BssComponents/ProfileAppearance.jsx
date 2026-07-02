@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { getUser } from "../../../api";
+import AvatarImage from "../../../components/HomeComponents/AvatarImage";
+import ProfileImageUpload from "../../../components/HomeComponents/ProfileImageUpload";
 import "./BussinessComponents.css";
 
 const BASE = "http://localhost:8000";
@@ -12,6 +14,7 @@ export default function ProfileAppearance() {
   const [ form, setForm ] = useState({});
   const [ saving, setSaving ] = useState(false);
   const [ msg, setMsg ] = useState("");
+  const [ openImageModal, setOpenImageModal ] = useState(false);
 
   // fetch this user's own merged directory-style profile
   useEffect(() => {
@@ -31,6 +34,10 @@ export default function ProfileAppearance() {
   const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const imageChange = () => {
+    setOpenImageModal(true);
+  }
 
   const handleSave = async () => {
     setSaving(true);
@@ -94,9 +101,9 @@ export default function ProfileAppearance() {
       <section className="profile-appearance">
         <div className="profile-header">
           <div className="profile-header-info">
-            <div className="dir-detail-image">
-              <div className="dir-detail-avatar">{displayName.charAt(0)}</div>
-            </div>
+              <AvatarImage src={profile.profile_image} name={displayName} size={64} />
+                      {editing && <ProfileImageUpload />}
+
 
             <div className="profile-header-info">
               {editing ? (
@@ -152,6 +159,8 @@ export default function ProfileAppearance() {
               </>
             )}
           </div>
+
+          
 
           <div className="description">
             {editing ? (

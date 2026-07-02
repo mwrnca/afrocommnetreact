@@ -697,6 +697,7 @@ def get_directory_full(role: str = None, county: str = None, search: str = None,
             "email": user.email,
             "phone_number": user.phone_number,
             "role": user.role,
+            "profile_image": user.profile_image,  # ← add this
             "name": None,
             "category": None,
             "location": None,
@@ -793,3 +794,115 @@ def get_community_notifications(user_id: int, db: Session = Depends(get_db)):
     ).count()
 
     return {"count": count}
+
+# ──────────────────────────────────────────
+# PROFILE VIEW ROUTES
+# ──────────────────────────────────────────
+
+@app.post("/profile-views/{profile_id}")
+def log_profile_view(profile_id: int, view: schemas.ProfileViewCreate, db: Session = Depends(get_db)):
+    # don't log someone viewing their own profile
+    if view.viewerId == profile_id:
+        return {"message": "Own profile, not logged"}
+
+    new_view = models.ProfileView(
+        profileId  = profile_id,
+        viewerId   = view.viewerId,
+        viewerName = view.viewerName,
+    )
+    db.add(new_view)
+    db.commit()
+    return {"message": "View logged"}
+
+# public count — anyone can see the number
+@app.get("/profile-views/{profile_id}/count")
+def get_profile_view_count(profile_id: int, db: Session = Depends(get_db)):
+    count = db.query(models.ProfileView).filter(
+        models.ProfileView.profileId == profile_id
+    ).count()
+    return {"count": count}
+
+# detail — only the profile owner should call this
+@app.get("/profile-views/{profile_id}/detail", response_model=list[schemas.ProfileViewResponse])
+def get_profile_view_detail(profile_id: int, db: Session = Depends(get_db)):
+    return db.query(models.ProfileView).filter(
+        models.ProfileView.profileId == profile_id
+    ).order_by(models.ProfileView.timestamp.desc()).all()
+
+# ──────────────────────────────────────────
+# COMMUNITY NOTIFICATION ROUTES
+# ──────────────────────────────────────────
+
+@app.get("/notifications/communities/{user_id}")
+def get_community_notifications(user_id: int, db: Session = Depends(get_db)):
+    user_data = db.query(models.UserData).filter(
+        models.UserData.userId == user_id
+    ).first()
+    if not user_data:
+        return {"count": 0}
+
+    joined = db.query(models.UserCommunity).filter(
+        models.UserCommunity.userDataId == user_data.id
+    ).all()
+    community_ids = [j.communityId for j in joined]
+    if not community_ids:
+        return {"count": 0}
+
+    last_seen = db.query(models.CommunityNotifSeen).filter(
+        models.CommunityNotifSeen.userId == user_id
+    ).order_by(models.CommunityNotifSeen.seenAt.desc()).first()
+
+    cutoff = last_seen.seenAt if last_seen else (
+        datetime.datetime.utcnow() - datetime.timedelta(hours=48)
+    )
+
+    count = db.query(models.CommunityPost).filter(
+        models.CommunityPost.communityId.in_(community_ids),
+        models.CommunityPost.userId != user_id,
+        models.CommunityPost.timestamp > cutoff,
+        models.CommunityPost.deleted == False
+    ).count()
+
+    return {"count": count}
+
+@app.post("/notifications/communities/{user_id}/seen")
+def mark_community_notifs_seen(user_id: int, db: Session = Depends(get_db)):
+    db.add(models.CommunityNotifSeen(userId=user_id))
+    db.commit()
+    return {"message": "Marked as seen"}
+
+# UPLOAD profile picture
+@app.post("/users/{user_id}/profile-image")
+def upload_profile_image(
+    user_id: int,
+    payload: dict,
+    db: Session = Depends(get_db)
+):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    image_data = payload.get("image")
+    if not image_data:
+        raise HTTPException(status_code=400, detail="No image provided")
+
+    # size check — base64 of 2MB image ≈ 2.7MB string
+    if len(image_data) > 3_000_000:
+        raise HTTPException(status_code=400, detail="Image too large — maximum 2MB")
+
+    user.profile_image = image_data
+    db.commit()
+    db.refresh(user)
+
+    # update saveUser on frontend will handle localStorage
+    return {"message": "Profile image updated", "profile_image": user.profile_image}
+
+# REMOVE profile picture — reverts to letter avatar
+@app.delete("/users/{user_id}/profile-image")
+def remove_profile_image(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    user.profile_image = None
+    db.commit()
+    return {"message": "Profile image removed"}

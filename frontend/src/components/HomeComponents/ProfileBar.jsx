@@ -4,8 +4,9 @@ import { useState } from "react";
 import "./HomeComponents.css"
 import ProfileDetail from "./ProfileDetail";
 import Logout from "./Logout";
+import AvatarImage from "./AvatarImage";
 
-export default function ProfileBar () {
+export default function ProfileBar ( user) {
 
     const [ open, setOpen ] = useState(false);
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function ProfileBar () {
         <div onClick={() => setOpen(true)} className="profilebar">
             <div className="details1">
                 <div>
-                    <img src="https://via.placeholder.com/150" alt="User Avatar" className="avatar" />
+                    {/* <AvatarImage  src={user.profile_image} name={user.name || user.first_name} size={48} /> */}
                 </div>
                 <div>
                     <h2>{ first_name || "User"}</h2>

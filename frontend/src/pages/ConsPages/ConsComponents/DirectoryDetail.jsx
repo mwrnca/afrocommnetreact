@@ -1,5 +1,6 @@
 // DirectoryDetail.jsx — fixed, no more broken `role.location` reference
 import { useState } from "react";
+import AvatarImage from "../../../components/HomeComponents/AvatarImage";
 import "./ConsumerComponents.css";
 
 export default function DirectoryDetail({ user, onClose }) {
@@ -42,7 +43,8 @@ export default function DirectoryDetail({ user, onClose }) {
       <section className="dir-header-cont">
         <div className="dir-header-major">
           <div className="dir-detail-image">
-            <div className="dir-detail-avatar">{displayName.charAt(0)}</div>
+            {/* <div className="dir-detail-avatar">{displayName.charAt(0)}</div> */}
+            <AvatarImage src={user.profile_image} name={displayName} size={80} />
           </div>
 
           <div>

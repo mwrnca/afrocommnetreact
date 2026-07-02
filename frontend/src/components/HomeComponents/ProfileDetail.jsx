@@ -110,14 +110,14 @@ export default function ProfileDetail({ onClose }) {
           </form>
         </section>
 
-        <section className="current-info-container">
+        {/* <section className="current-info-container">
           <span>Current Information</span>
           <p>{current.first_name}</p>
           <p>{current.second_name}</p>
           <p>{current.email}</p>
           <p>{current.phone_number}</p>
           {profile.name_of_business && <p>{profile.name_of_business}</p>}
-        </section>
+        </section> */}
       </div>
     </div>
   );

@@ -250,3 +250,9 @@
     text-align: center;
     background: transparent;
 }
+
+.topbar-current-page desktop-only {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}

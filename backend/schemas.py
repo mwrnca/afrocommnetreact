@@ -16,6 +16,7 @@ class UserCreate(UserBase):
 
 class UserResponse(UserBase):
     id: int
+    profile_image: Optional[str] = None  # ← add this
 
     class Config:
         from_attributes = True
@@ -347,8 +348,23 @@ class DirectoryEntryResponse(BaseModel):
     email: str
     phone_number: str
     role: str
+    profile_image: Optional[str] = None  # ← add thi
     name: Optional[str] = None
     category: Optional[str] = None
     location: Optional[str] = None
     county: Optional[str] = None
     description: Optional[str] = None
+
+class ProfileViewCreate(BaseModel):
+    viewerId:   Optional[int] = None
+    viewerName: Optional[str] = None
+
+class ProfileViewResponse(BaseModel):
+    id:         int
+    profileId:  int
+    viewerId:   Optional[int] = None
+    viewerName: Optional[str] = None
+    timestamp:  datetime.datetime
+
+    class Config:
+        from_attributes = True
