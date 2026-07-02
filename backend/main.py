@@ -1,3 +1,6 @@
+from jose import JWTError, jwt
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import Security
 from passlib.context import CryptContext
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,13 +18,17 @@ load_dotenv()
 RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 resend.api_key = RESEND_API_KEY
 
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM  = "HS256"
+security   = HTTPBearer()
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def hash_password(password: str) -> str:
-    return hashlib.sha256(password.encode()).hexdigest()
+# def hash_password(password: str) -> str:
+#     return hashlib.sha256(password.encode()).hexdigest()
 
-def verify_password(plain: str, hashed: str) -> bool:
-    return hashlib.sha256(plain.encode()).hexdigest() == hashed
+# def verify_password(plain: str, hashed: str) -> bool:
+#     return hashlib.sha256(plain.encode()).hexdigest() == hashed
 
 Base.metadata.create_all(bind=engine)
 
@@ -76,8 +83,12 @@ def login(credentials: schemas.LoginRequest, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.email == credentials.email).first()
     if not user or not pwd_context.verify(credentials.password, user.password):
         raise HTTPException(status_code=401, detail="Invalid email or password")
-    return {"user": user, "message": "Login successful"}
 
+    db.add(models.LoginEvent(userId=user.id))
+    db.commit()
+
+    token = create_token(user.id, user.role)
+    return {"user": user, "message": "Login successful", "token": token}
 # ──────────────────────────────────────────
 # USER DATA ROUTE
 # ──────────────────────────────────────────
@@ -94,14 +105,27 @@ def get_user_data(user_id: int, db: Session = Depends(get_db)):
 # ──────────────────────────────────────────
 
 @app.get("/tasks/{user_id}", response_model=list[schemas.TaskResponse])
-def get_tasks(user_id: int, db: Session = Depends(get_db)):
+def get_tasks(
+    user_id: int, 
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+    ):
+    if current_user["id"] != user_id:
+        raise HTTPException(status_code=403, detail="Not authorized")
     user_data = db.query(models.UserData).filter(models.UserData.userId == user_id).first()
     if not user_data:
         raise HTTPException(status_code=404, detail="User not found")
     return user_data.tasks
 
 @app.post("/tasks/{user_id}", response_model=schemas.TaskResponse)
-def create_task(user_id: int, task: schemas.TaskCreate, db: Session = Depends(get_db)):
+def create_task(
+    user_id: int,
+    task: schemas.TaskCreate,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+):
+    if current_user["id"] != user_id:
+        raise HTTPException(status_code=403, detail="Not authorized")
     user_data = db.query(models.UserData).filter(models.UserData.userId == user_id).first()
     if not user_data:
         raise HTTPException(status_code=404, detail="User not found")
@@ -131,7 +155,13 @@ def complete_task(task_id: int, db: Session = Depends(get_db)):
 # ──────────────────────────────────────────
 
 @app.get("/messages/{user_id}/received", response_model=list[schemas.MessageResponse])
-def get_received(user_id: int, db: Session = Depends(get_db)):
+def get_received(
+    user_id: int,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+):
+    if current_user["id"] != user_id:
+        raise HTTPException(status_code=403, detail="Not authorized")
     return db.query(models.Message).filter(
         models.Message.receiverId == user_id
     ).order_by(models.Message.timestamp.desc()).all()
@@ -150,7 +180,14 @@ def get_messages(user_id: int, db: Session = Depends(get_db)):
     return user_data.messages
 
 @app.post("/messages/{user_id}", response_model=schemas.MessageResponse)
-def send_message(user_id: int, message: schemas.MessageCreate, db: Session = Depends(get_db)):
+def send_message(
+    user_id: int,
+    message: schemas.MessageCreate,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+):
+    if current_user["id"] != user_id:
+        raise HTTPException(status_code=403, detail="Not authorized")
     user_data = db.query(models.UserData).filter(models.UserData.userId == user_id).first()
     if not user_data:
         raise HTTPException(status_code=404, detail="User not found")
@@ -266,7 +303,14 @@ def create_community_post(community_id: int, post: schemas.CommunityPostCreate, 
 # ──────────────────────────────────────────
 
 @app.get("/sales/{user_id}/{period}", response_model=list[schemas.SaleResponse])
-def get_sales(user_id: int, period: str, db: Session = Depends(get_db)):
+def get_sales(
+    user_id: int,
+    period: str,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+):
+    if current_user["id"] != user_id:
+        raise HTTPException(status_code=403, detail="Not authorized")
     user_data = db.query(models.UserData).filter(models.UserData.userId == user_id).first()
     if not user_data:
         raise HTTPException(status_code=404, detail="User not found")
@@ -299,7 +343,14 @@ def add_sale(user_id: int, sale: schemas.SaleCreate, db: Session = Depends(get_d
 # ──────────────────────────────────────────
 
 @app.get("/expenses/{user_id}/{period}", response_model=list[schemas.ExpenseResponse])
-def get_expenses(user_id: int, period: str, db: Session = Depends(get_db)):
+def get_expenses(
+    user_id: int,
+    period: str,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+):
+    if current_user["id"] != user_id:
+        raise HTTPException(status_code=403, detail="Not authorized")
     user_data = db.query(models.UserData).filter(models.UserData.userId == user_id).first()
     if not user_data:
         raise HTTPException(status_code=404, detail="User not found")
@@ -372,9 +423,10 @@ def create_employee(business_id: int, employee: schemas.EmployeeCreate, db: Sess
         first_name = employee.first_name,
         last_name  = employee.last_name,
         email      = employee.email,
-        password   = hash_password(employee.password),
+        password   = pwd_context.hash(employee.password[:72]),  # ← bcrypt
         position   = employee.position,
     )
+
     db.add(new_employee)
     db.commit()
     db.refresh(new_employee)
@@ -824,7 +876,13 @@ def get_profile_view_count(profile_id: int, db: Session = Depends(get_db)):
 
 # detail — only the profile owner should call this
 @app.get("/profile-views/{profile_id}/detail", response_model=list[schemas.ProfileViewResponse])
-def get_profile_view_detail(profile_id: int, db: Session = Depends(get_db)):
+def get_profile_view_detail(
+    profile_id: int,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+):
+    if current_user["id"] != profile_id:
+        raise HTTPException(status_code=403, detail="Not authorized")
     return db.query(models.ProfileView).filter(
         models.ProfileView.profileId == profile_id
     ).order_by(models.ProfileView.timestamp.desc()).all()
@@ -906,3 +964,18 @@ def remove_profile_image(user_id: int, db: Session = Depends(get_db)):
     user.profile_image = None
     db.commit()
     return {"message": "Profile image removed"}
+
+def create_token(user_id: int, role: str) -> str:
+    payload = {
+        "sub":  str(user_id),
+        "role": role,
+        "exp":  datetime.datetime.utcnow() + datetime.timedelta(hours=24),
+    }
+    return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+
+def get_current_user(credentials: HTTPAuthorizationCredentials = Security(security)):
+    try:
+        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        return {"id": int(payload["sub"]), "role": payload["role"]}
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")

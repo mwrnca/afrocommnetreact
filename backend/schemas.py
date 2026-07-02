@@ -81,7 +81,8 @@ class LoginRequest(BaseModel):
 class LoginResponse(BaseModel):
     user:    UserResponse
     message: str
-
+    token:  str
+    
 # ── Task schemas ──
 class TaskBase(BaseModel):
     title:    str

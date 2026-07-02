@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# backend/.gitignore
+.env
+afrocommnet.db
+__pycache__/
+venv/
+
+# frontend/.gitignore
+.env
+.env.local
+node_modules/
+dist/

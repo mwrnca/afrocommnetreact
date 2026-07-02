@@ -1,8 +1,8 @@
-const BASE = "http://localhost:8000";
-
+const BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 // ── Auth ──
-export function saveUser(user) {
-  localStorage.setItem("user",     JSON.stringify(user));
+export function saveUser(user, token) {
+  localStorage.setItem("user",  JSON.stringify(user));
+  localStorage.setItem("token", token || "");
   localStorage.setItem("userId",   String(user.id));
   localStorage.setItem("userRole", user.role);
   localStorage.setItem("userName", user.first_name);
@@ -18,7 +18,6 @@ export function logout() {
 export function getUser() {
   const stored = localStorage.getItem("user");
   if (stored) return JSON.parse(stored);
-  // fallback to individual keys
   return {
     id:         localStorage.getItem("userId"),
     role:       localStorage.getItem("userRole"),
@@ -26,12 +25,25 @@ export function getUser() {
   };
 }
 
+export function getToken() {
+  return localStorage.getItem("token") || "";
+}
+
 export function clearUser() {
   localStorage.removeItem("user");
+  localStorage.removeItem("token");
   localStorage.removeItem("userId");
   localStorage.removeItem("userRole");
   localStorage.removeItem("userName");
 }
+
+export function authHeaders() {
+  return {
+    "Content-Type":  "application/json",
+    "Authorization": `Bearer ${getToken()}`,
+  };
+}
+
 
 export async function signup(formData) {
   const res = await fetch(`${BASE}/register`, {
@@ -52,7 +64,7 @@ export async function login(email, password) {
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.detail || "Login failed");
-  return data; // { user, message }
+  return data; // now includes { user, message, token }
 }
 
 // ── Dashboard data ──

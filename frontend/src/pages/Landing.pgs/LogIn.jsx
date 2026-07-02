@@ -29,10 +29,10 @@ export default function LogIn() {
     }
     try {
       const data = await login(form.email, form.password);
+      saveUser(data.user, data.token);
       console.log("login response:", data);        // add this
       console.log("role:", data.user.role);         // add this
       console.log("route:", roleRoutes[data.user.role]);
-      saveUser(data.user);
       // route based on role returned from backend
       navigate(`/dash/${roleRoutes[data.user.role]}`);
     } catch (err) {
